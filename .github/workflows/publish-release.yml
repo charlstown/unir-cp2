@@ -1,4 +1,4 @@
-name: Publish release MkDocs Nginx to ACR
+name: Publish release to ACR
 
 on:
   workflow_dispatch:
