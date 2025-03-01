@@ -51,7 +51,7 @@ jobs:
       # ✅ Instalar MkDocs y construir el sitio
       - name: Install MkDocs & Build Docs
         run: |
-          pip install mkdocs
+          pip install -r requirements.txt
           mkdocs build
 
       # ✅ Crear Dockerfile para Nginx sirviendo el sitio MkDocs
