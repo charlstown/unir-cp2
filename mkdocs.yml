@@ -1,0 +1,81 @@
+site_name: Unir CP2
+site_description: Automatización de Infraestructura en Azure con Terraform y Ansible
+repo_url: https://github.com/charlstown/unir-cp2
+site_author: Carlos Grande
+
+# Configuration
+# Theme
+theme:
+  name: material
+  #custom_dir: overrides
+  static_templates:
+    - 404.html
+  logo: assets/images/favicon.svg
+  favicon: assets/images/favicon.svg
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.footer
+    - navigation.top
+    - toc.integrate
+    - search.suggest
+    - search.highlight 
+  language: en
+
+  # Color palette
+  palette: 
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue grey
+      accent: teal
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue grey
+      accent: teal
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+
+# Extensions
+markdown_extensions:
+  - admonition            # Block elements
+  - pymdownx.details      # Collapsible call-outs
+  - pymdownx.superfences  # Nested elements
+  - pymdownx.mark         # Hihlighting text
+  - attr_list             # To add buttons
+  - md_in_html            # To add html in markdown (centred images)
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+# Plugins
+plugins:
+  - search
+  - markdownextradata
+  - awesome-pages
+  - with-pdf
+
+# css
+extra_css:
+  - assets/stylesheets/extra.css
+
+# javascript
+extra_javascript:
+  - assets/javascripts/extra.js
+
+# Copyright message
+copyright: Copyright &copy; Unir CP2 - 2025
+
+# Global variables
+extra:
+  links:
+    self-host: 'url'
+    learning-host: 'url'
