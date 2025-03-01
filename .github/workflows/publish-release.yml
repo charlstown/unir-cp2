@@ -6,7 +6,7 @@ on:
       acr_name:
         description: "Azure Container Registry Name"
         required: true
-        default: "acrdevweucp2"  # ✅ Default ACR Name
+        default: "acrdevweucp2"
       acr_username:
         description: "Azure Container Registry Username"
         required: true
@@ -14,10 +14,10 @@ on:
         description: "Azure Container Registry Password"
         required: true
         type: string
-
-env:
-  IMAGE_NAME: "mkdocs-nginx"
-  TAG: "latest"
+      image_name:
+        description: "Container Image Name"
+        required: true
+        default: "mkdocs-nginx"
 
 jobs:
   build-and-push:
@@ -28,23 +28,45 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # ✅ Iniciar sesión en ACR con las credenciales ingresadas
+      # ✅ Obtener la versión de la publicación de GitHub (Si se activa por una publicación)
+      - name: Get Release Version
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            echo "RELEASE_TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          else
+            echo "RELEASE_TAG=latest" >> $GITHUB_ENV
+          fi
+
+      # ✅ Instalar Podman
+      - name: Install Podman
+        run: |
+          sudo apt update
+          sudo apt install -y podman
+
+      # ✅ Iniciar sesión en ACR con Podman
       - name: Log in to Azure Container Registry
         run: |
-          echo "${{ github.event.inputs.acr_password }}" | docker login ${{ github.event.inputs.acr_name }}.azurecr.io -u ${{ github.event.inputs.acr_username }} --password-stdin
+          echo "${{ github.event.inputs.acr_password }}" | podman login ${{ github.event.inputs.acr_name }}.azurecr.io -u ${{ github.event.inputs.acr_username }} --password-stdin
 
-      # ✅ Instalar MkDocs
-      - name: Install MkDocs
+      # ✅ Instalar MkDocs y construir el sitio
+      - name: Install MkDocs & Build Docs
         run: |
           pip install mkdocs
           mkdocs build
 
-      # ✅ Construir imagen Docker con el sitio MkDocs dentro de Nginx
-      - name: Build Docker Image
+      # ✅ Crear Dockerfile para Nginx sirviendo el sitio MkDocs
+      - name: Create Dockerfile
         run: |
-          docker build -t ${{ github.event.inputs.acr_name }}.azurecr.io/$IMAGE_NAME:$TAG .
+          echo 'FROM nginx:latest' > Dockerfile
+          echo 'COPY site/ /usr/share/nginx/html/' >> Dockerfile
+          echo 'EXPOSE 80' >> Dockerfile
 
-      # ✅ Subir imagen a ACR
-      - name: Push Image to ACR
+      # ✅ Construir imagen con Podman
+      - name: Build Container Image with Podman
         run: |
-          docker push ${{ github.event.inputs.acr_name }}.azurecr.io/$IMAGE_NAME:$TAG
+          podman build -t ${{ github.event.inputs.acr_name }}.azurecr.io/${{ github.event.inputs.image_name }}:$RELEASE_TAG .
+
+      # ✅ Subir imagen a ACR con Podman
+      - name: Push Image to ACR with Podman
+        run: |
+          podman push ${{ github.event.inputs.acr_name }}.azurecr.io/${{ github.event.inputs.image_name }}:$RELEASE_TAG
