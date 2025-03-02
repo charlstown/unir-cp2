@@ -15,20 +15,33 @@
         name: podman
         state: present
 
-    # ✅ Iniciar sesión en Azure Container Registry (ACR)
-    - name: Log in to ACR
-      shell: echo "{{ acr_password }}" | podman login {{ acr_name }}.azurecr.io -u {{ acr_username }} --password-stdin
-      args:
-        executable: /bin/bash
+    # ✅ Crear directorio de autenticación para Podman
+    - name: Ensure auth directory exists
+      file:
+        path: /root/.config/containers
+        state: directory
+        mode: '0755'
 
-    # ✅ Descargar la imagen del contenedor desde ACR
+    # ✅ Iniciar sesión en Azure Container Registry (ACR) usando el módulo `community.general.podman_login`
+    - name: Log in to Azure Container Registry (ACR)
+      community.general.podman_login:
+        registry: "{{ acr_name }}.azurecr.io"
+        username: "{{ acr_username }}"
+        password: "{{ acr_password }}"
+
+    # ✅ Descargar la imagen del contenedor desde ACR con `community.general.podman_image`
     - name: Pull container image from ACR
-      shell: podman pull {{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}
-      args:
-        executable: /bin/bash
+      community.general.podman_image:
+        name: "{{ acr_name }}.azurecr.io/{{ image_name }}"
+        tag: "{{ image_tag }}"
+        state: present
 
-    # ✅ Ejecutar el contenedor
+    # ✅ Ejecutar el contenedor con `community.general.podman_container`
     - name: Run container from ACR image
-      shell: podman run -d --name mkdocs_container -p 80:80 {{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}
-      args:
-        executable: /bin/bash
+      community.general.podman_container:
+        name: mkdocs_container
+        image: "{{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"

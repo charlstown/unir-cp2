@@ -2,7 +2,7 @@
 
 ## Codigo fuente
 
-[:simple-git: unir-cp2](https://github.com/charlstown/unir-cp2)
+[:simple-git: Acceso al repositorio](https://github.com/charlstown/unir-cp2){ .md-button }
 
 ## 🗂️ Estructura del repositorio
 
@@ -18,23 +18,3 @@
 │   ├── main.tf         # Configuración principal de Terraform
 │   └── recursos.tf     # Definición de recursos en Azure
 ```
-
-
-
-## Arquitectura planteada
-
-### Arquitectura de referencia
-
-![arquitectura-referencia.png]()
-
-### Diseño de la solución
-
-![diseño-solucion.png]()
-
-## Despliegues
-
-### Descripción del proceso de despliegue
-
-### Descripción de la aplicación desplegada
-
-## Licencia

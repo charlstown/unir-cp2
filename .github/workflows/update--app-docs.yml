@@ -1,0 +1,33 @@
+name: Build MkDocs Documentation
+
+on:
+  push:  # Runs on every push to any branch
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yaml'
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ✅ Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # ✅ Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      # ✅ Install MkDocs
+      - name: Install MkDocs and dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # ✅ Build the documentation
+      - name: Build MkDocs Site
+        run: mkdocs build --site-dir images/app_docs/site

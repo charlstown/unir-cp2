@@ -2,5 +2,6 @@
 nav:
     - index.md
     - Arquitectura: arquitectura.md
-    - Setup: setup.md
+    - Despliegue: despliegue.md
     - Licencia: licencia.md
+    - Referencias: referencias.md
