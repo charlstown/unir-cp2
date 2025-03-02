@@ -1,0 +1,6 @@
+---
+nav:
+    - index.md
+    - Arquitectura: arquitectura.md
+    - Setup: setup.md
+    - Licencia: licencia.md
