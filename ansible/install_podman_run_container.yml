@@ -1,0 +1,34 @@
+- name: Install Podman and Run ACR Container
+  hosts: azure_vm
+  become: yes
+  tasks:
+
+    # ✅ Asegurarse de que el sistema esté actualizado
+    - name: Update system packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    # ✅ Instalar Podman
+    - name: Install Podman
+      apt:
+        name: podman
+        state: present
+
+    # ✅ Iniciar sesión en Azure Container Registry (ACR)
+    - name: Log in to ACR
+      shell: echo "{{ acr_password }}" | podman login {{ acr_name }}.azurecr.io -u {{ acr_username }} --password-stdin
+      args:
+        executable: /bin/bash
+
+    # ✅ Descargar la imagen del contenedor desde ACR
+    - name: Pull container image from ACR
+      shell: podman pull {{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}
+      args:
+        executable: /bin/bash
+
+    # ✅ Ejecutar el contenedor
+    - name: Run container from ACR image
+      shell: podman run -d --name mkdocs_container -p 80:80 {{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}
+      args:
+        executable: /bin/bash

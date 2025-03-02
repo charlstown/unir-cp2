@@ -1,0 +1,42 @@
+
+# Action to deploy the mkdocs documentation to the branch gh-pages.
+name: On Push Deploy Documentation # Name of the workflow
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - '.github/workflows/**'
+      - 'mkdocs.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - '.github/workflows/**'
+      - 'mkdocs.yaml'
+
+# Jobs
+jobs: # Jobs to run
+    deploy: # Name of the job
+        name: deploy-documentation
+        runs-on: ubuntu-latest # Operating system to run the job on
+        steps: # Steps to run
+        - name: Checkout repo # Name of the step
+          uses: actions/checkout@v4 # Action to run
+        - name: Set up Python # Name of the step
+          uses: actions/setup-python@v5 # Action to run
+          with: # Inputs for the action
+            python-version: '3.10' # Version of Python to use
+        - name: Caching # Name of the step
+          uses: actions/cache@v3 # Action to run
+          with: # Inputs for the action
+            path: $/{/{ env.pythonLocation /}/} # Path to cache
+            key: $/{/{ env.pythonLocation /}/}-$/{/{ hashFiles('setup.py') /}/}-$/{/{ hashFiles('requirements.txt') /}/} # Key to use for restoring and saving the cache
+        - name: Install dependencies # Name of the step
+          run: | # Command to run
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+        - name: Deploy documentation # Name of the step
+          run: python -m mkdocs gh-deploy --force --clean --verbose # Command to run

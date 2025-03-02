@@ -1,0 +1,5 @@
+acr_name: "acrdevweucp2"
+acr_username: "{{ lookup('env', 'ACR_USERNAME') }}"  # Load from environment
+acr_password: "{{ lookup('env', 'ACR_PASSWORD') }}"  # Load from environment
+image_name: "mkdocs-nginx"
+image_tag: "latest"

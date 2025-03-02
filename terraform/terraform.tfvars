@@ -16,4 +16,4 @@ subnet_name         = "subnet-dev-weu-cp2"
 subnet_cidr         = "10.0.1.0/24"
 
 # OS image
-image_os            = "19_10-daily-gen2"
+image_os            = "18.04-LTS"
