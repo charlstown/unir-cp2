@@ -1,0 +1,89 @@
+/* Global CSS */
+
+  hr {
+    border: 0;
+    box-sizing: initial;
+    display: block;
+    height: 0.05rem;
+    overflow: visible;
+    padding: 0;
+    border-bottom: 0.05rem solid var(--md-default-fg-color--lightest);
+    display: flow-root;
+    margin: 2em 0;
+  }
+  
+/* Classes to create grids and cards embeded in the markdown (extension md_in_html needed) */
+.cards {
+  justify-content: center;
+  display: grid;
+  grid-gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+
+.row-2 {
+  grid-template-columns: repeat(2, minmax(8rem, 1fr));
+}
+
+.row-auto {
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+}
+
+.cards ul {
+  display: contents!important;
+}
+
+.cards ul li {
+  list-style: none;
+  text-align: left;
+  padding: 0.8rem;
+  border: 0.05rem solid var(--md-default-fg-color--lightest);
+  border-radius: 0.1rem;
+  display: block;
+  transition: border .25s,box-shadow .25s;
+  height: 100%;
+  position: relative;
+}
+
+.cards p:nth-last-child(2) {
+  margin-bottom: 1rem;
+}
+
+.cards ul p:has(a) {
+  position: absolute;
+  bottom: 0;
+}
+
+.cards hr {
+  margin: 0.3rem 0;
+}
+
+.cards ul li:hover {
+  border-color: #0000;
+  box-shadow: var(--md-shadow-z2);
+}
+
+.grid {
+  grid-gap: 0.4rem;
+  display: grid;
+  margin: 1em 0;
+}
+
+.grid ul {
+  display: contents!important;
+  list-style: none;
+}
+
+.grid ul li a {
+  list-style: none;
+  text-align: left;
+  padding: 0.8rem;
+  border: 0.05rem solid var(--md-default-fg-color--lightest);
+  border-radius: 0.1rem;
+  display: block;
+  transition: border .25s, color .25s;
+}
+
+.grid ul li a:hover {
+  border-color: var(--md-accent-fg-color);
+  color: var(--md-accent-fg-color);
+}
