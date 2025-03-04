@@ -1,3 +1,9 @@
+variable "environment" {
+  description = "Deployment environment: dev, pre, pro"
+  type        = string
+  default     = "dev"
+}
+
 variable "resource_group_name" {
   description = "The name of the resource group"
   type        = string
@@ -13,12 +19,13 @@ variable "location" {
 variable "acr_name" {
   description = "ACR name"
   type        = string
+  default     = "acrdevweucp2"
 }
 
 variable "vm_name" {
   description = "Virtual Machine name"
   type        = string
-  default     = "myUbuntuVM"
+  default     = "vm-dev-weu-cp2-docs"
 }
 
 variable "vm_username" {
@@ -30,7 +37,7 @@ variable "vm_username" {
 variable "vm_size" {
   description = "Azure VM size"
   type        = string
-  default     = "Standard_B1ls"  # Cheapest VM
+  default     = "Standard_B1ls"
 }
 
 # Networking
