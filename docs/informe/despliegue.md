@@ -79,8 +79,6 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
     ansible-playbook -i inventory.ini install_podman_run_container.yml --extra-vars "@vars.yml" --extra-vars "ansible_host=$VM_IP" --ask-vault-pass
     ```
 
-    *To force Ansible to recreate everything from the beginning, you can use the --force-handlers and --extra-vars "recreate=true" flags:*
-
     Este playbook se ejecuta apuntando a un Vault de ansible donde se han guardado las credenciales usadas para crear el fichero `htpasswd.users` en la carpeta `/etc/nginx/auth/htpasswd.users` de la VM.
 
     ??? note "Mostrar contraseñas guardadas en el vault"
@@ -90,14 +88,12 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
         ansible-vault view secrets.yml
         ```
 
-3. Comprobar que el contenedor está ejecutándose
+4. Si todo ha ido bien se puede comprobar que el sitio se muestra a través de internet en la ip pública de la VM. Ejecutando el comando:
 
     ```sh
-    ssh -i ~/.ssh/az_unir_rsa charlstown@${VM_IP}
-    podman ps
+     curl -k -u charlstown:\*\*\* https://${VM_IP}:443
     ```
 
-4. Comprobar que el sitio se muestra a través de internet en la ip pública de la VM.
+    También puede visualizarse en el browser en la dirección `https://ip-publica/`.
 
-    ```sh
-    ```
+    ![acceso-vm-docs](../assets/images/acceso-vm-docs-ip-publica.png)
