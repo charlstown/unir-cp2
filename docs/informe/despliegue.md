@@ -37,7 +37,15 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
 
 La publicación de la imagen se automatiza mediante el workflow [`Publish release to ACR`](https://github.com/charlstown/unir-cp2/actions/workflows/publish-release.yml) de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.
 
-1. Rellenar los datos del formulario del workflow con username y pwd del ACR desplegado en Azure.
+1. Rellenar los datos del formulario del workflow con username y pwd del ACR desplegado en Azure. 
+
+    Para extraer el password, aunque en outputs está marcado como sensitive para no mostrarse en la consola, puedes ejecutar el siguiente comando para recuperarlo:
+
+    ```bash
+    terraform output -raw acr_password
+    ```
+
+    Posteriormente rellena los datos del formulario:
 
     ![Workflow form](../assets/images/run-workflow-form.png)
 

@@ -38,18 +38,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # ✅ Iniciar sesión en Azure
-      - name: Log in to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      # ✅ Iniciar sesión en ACR
-      - name: Log in to Azure Container Registry
+      # ✅ Instalar Podman
+      - name: Install Podman
         run: |
-          az acr login --name $ACR_NAME
+          sudo apt update
+          sudo apt install -y podman
 
       # ✅ Instalar MkDocs
       - name: Install MkDocs
@@ -57,12 +50,17 @@ jobs:
           pip install -r requirements.txt
           mkdocs build
 
+      # ✅ Iniciar sesión en ACR con Podman
+      - name: Log in to Azure Container Registry
+        run: |
+          echo "${{ github.event.inputs.acr_password }}" | podman login ${{ github.event.inputs.acr_name }}.azurecr.io -u ${{ github.event.inputs.acr_username }} --password-stdin    
+
       # ✅ Construir imagen Docker con el sitio MkDocs dentro de Nginx
       - name: Build Docker Image
         run: |
           docker build -t $ACR_NAME/$IMAGE_NAME:$TAG .
 
-      # ✅ Subir imagen a ACR
-      - name: Push Image to ACR
+      # ✅ Subir imagen a ACR con Podman
+      - name: Push Image to ACR with Podman
         run: |
-          docker push $ACR_NAME/$IMAGE_NAME:$TAG
+          podman push ${{ github.event.inputs.acr_name }}.azurecr.io/${{ github.event.inputs.image_name }}:$RELEASE_TAG
