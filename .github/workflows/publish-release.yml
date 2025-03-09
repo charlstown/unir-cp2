@@ -55,10 +55,10 @@ jobs:
         run: |
           echo "${{ github.event.inputs.acr_password }}" | podman login ${{ github.event.inputs.acr_name }}.azurecr.io -u ${{ github.event.inputs.acr_username }} --password-stdin    
 
-      # ✅ Construir imagen Docker con el sitio MkDocs dentro de Nginx
-      - name: Build Docker Image
+      # ✅ Construir imagen Podman con el sitio MkDocs dentro de Nginx
+      - name: Build Podman Image
         run: |
-          docker build -t $ACR_NAME/$IMAGE_NAME:$TAG .
+          podman build -t $ACR_NAME/$IMAGE_NAME:$TAG -f Dockerfile.docs .
 
       # ✅ Subir imagen a ACR con Podman
       - name: Push Image to ACR with Podman
