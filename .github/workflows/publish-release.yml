@@ -18,7 +18,7 @@ on:
       image_name:
         description: "Container Image Name"
         required: true
-        default: "mkdocs-nginx"
+        default: "docs-nginx"
       tag_name:
         description: "Tag Name"
         required: true
@@ -58,7 +58,12 @@ jobs:
       # ✅ Construir imagen Podman con el sitio MkDocs dentro de Nginx
       - name: Build Podman Image
         run: |
-          podman build -t ${ACR_NAME}/${IMAGE_NAME}:${RELEASE_TAG} -f Dockerfile.docs .
+          podman build -t ${IMAGE_NAME}:${RELEASE_TAG} -f Dockerfile.docs .
+
+      # ✅ Tag Image for ACR before pushing
+      - name: Tag Image for ACR
+        run: |
+          podman tag ${IMAGE_NAME}:${RELEASE_TAG} ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${RELEASE_TAG}
 
       # ✅ Subir imagen a ACR con Podman
       - name: Push Image to ACR with Podman
