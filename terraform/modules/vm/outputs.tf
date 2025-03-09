@@ -5,7 +5,7 @@ output "vm_id" {
 }
 
 # Devuelve la dirección IP privada de la VM
-output "vm_public_ip" {
+output "vm_private_ip" {
   description = "La dirección IP privada de la VM"
   value       = azurerm_network_interface.nic.private_ip_address
 }

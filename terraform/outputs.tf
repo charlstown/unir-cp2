@@ -11,12 +11,12 @@ output "acr_login_server" {
 # Salida con el nombre de usuario del ACR
 output "acr_username" {
   description = "ACR Admin Username"
-  value       = azurerm_container_registry.acr.admin_username
+  value       = module.container_registry.acr_username
 }
 
 # Salida con la contraseña del ACR
 output "acr_password" {
   description = "ACR Admin Password"
-  value       = azurerm_container_registry.acr.admin_password
+  value       = module.container_registry.acr_password
   sensitive   = true
 }

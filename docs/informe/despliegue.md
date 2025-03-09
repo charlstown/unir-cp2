@@ -27,7 +27,7 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
     ```
     output: `Success! The configuration is valid.`
 
-3. Despliega la infraestructura
+3. Despliega la infraestructura con el siguiente comando, por defecto se despliega en dev. Siempre puedes añadir el flag `-var="environment=pro"` para especificar un entorno entre `dev|pre|pro`
 
     ```sh
     terraform apply --auto-approve

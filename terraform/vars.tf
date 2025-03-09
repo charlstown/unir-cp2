@@ -7,7 +7,7 @@ variable "environment" {
 variable "resource_group_name" {
   description = "The name of the resource group"
   type        = string
-  default     = "rg-dev-weu-cp2"
+  default     = "rg-weu-cp2"
 }
 
 variable "location" {
@@ -25,7 +25,7 @@ variable "acr_name" {
 variable "vm_name" {
   description = "Virtual Machine name"
   type        = string
-  default     = "vm-dev-weu-cp2-docs"
+  default     = "vm-weu-cp2-docs"
 }
 
 variable "vm_username" {
@@ -44,13 +44,13 @@ variable "vm_size" {
 variable "vnet_name" {
   description = "Virtual Network Name"
   type        = string
-  default     = "vnet-dev-weu-cp2"
+  default     = "vnet-weu-cp2"
 }
 
 variable "subnet_name" {
   description = "Subnet Name"
   type        = string
-  default     = "subnet-dev-weu-cp2"
+  default     = "subnet-weu-cp2"
 }
 
 variable "subnet_cidr" {

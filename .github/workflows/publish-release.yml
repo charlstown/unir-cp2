@@ -1,12 +1,33 @@
-name: Build & Push MkDocs Nginx to ACR
+name: Publish docs to ACR
 
 on:
   workflow_dispatch:  # Permite ejecución manual
-
+    inputs:
+      acr_name:
+        description: "Azure Container Registry Name"
+        required: true
+        default: "acrdevweucp2"
+      acr_username:
+        description: "Azure Container Registry Username"
+        required: true
+        default: "acrdevweucp2"
+      acr_password:
+        description: "Azure Container Registry Password"
+        required: true
+        type: string
+      image_name:
+        description: "Container Image Name"
+        required: true
+        default: "mkdocs-nginx"
+      tag_name:
+        description: "Tag Name"
+        required: true
+        default: "casopractico2"
+        
 env:
-  ACR_NAME: ${{ secrets.AZURE_ACR_NAME }}
-  IMAGE_NAME: "mkdocs-nginx"
-  TAG: "casopractico2"
+  ACR_NAME: ${{ github.event.inputs.acr_name }}
+  IMAGE_NAME: ${{ github.event.inputs.image_name }}
+  TAG: ${{ github.event.inputs.tag_name }}
 
 jobs:
   build-and-push:
