@@ -15,5 +15,7 @@ vnet_name           = "vnet-weu-cp2"
 subnet_name         = "subnet-weu-cp2"
 subnet_cidr         = "10.0.1.0/24"
 
-# OS image
-image_os            = "18.04-LTS"
+# Image
+image_os            = "22_04-lts-gen2"
+image_offer         = "0001-com-ubuntu-server-jammy"
+# check offers here: https://documentation.ubuntu.com/azure/en/latest/azure-how-to/instances/find-ubuntu-images/

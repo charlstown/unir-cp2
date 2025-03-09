@@ -37,6 +37,7 @@ module "virtual_machine" {
   subnet_name        = "${var.subnet_name}-${var.environment}"
   subnet_cidr        = var.subnet_cidr
   image_os           = var.image_os
+  image_offer           = var.image_offer
 }
 
 # 🔹 Llamar al módulo del Registro de Contenedores (ACR)

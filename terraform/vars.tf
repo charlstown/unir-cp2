@@ -63,5 +63,12 @@ variable "subnet_cidr" {
 variable "image_os" {
   description = "OS Image SKU"
   type        = string
-  default     = "20.04-LTS"
+  default     = "18.04-LTS"
+}
+
+# Image offer
+variable "image_offer" {
+  description = "Image offer"
+  type        = string
+  default     = "UbuntuServer"
 }

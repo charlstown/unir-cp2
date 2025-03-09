@@ -37,15 +37,15 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
 
 La publicación de la imagen se automatiza mediante el workflow [`Publish release to ACR`](https://github.com/charlstown/unir-cp2/actions/workflows/publish-release.yml) de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.
 
-1. Rellenar los datos del formulario del workflow con username y pwd del ACR desplegado en Azure. 
+1. Rellenar los datos del formulario del workflow con username y pwd del ACR desplegado en Azure.
 
-    Para extraer el password, aunque en outputs está marcado como sensitive para no mostrarse en la consola, puedes ejecutar el siguiente comando para recuperarlo:
+    ??? Reminder "Recordatorio"
 
-    ```bash
-    terraform output -raw acr_password
-    ```
+        Para extraer el password, aunque en outputs está marcado como sensitive para no mostrarse en la consola, puedes ejecutar el siguiente comando para recuperarlo:
 
-    Posteriormente rellena los datos del formulario:
+        ```bash
+        terraform output -raw acr_password
+        ```
 
     ![Workflow form](../assets/images/run-workflow-form.png)
 
@@ -60,11 +60,19 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
 1. Comprobar conexión a la VM por SSH
 
     ```sh
-    ssh -i ~/.ssh/az_unir_rsa azureuser@<YOUR_VM_PUBLIC_IP>
+    ssh -i ~/.ssh/az_unir_rsa charlstown@<YOUR_VM_PUBLIC_IP>
     exit
     ```
 
-2. Exportar secrets en el environment
+2. Exportar secrets en el environment.
+
+    ??? Reminder "Recordatorio"
+
+        Siempre puedes ejecutar este comando para recuperar el usuario y la contraseña del ACR.
+
+        ```bash
+        az acr credential show --name acrweucp2dev --query "[username, passwords[0].value]" -o tsv
+        ```
 
     ```sh
     export ACR_USERNAME="your_acr_username"
@@ -80,6 +88,7 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
 4. Comprobar que el contenedor está ejecutándose
 
     ```sh
-    ssh -i ~/.ssh/az_unir_rsa azureuser@<YOUR_VM_PUBLIC_IP>
+    cd ../ansible
+    ssh -i ~/.ssh/az_unir_rsa charlstown@<YOUR_VM_PUBLIC_IP>
     podman ps
     ```

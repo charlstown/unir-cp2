@@ -60,7 +60,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   # OS Image Selection
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
+    offer     = var.image_offer
     sku       = var.image_os
     version   = "latest"
   }

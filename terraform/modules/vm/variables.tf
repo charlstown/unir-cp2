@@ -27,3 +27,9 @@ variable "image_os" {
   description = "OS Image SKU for the VM"
   type        = string
 }
+
+# Image offer Variable
+variable "image_offer" {
+  description = "Image offer for the VM"
+  type        = string
+}

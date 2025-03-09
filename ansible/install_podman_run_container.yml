@@ -15,33 +15,41 @@
         name: podman
         state: present
 
-    # ✅ Crear directorio de autenticación para Podman
-    - name: Ensure auth directory exists
-      file:
-        path: /root/.config/containers
-        state: directory
-        mode: '0755'
-
-    # ✅ Iniciar sesión en Azure Container Registry (ACR) usando el módulo `community.general.podman_login`
-    - name: Log in to Azure Container Registry (ACR)
-      community.general.podman_login:
+    # ✅ Iniciar sesión en Azure Container Registry (ACR)
+    - name: Log into Azure Container Registry (ACR)
+      containers.podman.podman_login:
         registry: "{{ acr_name }}.azurecr.io"
         username: "{{ acr_username }}"
         password: "{{ acr_password }}"
 
-    # ✅ Descargar la imagen del contenedor desde ACR con `community.general.podman_image`
+    # ✅ Descargar la imagen del contenedor desde ACR
     - name: Pull container image from ACR
-      community.general.podman_image:
+      containers.podman.podman_image:
         name: "{{ acr_name }}.azurecr.io/{{ image_name }}"
         tag: "{{ image_tag }}"
         state: present
 
-    # ✅ Ejecutar el contenedor con `community.general.podman_container`
+    # ✅ Ejecutar el contenedor
     - name: Run container from ACR image
-      community.general.podman_container:
+      containers.podman.podman_container:
         name: mkdocs_container
         image: "{{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}"
         state: started
         restart_policy: always
         ports:
           - "80:80"
+
+    # ✅ Generar un servicio systemd para hacer el contenedor persistente
+    - name: Generate systemd service for Podman container
+      containers.podman.podman_generate_systemd:
+        name: mkdocs_container
+        dest: /etc/systemd/system/
+        restart_policy: always
+
+    # ✅ Habilitar y arrancar el servicio systemd para que se inicie en cada reinicio
+    - name: Enable and start Podman container systemd service
+      systemd:
+        name: container-mkdocs_container
+        enabled: yes
+        state: started
+        daemon_reload: yes
