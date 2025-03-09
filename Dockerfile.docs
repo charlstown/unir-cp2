@@ -1,8 +1,23 @@
-# Use official Nginx image
+# Usa la imagen oficial de Nginx
 FROM nginx:latest
 
-# Copy generated HTML files to Nginx's web root
+# Crear directorio para SSL
+RUN mkdir -p /etc/nginx/ssl
+
+# Generar certificado X.509 autofirmado
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/server.key \
+    -out /etc/nginx/ssl/server.crt \
+    -subj "/C=US/ST=State/L=City/O=Company/CN=localhost"
+
+# Copiar configuración de Nginx para SSL en el directorio correcto
+COPY nginx_ssl.conf /etc/nginx/conf.d/default.conf
+
+# Copiar contenido web
 COPY site/ /usr/share/nginx/html/
 
-# Expose port 80
-EXPOSE 80
+# Exponer puerto HTTPS
+EXPOSE 443
+
+# Iniciar Nginx
+CMD ["nginx", "-g", "daemon off;"]

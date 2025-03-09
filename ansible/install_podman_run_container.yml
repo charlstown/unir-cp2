@@ -1,4 +1,4 @@
-- name: Install Podman and Run ACR Container
+- name: Deploy Podman Container with ACR
   hosts: azure_vm
   become: yes
   tasks:
@@ -9,11 +9,30 @@
         update_cache: yes
         upgrade: yes
 
-    # ✅ Instalar Podman
-    - name: Install Podman
+    # ✅ Instalar Podman y Apache Utils (para htpasswd)
+    - name: Install Podman and Apache Utils
       apt:
-        name: podman
+        name:
+          - podman
+          - apache2-utils  # Necesario para htpasswd
         state: present
+
+    # ✅ Crear directorio para credenciales en la VM
+    - name: Ensure authentication directory exists
+      file:
+        path: /etc/nginx/auth
+        state: directory
+        mode: '0755'
+
+    # ✅ Cargar variables seguras desde archivo secrets.yml
+    - name: Load secure variables
+      include_vars: secrets.yml
+
+    # ✅ Generar archivo htpasswd con usuario "admin" y una contraseña definida en variables
+    - name: Generate htpasswd file
+      command: htpasswd -bc /etc/nginx/auth/htpasswd.users charlstown "{{ site_pwd }}"
+      args:
+        creates: /etc/nginx/auth/htpasswd.users
 
     # ✅ Iniciar sesión en Azure Container Registry (ACR)
     - name: Log into Azure Container Registry (ACR)
@@ -29,15 +48,17 @@
         tag: "{{ image_tag }}"
         state: present
 
-    # ✅ Ejecutar el contenedor
-    - name: Run container from ACR image
+    # ✅ Ejecutar el contenedor con SSL y autenticación básica
+    - name: Run container from ACR image with SSL and Basic Auth
       containers.podman.podman_container:
         name: mkdocs_container
         image: "{{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}"
         state: started
         restart_policy: always
         ports:
-          - "80:80"
+          - "443:443"
+        volume:
+          - "/etc/nginx/auth/htpasswd.users:/etc/nginx/.htpasswd:ro"
 
     # ✅ Generar un servicio systemd para hacer el contenedor persistente
     - name: Generate systemd service for Podman container

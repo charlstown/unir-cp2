@@ -4,7 +4,7 @@ A continuación, se explica cómo reproducir los pasos necesarios para llevar a 
 
 - [1. Despliegue de la infraestructura](#1-despliegue-de-la-infraestructura)
 - [2. Publicación de la imagen](#2-publicacion-de-la-imagen)
-- [3. Configuración de VM](#3-configuración-de-vm)
+- [3. Configuración de la VM](#3-configuracion-de-la-vm)
 
 ---
 
@@ -31,6 +31,15 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
 
     ```sh
     terraform apply --auto-approve
+    cd ..
+    ```
+
+!!! tip "Automatización de variables"
+
+    Tras el despliegue de toda la infraestructura se generan automáticamente las variables globales necesarias para poder realizar lo que queda del ejercicio ejecutando el fichero `setup.sh`.
+
+    ```sh
+    source setup.sh
     ```
 
 ## 2. Publicación de la imagen
@@ -39,12 +48,12 @@ La publicación de la imagen se automatiza mediante el workflow [`Publish releas
 
 1. Rellenar los datos del formulario del workflow con username y pwd del ACR desplegado en Azure.
 
-    ??? Reminder "Recordatorio"
+    ??? note "Visualizar usuario y contraseña del ACR"
 
-        Para extraer el password, aunque en outputs está marcado como sensitive para no mostrarse en la consola, puedes ejecutar el siguiente comando para recuperarlo:
+        Siempre puedes ejecutar este comando para recuperar el usuario y la contraseña del ACR.
 
         ```bash
-        terraform output -raw acr_password
+        az acr credential show --name acrweucp2dev --query "[username, passwords[0].value]" -o tsv
         ```
 
     ![Workflow form](../assets/images/run-workflow-form.png)
@@ -53,42 +62,42 @@ La publicación de la imagen se automatiza mediante el workflow [`Publish releas
 
     ![Workflow run](../assets/images/job-logs.png)
 
-## 3. Configuración de VM
+## 3. Configuración de la VM
 
 La configuración de la VM se llevará a cabo desde la máquina local utilizando Ansible, accediendo por SSH para realizar comprobaciones y garantizar el correcto despliegue del entorno.
 
 1. Comprobar conexión a la VM por SSH
 
     ```sh
-    ssh -i ~/.ssh/az_unir_rsa charlstown@<YOUR_VM_PUBLIC_IP>
+    ssh -i ~/.ssh/az_unir_rsa charlstown@${VM_IP}
     exit
     ```
 
-2. Exportar secrets en el environment.
+2. Ejecutar ansible apuntando a la VM. Asegurarse que el comando se ejecuta desde `./ansible`. Para forzar ansible a recrear todo desde el principio es posible usar los argumentos `--force-handlers` y `--extra-vars "recreate=true"`.
 
-    ??? Reminder "Recordatorio"
+    ```sh
+    ansible-playbook -i inventory.ini install_podman_run_container.yml --extra-vars "@vars.yml" --extra-vars "ansible_host=$VM_IP" --ask-vault-pass
+    ```
 
-        Siempre puedes ejecutar este comando para recuperar el usuario y la contraseña del ACR.
+    *To force Ansible to recreate everything from the beginning, you can use the --force-handlers and --extra-vars "recreate=true" flags:*
 
-        ```bash
-        az acr credential show --name acrweucp2dev --query "[username, passwords[0].value]" -o tsv
+    Este playbook se ejecuta apuntando a un Vault de ansible donde se han guardado las credenciales usadas para crear el fichero `htpasswd.users` en la carpeta `/etc/nginx/auth/htpasswd.users` de la VM.
+
+    ??? note "Mostrar contraseñas guardadas en el vault"
+
+        Para visualizar las contraseñas guardadas en el vault puedes ejecutar el comando:
+        ```sh
+        ansible-vault view secrets.yml
         ```
 
-    ```sh
-    export ACR_USERNAME="your_acr_username"
-    export ACR_PASSWORD="your_acr_password"
-    ```
-
-3. Ejecutar ansible apuntando a la VM
+3. Comprobar que el contenedor está ejecutándose
 
     ```sh
-    ansible-playbook -i inventory.ini install_podman_run_container.yml --extra-vars "@vars.yml"
-    ```
-
-4. Comprobar que el contenedor está ejecutándose
-
-    ```sh
-    cd ../ansible
-    ssh -i ~/.ssh/az_unir_rsa charlstown@<YOUR_VM_PUBLIC_IP>
+    ssh -i ~/.ssh/az_unir_rsa charlstown@${VM_IP}
     podman ps
+    ```
+
+4. Comprobar que el sitio se muestra a través de internet en la ip pública de la VM.
+
+    ```sh
     ```

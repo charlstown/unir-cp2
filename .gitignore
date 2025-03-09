@@ -10,6 +10,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Ansible
+secrets.yml
+
 # PyBuilder
 .pybuilder/
 target/

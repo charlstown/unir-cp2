@@ -53,7 +53,7 @@ jobs:
       # ✅ Iniciar sesión en ACR con Podman
       - name: Log in to Azure Container Registry
         run: |
-          echo "${{ github.event.inputs.acr_password }}" | podman login ${ACR_NAME}.azurecr.io -u ${{ github.event.inputs.acr_username }} --password-stdin    
+          echo "${{ github.event.inputs.acr_password }}" | podman login ${ACR_NAME}.azurecr.io -u ${ACR_NAME} --password-stdin    
 
       # ✅ Construir imagen Podman con el sitio MkDocs dentro de Nginx
       - name: Build Podman Image
