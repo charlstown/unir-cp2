@@ -27,7 +27,7 @@ on:
 env:
   ACR_NAME: ${{ github.event.inputs.acr_name }}
   IMAGE_NAME: ${{ github.event.inputs.image_name }}
-  TAG: ${{ github.event.inputs.tag_name }}
+  RELEASE_TAG: ${{ github.event.inputs.tag_name }}
 
 jobs:
   build-and-push:
@@ -53,7 +53,7 @@ jobs:
       # ✅ Iniciar sesión en ACR con Podman
       - name: Log in to Azure Container Registry
         run: |
-          echo "${{ github.event.inputs.acr_password }}" | podman login ${{ github.event.inputs.acr_name }}.azurecr.io -u ${{ github.event.inputs.acr_username }} --password-stdin    
+          echo "${{ github.event.inputs.acr_password }}" | podman login ${ACR_NAME}.azurecr.io -u ${{ github.event.inputs.acr_username }} --password-stdin    
 
       # ✅ Construir imagen Podman con el sitio MkDocs dentro de Nginx
       - name: Build Podman Image
@@ -63,4 +63,4 @@ jobs:
       # ✅ Subir imagen a ACR con Podman
       - name: Push Image to ACR with Podman
         run: |
-          podman push ${{ github.event.inputs.acr_name }}.azurecr.io/${{ github.event.inputs.image_name }}:$RELEASE_TAG
+          podman push ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${RELEASE_TAG}
