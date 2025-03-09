@@ -58,7 +58,7 @@ jobs:
       # ✅ Construir imagen Podman con el sitio MkDocs dentro de Nginx
       - name: Build Podman Image
         run: |
-          podman build -t $ACR_NAME/$IMAGE_NAME:$TAG -f Dockerfile.docs .
+          podman build -t ${ACR_NAME}/${IMAGE_NAME}:${RELEASE_TAG} -f Dockerfile.docs .
 
       # ✅ Subir imagen a ACR con Podman
       - name: Push Image to ACR with Podman
