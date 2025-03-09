@@ -6,11 +6,11 @@ on:
       acr_name:
         description: "Azure Container Registry Name"
         required: true
-        default: "acrdevweucp2"
+        default: "acrweucp2dev"
       acr_username:
         description: "Azure Container Registry Username"
         required: true
-        default: "acrdevweucp2"
+        default: "acrweucp2dev"
       acr_password:
         description: "Azure Container Registry Password"
         required: true
