@@ -1,6 +1,6 @@
 # Despliegue
 
-A continuación, se explica cómo reproducir los pasos necesarios para llevar a cabo el caso práctico. Se detallan las instrucciones para:
+A continuación, se explica cómo reproducir los pasos necesarios para llevar a cabo el caso práctico sobre el repositorio. Se detallan las instrucciones para:
 
 - [1. Despliegue de la infraestructura](#1-despliegue-de-la-infraestructura)
 - [2. Publicación de las imagenes](#2-publicacion-de-las-imagens)
