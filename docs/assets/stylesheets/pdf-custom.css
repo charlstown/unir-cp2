@@ -1,0 +1,33 @@
+/* Apply styles ONLY when exporting to PDF */
+@media print {
+    /* Softer blue lines for PDF */
+    hr, .md-typeset hr {
+        border-color: #6D9DC5 !important; /* Light pastel blue */
+    }
+
+    /* Borders under H1, H2, H3 only in PDF */
+    h1 {
+        border-color:#6D9DC5 !important; /* Soft lavender blue */
+    }
+
+    h2 {
+        border-color:  #b3c5d3 !important; /* Soft lavender blue */
+    }
+
+    /* Cover Page Title and Subtitle */
+    .cover-title {
+        color: #6D9DC5 !important; /* Grayish pastel blue */
+    }
+    /* Center all images in the PDF */
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+/* Show the PNG version only in PDF */
+@media screen {
+    .only-pdf {
+        display: none !important;
+    }
+}

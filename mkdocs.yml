@@ -66,12 +66,14 @@ plugins:
   - search
   - markdownextradata
   - awesome-pages
-  - with-pdf
   - drawio
+  - with-pdf:
+      cover_subtitle: "Despliegue y configuración de infraestructura en Azure"
 
 # css
 extra_css:
   - assets/stylesheets/extra.css
+  - assets/stylesheets/pdf-custom.css
 
 # javascript
 extra_javascript:

@@ -9,11 +9,12 @@ acr_name            = "acrweucp2"
 vm_name             = "vm-weu-cp2-docs"
 vm_username         = "charlstown"
 vm_size             = "Standard_B1ls"
+ssh_public_key      = "~/.ssh/az_unir_rsa.pub"
 
 # Networking
 vnet_name           = "vnet-weu-cp2"
 subnet_name         = "subnet-weu-cp2"
-subnet_cidr         = "10.0.1.0/24"
+subnet_cidr         = "10.0.1.0/28"
 
 # Image
 image_os            = "22_04-lts-gen2"

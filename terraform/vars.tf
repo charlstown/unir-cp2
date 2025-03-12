@@ -40,6 +40,12 @@ variable "vm_size" {
   default     = "Standard_B1ls"
 }
 
+variable "ssh_public_key" {
+  description = "Path to the local ssh public key"
+  type        = string
+  default     = "~/.ssh/az_unir_rsa.pub"
+}
+
 # Networking
 variable "vnet_name" {
   description = "Virtual Network Name"

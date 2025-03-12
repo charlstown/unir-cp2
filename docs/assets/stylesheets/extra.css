@@ -11,6 +11,13 @@
     display: flow-root;
     margin: 2em 0;
   }
+
+.cita {
+  color: var(--md-primary-fg-color--light);
+  font-size: small;
+  margin-top: 0!important;
+  margin-bottom: 0!important;
+}
   
 /* Classes to create grids and cards embeded in the markdown (extension md_in_html needed) */
 .cards {
