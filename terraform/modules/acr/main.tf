@@ -5,4 +5,5 @@ resource "azurerm_container_registry" "acr" {
   location            = var.location
   sku                 = "Basic"  # Opción más barata
   admin_enabled       = true
+  tags                = var.tags
 }

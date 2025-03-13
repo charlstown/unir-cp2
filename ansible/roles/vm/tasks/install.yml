@@ -1,0 +1,10 @@
+- name: Update system packages
+  apt:
+    update_cache: yes
+
+- name: Install Podman and Apache Utils
+  apt:
+    name:
+      - podman
+      - apache2-utils
+    state: present

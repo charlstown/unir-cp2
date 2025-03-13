@@ -1,0 +1,9 @@
+- name: Restart Podman
+  systemd:
+    name: podman
+    state: restarted
+
+- name: Restart container
+  containers.podman.podman_container:
+    name: mkdocs_container
+    state: restarted

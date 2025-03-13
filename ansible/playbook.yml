@@ -1,0 +1,7 @@
+- name: Configure VM and Deploy Podman Container
+  hosts: azure_vm
+  become: yes
+  roles:
+    - vm
+  vars_files:
+      - ./vars.yml

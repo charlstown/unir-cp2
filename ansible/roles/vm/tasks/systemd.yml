@@ -1,0 +1,12 @@
+- name: Generate systemd service for Podman container
+  containers.podman.podman_generate_systemd:
+    name: mkdocs_container
+    dest: /etc/systemd/system/
+    restart_policy: always
+
+- name: Enable and start Podman container systemd service
+  systemd:
+    name: container-mkdocs_container
+    enabled: yes
+    state: started
+    daemon_reload: yes

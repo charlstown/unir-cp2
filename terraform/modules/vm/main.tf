@@ -4,6 +4,7 @@ resource "azurerm_public_ip" "vm_public_ip" {
   resource_group_name = var.resource_group
   location            = var.location
   allocation_method   = "Static"
+  tags                = var.tags
 }
 
 # Network Interface
@@ -18,6 +19,7 @@ resource "azurerm_network_interface" "nic" {
     public_ip_address_id          = azurerm_public_ip.vm_public_ip.id
     private_ip_address_allocation = "Dynamic"
   }
+  tags = var.tags
 }
 
 # Virtual Machine
@@ -45,4 +47,5 @@ resource "azurerm_linux_virtual_machine" "vm" {
     sku       = var.image_os
     version   = "latest"
   }
+  tags = var.tags
 }

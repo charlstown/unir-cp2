@@ -75,6 +75,14 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
     ```
 
 2. Ejecutar ansible apuntando a la VM. Asegurarse que el comando se ejecuta desde `./ansible`. Para forzar ansible a recrear todo desde el principio es posible usar los argumentos `--force-handlers` y `--extra-vars "recreate=true"`.
+    
+    ??? warning "Fichero de configuración de Ansible"
+
+        Según la documentación de Ansible, es importante declarar la ubicación del fichero de configuración si este se encuentra en el mismo directorio desde el que se ejecuta [(Ansible, s.f.)](./referencias.md).
+
+        ```sh
+        export ANSIBLE_CONFIG=./ansible.cfg
+        ```
 
     ```sh
     ansible-playbook -i inventory.ini install_podman_run_container.yml --extra-vars "@vars.yml" --extra-vars "ansible_host=$VM_IP" --ask-vault-pass

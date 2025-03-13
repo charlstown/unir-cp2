@@ -33,3 +33,8 @@ variable "image_offer" {
   description = "Image offer for the VM"
   type        = string
 }
+
+variable "tags" {
+  description = "Tags to be applied to resources"
+  type        = map(string)
+}

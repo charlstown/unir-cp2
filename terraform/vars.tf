@@ -78,3 +78,18 @@ variable "image_offer" {
   type        = string
   default     = "UbuntuServer"
 }
+
+# Python interpreter
+variable "python_interpreter" {
+  description = "Python interpreter"
+  type        = string
+  default     = "/usr/bin/python3"
+}
+
+variable "tags" {
+  description = "Tags to be applied to resources"
+  type        = map(string)
+  default     = {
+    casopractico2 = "true"
+  }
+}

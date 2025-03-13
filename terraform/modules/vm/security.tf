@@ -3,6 +3,7 @@ resource "azurerm_network_security_group" "vm_nsg" {
   name                = "${var.vm_name}-nsg"
   resource_group_name = var.resource_group
   location            = var.location
+  tags                = var.tags
 }
 
 # SSH Rule (22)

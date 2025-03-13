@@ -15,3 +15,8 @@ variable "acr_name" {
   description = "Nombre del registro de contenedores en Azure"
   type        = string
 }
+
+variable "tags" {
+  description = "Tags to be applied to resources"
+  type        = map(string)
+}

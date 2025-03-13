@@ -1,0 +1,13 @@
+- name: Ensure authentication directory exists
+  file:
+    path: /etc/nginx/auth
+    state: directory
+    mode: '0755'
+
+- name: Load secure variables
+  include_vars: secrets.yml
+
+- name: Generate htpasswd file
+  command: htpasswd -bc /etc/nginx/auth/htpasswd.users charlstown "{{ site_pwd }}"
+  args:
+    creates: /etc/nginx/auth/htpasswd.users

@@ -1,5 +1,8 @@
 # Referencias
 
+
+Ansible. (s.f.). *Ansible configuration settings*. Ansible Documentation. Recuperado de [https://docs.ansible.com/ansible/latest/reference_appendices/config.html](https://docs.ansible.com/ansible/latest/reference_appendices/config.html)
+
 ## Herramientas usadas
 
 - JGraph Ltd. (s.f.). *draw.io*. Recuperado de [https://www.drawio.com/](https://www.drawio.com/)
