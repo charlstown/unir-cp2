@@ -1,0 +1,11 @@
+---
+- name: Ensure repository is present on the VM
+  git:
+    repo: "https://github.com/charlstown/unir-cp2.git"
+    dest: "/opt/unir-cp2"
+    version: main
+
+- name: Build Podman image on the VM
+  command:
+    cmd: podman build -t "{{ image_name }}:{{ image_tag }}" -f /opt/unir-cp2/Dockerfile.docs
+    chdir: "/opt/unir-cp2"

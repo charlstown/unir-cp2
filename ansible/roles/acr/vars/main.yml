@@ -1,0 +1,5 @@
+---
+acr_name: "{{ lookup('env', 'ACR_NAME') }}"  # Nombre del ACR desde la variable de entorno
+acr_username: "{{ lookup('env', 'ACR_USERNAME') }}"  # Nombre de usuario del ACR desde la variable de entorno
+acr_password: "{{ lookup('env', 'ACR_PASSWORD') }}"  # Contraseña del ACR desde la variable de entorno
+acr_login_server: "{{ lookup('env', 'ACR_NAME') }}.azurecr.io"  # Servidor de inicio de sesión del ACR

@@ -16,8 +16,7 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
 1. Accede al directorio de terraform en el repositorio e inicializa terraform.
 
     ```sh
-    cd terraform
-    terraform init
+    terraform -chdir=./terraform init
     ```
     Output: `Terraform has been successfully initialized!`
 
@@ -31,7 +30,7 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
 3. Despliega la infraestructura con el siguiente comando, por defecto se despliega en dev. Siempre puedes añadir el flag `-var="environment=pro"` para especificar un entorno entre `dev|pre|pro`
 
     ```sh
-    terraform apply --auto-approve
+    terraform -chdir=./terraform apply --auto-approve
     cd ..
     ```
 
@@ -78,14 +77,14 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
     
     ??? warning "Fichero de configuración de Ansible"
 
-        Según la documentación de Ansible, es importante declarar la ubicación del fichero de configuración si este se encuentra en el mismo directorio desde el que se ejecuta [(Ansible, s.f.)](./referencias.md).
+        Según la documentación de Ansible, es importante declarar la ubicación del fichero de configuración si este se encuentra en el mismo directorio desde el que se ejecuta [(Ansible, s.f.)](./referencias.md). No es necesario ejecutarlo si ya has ejecutado el [`setup.sh`](#1-despliegue-de-la-infraestructura).
 
         ```sh
         export ANSIBLE_CONFIG=./ansible.cfg
         ```
 
     ```sh
-    ansible-playbook -i inventory.ini install_podman_run_container.yml --extra-vars "@vars.yml" --extra-vars "ansible_host=$VM_IP" --ask-vault-pass
+    ansible-playbook playbook.yml --ask-vault-pass
     ```
 
     Este playbook se ejecuta apuntando a un Vault de ansible donde se han guardado las credenciales usadas para crear el fichero `htpasswd.users` en la carpeta `/etc/nginx/auth/htpasswd.users` de la VM.

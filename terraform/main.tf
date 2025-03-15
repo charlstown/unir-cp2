@@ -53,8 +53,8 @@ module "container_registry" {
 
 # Generar el archivo inventory.ini
 resource "local_file" "ansible_inventory" {
-  filename = "../ansible/inventory.ini"
-  content  = templatefile("../ansible/inventory.tmpl", {
+  filename = "../ansible/hosts.yml"
+  content  = templatefile("../ansible/hosts.tmpl", {
     vm_name             = var.vm_name
     vm_public_ip        = module.virtual_machine.vm_public_ip
     vm_username         = var.vm_username

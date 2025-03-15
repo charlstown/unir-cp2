@@ -1,5 +1,5 @@
 # Usa la imagen oficial de Nginx
-FROM nginx:latest
+FROM docker.io/library/nginx:latest
 
 # Crear directorio para SSL
 RUN mkdir -p /etc/nginx/ssl
