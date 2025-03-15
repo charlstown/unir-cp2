@@ -355,6 +355,11 @@ resource "azurerm_network_security_rule" "allow_outbound" {
 
 ### Kubernetes service
 
+
+## :simple-ansible: Configuración de la infraestructura
+
+A continuación se describen las configuraciones aplicadas a la infraestructura desplegada, automatizadas con Ansible, y la justificación de cada una de ellas.
+
 ### Imágenes contenerizadas
 
 #### Imágen sin persistencia para la VM
@@ -363,11 +368,109 @@ La imagen utilizada en el contenedor Podman dentro de la máquina virtual se bas
 
 Además, se ha utilizado el tema **Material for MkDocs**, que añade una interfaz moderna y varias opciones de personalización [(Squidfunk, s.f.)](./referencias.md#herramientas-usadas).
 
-##### Publicación en GitHub Pages  
-
 La documentación también está disponible a través de **GitHub Pages**, lo que permite su acceso incluso cuando la infraestructura de Azure no está desplegada. Se puede visualizar en el siguiente enlace:  
 
-[:material-file-document: Ver documentación en GitHub Pages](https://charlstown.github.io/unir-cp2/informe/despliegue/)  
+[:material-file-document: Ver documentación en GitHub Pages](https://charlstown.github.io/unir-cp2)  
+
+#### Imágen con persistencia para el AKS
+
+### Configuración del ACR
+
+Para configurar el ACR se publicarán dos imágenes contenerizadas: una corresponde a un sitio estático en Nginx, que será desplegado en una máquina virtual con Podman, y la otra es una aplicación con persistencia que será ejecutada en un contenedor dentro de Azure Kubernetes Service (AKS).
+
+Este proyecto permite la publicación de las imágenes en el ACR de dos maneras:
+
+- Publicación mediante Ansible.
+- Publicación manual mediante Github Actions
+
+#### Publicación mediante Ansible
+
+Para la publicación usando Ansible se ha generado un rol llamado `acr` que contiene todas las tareas necesarias y se estructura de la siguiente manera:
+
+```sh
+ansible/
+├── roles/
+│   ├── acr/                 # Rol para gestionar ACR en Ansible
+│   │   ├── tasks/           # Tareas que se ejecutan en el ACR
+│   │   │   ├── login.yml    # Iniciar sesión en ACR
+│   │   │   ├── build.yml    # Construcción de las imágenes
+│   │   │   ├── push.yml     # Publicación de imágenes en ACR
+│   │   │   └── main.yml     # Inclusión de todas las tareas
+│   │   └── vars/            # Variables específicas del rol
+│   │       └── main.yml     # Configuración de credenciales y parámetros
+```
+
+El fichero `tasks/main.yml` dentro del rol acr, gestiona la configuración y publicación de imágenes en la máquina virtual y el Azure Container Registry (ACR).
+
+```yaml title="main.yml"
+---
+- name: Install Podman on the VM
+  include_tasks: install.yml
+
+- name: Build image from the VM
+  include_tasks: build.yml
+
+- name: Push image in to Azure Container Registry (ACR)
+  include_tasks: push.yml
+```
+
+#### Instalar Podman
+
+```yaml title="install.yml"
+---
+- name: Install Podman
+  apt:
+    name: podman
+    state: present
+    update_cache: no  # Avoids unnecessary update
+```
+
+#### Construir la imagen
+
+```yaml title="build.yml"
+---
+- name: Ensure repository is present on the VM
+  git:
+    repo: "https://github.com/charlstown/unir-cp2.git"
+    dest: "/opt/unir-cp2"
+    version: main
+
+- name: Install dependencies for MkDocs
+  apt:
+    name:
+      - python3-pip
+    state: present
+    update_cache: no
+  become: yes
+
+- name: Install required system dependencies for WeasyPrint
+  apt:
+    name:
+      - libpango1.0-0
+      - libpangocairo-1.0-0
+      - libcairo2
+    state: present
+    update_cache: no
+  become: yes
+
+- name: Install project dependencies
+  pip:
+    requirements: "/opt/unir-cp2/requirements.txt"
+
+- name: Build MkDocs static site
+  command:
+    cmd: mkdocs build
+    chdir: "/opt/unir-cp2"
+
+- name: Build Podman image on the VM
+  command:
+    cmd: podman build -t "{{ image_name }}:{{ image_tag }}" -f /opt/unir-cp2/Dockerfile.docs
+    chdir: "/opt/unir-cp2"
+```
+
+#### Publicar la imagen en ACR
+
+
 
 ##### Generación de la Imagen  
 
@@ -379,12 +482,6 @@ La imagen se genera a partir de la documentación escrita en MkDocs, transformá
 
 El proceso detallado de despliegue de la imagen puede consultarse en el siguiente apartado de esta memoria: [:material-file-document: Sección de Despliegue](./despliegue.md).
 
-#### Imágen con persistencia para el AKS
-
-
-## :simple-ansible: Configuración de la infraestructura
-
-A continuación se describen las configuraciones aplicadas a la infraestructura desplegada, realizadas con Ansible, y la justificación de cada una de ellas.
 
 ### Configuración de la VM
 

@@ -1,6 +1,3 @@
-- name: Include installation tasks
-  import_tasks: install.yml
-
 - name: Include authentication setup
   import_tasks: auth.yml
 

@@ -29,6 +29,5 @@ export ACR_USERNAME="$ACR_USERNAME"
 export ACR_PASSWORD="$ACR_PASSWORD"
 export VM_NAME="$VM_NAME"
 export VM_IP="$VM_IP"
-export ANSIBLE_CONFIG="./ansible/ansible.cfg"
 
 echo "✅ Done! Variables set for this session."

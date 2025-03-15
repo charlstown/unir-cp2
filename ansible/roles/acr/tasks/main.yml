@@ -2,8 +2,8 @@
 - name: Install Podman on the VM
   include_tasks: install.yml
 
-- name: Build and push image from the VM
+- name: Build image from the VM
   include_tasks: build.yml
 
-- name: Log in to Azure Container Registry (ACR)
+- name: Push image in to Azure Container Registry (ACR)
   include_tasks: push.yml
