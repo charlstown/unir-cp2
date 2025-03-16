@@ -34,5 +34,5 @@
 
 - name: Build Podman image on the VM
   command:
-    cmd: podman build -t "{{ image_name }}:{{ image_tag }}" -f /opt/unir-cp2/Dockerfile.docs
+    cmd: podman build -t "{{ image_name_docs }}:{{ image_tag_docs }}" -f /opt/unir-cp2/Dockerfile.docs
     chdir: "/opt/unir-cp2"

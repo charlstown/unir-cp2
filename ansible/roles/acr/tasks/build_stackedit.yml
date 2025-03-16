@@ -1,0 +1,14 @@
+---
+- name: Ensure StackEdit repository is present on the VM
+  git:
+    repo: "https://github.com/benweet/stackedit.git"
+    dest: "/opt/stackedit"
+    version: master
+
+- name: Pull base image from Docker Hub
+  command: podman pull docker.io/benweet/stackedit-base
+
+- name: Build Podman image for StackEdit **locally on the VM**
+  command:
+    cmd: podman build -t "{{ image_name_stackedit }}:{{ image_tag_stackedit }}" -f /opt/stackedit/Dockerfile
+    chdir: "/opt/stackedit"

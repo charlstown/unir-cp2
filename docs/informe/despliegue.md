@@ -76,7 +76,7 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
 2. Ejecutar ansible apuntando a la VM. Asegurarse que el comando se ejecuta desde `./ansible`. Para forzar ansible a recrear todo desde el principio es posible usar los argumentos `--force-handlers` y `--extra-vars "recreate=true"`.
 
     ```sh
-    ansible-playbook ansible/playbook.yml -i ansible/hosts.yml --extra-vars "ansible/vars.yml" --ask-vault-pass
+    ansible-playbook ansible/playbook.yml -i ansible/hosts.yml --extra-vars "@ansible/vars.yml" --ask-vault-pass
     ```
 
     Este playbook se ejecuta apuntando a un Vault de ansible donde se han guardado las credenciales usadas para crear el fichero `htpasswd.users` en la carpeta `/etc/nginx/auth/htpasswd.users` de la VM.

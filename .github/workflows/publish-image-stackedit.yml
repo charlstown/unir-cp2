@@ -1,7 +1,7 @@
-name: Publish docs to ACR
+name: Publish StackEdit image to ACR
 
 on:
-  workflow_dispatch:  # Permite ejecución manual
+  workflow_dispatch:  # Allows manual execution
     inputs:
       acr_name:
         description: "Azure Container Registry Name"
@@ -18,54 +18,48 @@ on:
       image_name:
         description: "Container Image Name"
         required: true
-        default: "docs-nginx"
+        default: "stackedit"
       tag_name:
         description: "Tag Name"
         required: true
-        default: "casopractico2"
-        
+        default: "latest"
+
 env:
   ACR_NAME: ${{ github.event.inputs.acr_name }}
   IMAGE_NAME: ${{ github.event.inputs.image_name }}
   RELEASE_TAG: ${{ github.event.inputs.tag_name }}
 
 jobs:
-  build-and-push:
+  publish-stackedit:
     runs-on: ubuntu-latest
     steps:
       
-      # ✅ Clonar el repositorio
-      - name: Checkout code
+      # ✅ Checkout repository (not strictly needed, but keeps the workflow clean)
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # ✅ Instalar Podman
+      # ✅ Install Podman
       - name: Install Podman
         run: |
           sudo apt update
           sudo apt install -y podman
 
-      # ✅ Instalar MkDocs
-      - name: Install MkDocs
-        run: |
-          pip install -r requirements.txt
-          mkdocs build
-
-      # ✅ Iniciar sesión en ACR con Podman
+      # ✅ Log in to Azure Container Registry (ACR)
       - name: Log in to Azure Container Registry
         run: |
           echo "${{ github.event.inputs.acr_password }}" | podman login ${ACR_NAME}.azurecr.io -u ${ACR_NAME} --password-stdin    
 
-      # ✅ Construir imagen Podman con el sitio MkDocs dentro de Nginx
-      - name: Build Podman Image
+      # ✅ Pull StackEdit image from Docker Hub
+      - name: Pull StackEdit Image from Docker Hub
         run: |
-          podman build -t ${IMAGE_NAME}:${RELEASE_TAG} -f Dockerfile.docs .
+          podman pull docker.io/benweet/stackedit-base:latest
 
-      # ✅ Tag Image for ACR before pushing
+      # ✅ Tag the image for ACR
       - name: Tag Image for ACR
         run: |
-          podman tag ${IMAGE_NAME}:${RELEASE_TAG} ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${RELEASE_TAG}
+          podman tag docker.io/benweet/stackedit-base:latest ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${RELEASE_TAG}
 
-      # ✅ Subir imagen a ACR con Podman
-      - name: Push Image to ACR with Podman
+      # ✅ Push Image to ACR
+      - name: Push Image to ACR
         run: |
           podman push ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${RELEASE_TAG}

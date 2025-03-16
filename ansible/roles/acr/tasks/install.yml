@@ -3,4 +3,4 @@
   apt:
     name: podman
     state: present
-    update_cache: no  # Avoids unnecessary update
+    update_cache: yes

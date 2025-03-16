@@ -1,3 +1,10 @@
+---
+- name: Install Apache Utils for htpasswd
+  apt:
+    name: apache2-utils
+    state: present
+  become: yes
+
 - name: Ensure authentication directory exists
   file:
     path: /etc/nginx/auth

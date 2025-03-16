@@ -1,0 +1,16 @@
+---
+- name: Log in to ACR from the VM
+  command: >
+    podman login {{ acr_login_server }} 
+    -u {{ acr_username }} 
+    --password {{ acr_password }}
+
+# Push MkDocs image
+- name: Tag MkDocs image for ACR
+  command: >
+    podman tag {{ image_name_docs }}:{{ image_tag_docs }} 
+    {{ acr_login_server }}/{{ image_name_docs }}:{{ image_tag_docs }}
+
+- name: Push MkDocs image to ACR from the VM
+  command: >
+    podman push {{ acr_login_server }}/{{ image_name_docs }}:{{ image_tag_docs }}

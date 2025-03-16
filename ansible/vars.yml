@@ -2,5 +2,11 @@
 acr_name: "{{ lookup('env', 'ACR_NAME') }}"  # Nombre del ACR desde la variable de entorno
 acr_username: "{{ lookup('env', 'ACR_USERNAME') }}"  # Nombre de usuario del ACR desde la variable de entorno
 acr_password: "{{ lookup('env', 'ACR_PASSWORD') }}"  # Contraseña del ACR desde la variable de entorno
-image_name: "docs-nginx"
-image_tag: "1.0.0"
+
+# Existing docs-nginx image
+image_name_docs: "docs-nginx"
+image_tag_docs: "1.0.0"
+
+# New StackEdit image
+image_name_stackedit: "stackedit"
+image_tag_stackedit: "1.0.0"

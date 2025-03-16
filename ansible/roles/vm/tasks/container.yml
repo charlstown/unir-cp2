@@ -4,12 +4,6 @@
     username: "{{ acr_username }}"
     password: "{{ acr_password }}"
 
-- name: Pull container image from ACR
-  containers.podman.podman_image:
-    name: "{{ acr_name }}.azurecr.io/{{ image_name }}"
-    tag: "{{ image_tag }}"
-    state: present
-
 - name: Run container from ACR image with SSL and Basic Auth
   containers.podman.podman_container:
     name: mkdocs_container

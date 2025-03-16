@@ -2,8 +2,11 @@
 - name: Install Podman on the VM
   include_tasks: install.yml
 
-- name: Build image from the VM
-  include_tasks: build.yml
+- name: Build MkDocs image
+  include_tasks: build_docs.yml
 
-- name: Push image in to Azure Container Registry (ACR)
-  include_tasks: push.yml
+- name: Push mkdocs image to ACR from the VM
+  include_tasks: push_mkdocs.yml
+
+- name: Push stackedit image to ACR from localhost
+  include_tasks: push_stackedit.yml

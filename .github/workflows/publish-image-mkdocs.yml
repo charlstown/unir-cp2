@@ -1,0 +1,71 @@
+name: Publish mkdocs image to ACR
+
+on:
+  workflow_dispatch:  # Permite ejecución manual
+    inputs:
+      acr_name:
+        description: "Azure Container Registry Name"
+        required: true
+        default: "acrweucp2dev"
+      acr_username:
+        description: "Azure Container Registry Username"
+        required: true
+        default: "acrweucp2dev"
+      acr_password:
+        description: "Azure Container Registry Password"
+        required: true
+        type: string
+      image_name:
+        description: "Container Image Name"
+        required: true
+        default: "docs-nginx"
+      tag_name:
+        description: "Tag Name"
+        required: true
+        default: "casopractico2"
+        
+env:
+  ACR_NAME: ${{ github.event.inputs.acr_name }}
+  IMAGE_NAME: ${{ github.event.inputs.image_name }}
+  RELEASE_TAG: ${{ github.event.inputs.tag_name }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      
+      # ✅ Clonar el repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # ✅ Instalar Podman
+      - name: Install Podman
+        run: |
+          sudo apt update
+          sudo apt install -y podman
+
+      # ✅ Instalar MkDocs
+      - name: Install MkDocs
+        run: |
+          pip install -r requirements.txt
+          mkdocs build
+
+      # ✅ Iniciar sesión en ACR con Podman
+      - name: Log in to Azure Container Registry
+        run: |
+          echo "${{ github.event.inputs.acr_password }}" | podman login ${ACR_NAME}.azurecr.io -u ${ACR_NAME} --password-stdin    
+
+      # ✅ Construir imagen Podman con el sitio MkDocs dentro de Nginx
+      - name: Build Podman Image
+        run: |
+          podman build -t ${IMAGE_NAME}:${RELEASE_TAG} -f Dockerfile.docs .
+
+      # ✅ Tag Image for ACR before pushing
+      - name: Tag Image for ACR
+        run: |
+          podman tag ${IMAGE_NAME}:${RELEASE_TAG} ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${RELEASE_TAG}
+
+      # ✅ Subir imagen a ACR con Podman
+      - name: Push Image to ACR with Podman
+        run: |
+          podman push ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${RELEASE_TAG}
