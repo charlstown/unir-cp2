@@ -3,9 +3,9 @@
 A continuación, se explica cómo reproducir los pasos necesarios para llevar a cabo el caso práctico sobre el repositorio. Se detallan las instrucciones para:
 
 - [1. Despliegue de la infraestructura](#despliegue-de-la-infraestructura)
-- [2. Publicación de las imagenes](#publicacion-de-las-imagens)
+- [2. Publicación de las imagenes](#publicacion-de-las-imagenes)
 - [3. Configuración de la VM](#configuracion-de-la-vm)
-- [4. Configuración del AKS](#configuración-del-aks)
+- [4. Configuración del AKS](#configuracion-del-aks)
 
 ---
 
