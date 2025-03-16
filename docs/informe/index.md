@@ -2,7 +2,7 @@
 
 Este informe documenta la entrega del Caso Práctico 2 de la asignatura **DevOps & Cloud** del **programa avanzado DevOps** de la UNIR. El contenido del informe se estructura en las siguientes secciones:  
 
-- **[Arquitectura](./arquitectura.md)**: Descripción de los componentes desplegados y su configuración.  
+- **[Arquitectura](./arquitectura/index.md)**: Descripción de los componentes desplegados y su configuración.  
 - **[Despliegue](./despliegue.md)**: Ejecución práctica de la infraestructura y su configuración.  
 - **[Evidencias](./evidencias.md)**: Recopilación de pruebas de funcionamiento y validaciones.  
 - **[Licencia](./licencia.md)**: Definición del marco legal de uso.  
