@@ -1,7 +1,7 @@
 ---
 nav:
     - index.md
-    - Arquitectura: arquitectura.md
+    - Arquitectura: arquitectura
     - Despliegue: despliegue.md
     - Evidencias: evidencias.md
     - Licencia: licencia.md

@@ -20,7 +20,7 @@ theme:
     - navigation.tracking # URL in the address bar is automatically updated with the active anchor in the table of contents.
     - navigation.tabs # Top-level sections are rendered in a menu layer below the header for viewports above
     - navigation.instant # Instant navigation is enabled by default
-    #- navigation.sections # top-level sections are rendered as groups in the sidebar for viewports above
+    - navigation.sections # top-level sections are rendered as groups in the sidebar for viewports above
     - navigation.footer
     - navigation.top # A back-to-top button can be shown when the user, after scrolling down, starts to scroll up again
     #- toc.integrate # Table of contents is always rendered as part of the navigation sidebar on the left.
@@ -29,7 +29,7 @@ theme:
     - content.code.copy # Codeblocks
     - content.tabs.link
     - navigation.indexes # Documents attached to sections
-  language: en
+  language: es
 
   # Color palette
   palette: 
@@ -62,7 +62,7 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - toc:
       permalink: true
-      toc_depth: 2-4  # Only show H2 and H3
+      toc_depth: 2-4  # Only show H2 and H4
 
 # Plugins
 plugins:

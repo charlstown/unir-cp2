@@ -1,32 +1,164 @@
-# Arquitectura
-
-Esta sección describe la infraestructura desplegada en Azure, estructurado de la siguiente manera:
-
-- [:simple-diagramsdotnet: Diagrama general](#diagrama-general)
-- [:simple-terraform: Infraestrutura](#infraestructura)
-- [:simple-ansible: Configuración de la infraestructura](#configuracion-de-la-infraestructura)
-
----
-
-## :simple-diagramsdotnet: Diagrama general
-
-El siguiente diagrama representa la infraestructura desplegada con Terraform y configurada con Ansible, incluyendo una máquina virtual con un contenedor Podman y un clúster AKS, ambos obteniendo imágenes desde un Azure Container Registry (ACR).
-
-![Arquitectura](../assets/drawio/cp2-arquitectura.png){ .only-pdf }
-![Arquitectura](../assets/drawio/cp2-arquitectura.drawio)
-
-*Figura 1: Diagrama de la arquitectura desplegada en Azure (Elaboración propia con [draw.io](./referencias.md#herramientas-usadas)).*
-{ .cita }
-
-## :simple-terraform: Infraestructura
+# :simple-terraform: Infraestructura
 
 A continuación se describen los diferentes componentes de la infraestructura desplegados con terraform y la justificación de sus configuraciones.
+
+## Estructura de ficheros Terraform
+
+Para la implementación de la infraestructura, se ha seguido una organización modular en Terraform, siguiendo las mejores prácticas recomendadas en la comunidad [(Stivenson, 2023)](../referencias.md). A continuación, se describe la estructura de los archivos y su propósito dentro del proyecto.
+
+```plaintext
+terraform/
+├── main.tf           # Archivo principal que llama a los módulos y recursos
+├── modules/          # Carpeta que contiene los módulos de infraestructura
+│   ├── acr/          # Módulo para desplegar Azure Container Registry (ACR)
+│   ├── aks/          # Módulo para desplegar Azure Kubernetes Service (AKS)
+│   └── vm/           # Módulo para desplegar la máquina virtual en Azure
+├── outputs.tf        # Define las salidas (outputs) de Terraform
+├── terraform.tfvars  # Define valores específicos para esta implementación
+└── vars.tf           # Define las variables requeridas para el despliegue
+```
+
+### Fichero principal `main.tf`
+
+El archivo main.tf define la infraestructura base del proyecto y se estructura en tres secciones principales:
+
+- **Configuración base:** define el proveedor azurerm, el grupo de recursos y variables locales para el entorno.
+- **Llamada a los módulos:** incluyendo la máquina virtual (VM), el registro de contenedores (ACR) y el clúster de Kubernetes (AKS).
+- **Generación dinámica del inventario de Ansible:** crea automáticamente un archivo hosts.yml con la información de conexión necesaria para la configuración mediante Ansible.
+
+#### Configuración base
+
+```hcl title="main.tf"
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~>3.0"
+    }
+  }
+}
+
+# Configuración del proveedor de Azure
+provider "azurerm" {
+  subscription_id = "fb24fc1f-67e2-4871-8be2-c10a36e74c93"
+  features {}
+}
+
+# Define la variable de entorno elegida para el despliegue
+locals {
+  env_suffix = "-${var.environment}"
+}
+
+# Crear un grupo de recursos en West Europe
+resource "azurerm_resource_group" "rg" {
+  name     = "${var.resource_group_name}-${var.environment}"
+  location = var.location
+  tags     = var.tags
+}
+```
+
+#### Llamada a módulos
+
+Contiene la llamada a los diferentes módulos de infraestructura, incluyendo la máquina virtual (VM), el registro de contenedores (ACR) y el clúster de Kubernetes (AKS).
+
+A continuación, se muestra un ejemplo de la estructura de un módulo en main.tf, en este caso, la definición del AKS:
+
+```hcl title="main.tf"
+# Llamar al módulo del AKS
+module "aks" {
+  source          = "./modules/aks"
+  aks_name        = "${var.aks_name}-${var.environment}"
+  resource_group  = azurerm_resource_group.rg.name
+  location        = azurerm_resource_group.rg.location
+  dns_prefix      = var.dns_prefix
+  node_count      = var.node_count
+  vm_size         = var.aks_vm_size
+  acr_id          = module.container_registry.acr_id
+  tags            = var.tags
+}
+```
+
+
+#### Generación del inventario
+
+La generación del inventario de Ansible se realiza dinámicamente con Terraform para automatizar la configuración de la infraestructura. Se emplea el recurso `local_file` para crear el archivo `hosts.yml` basado en una plantilla que incluye información clave de los recursos desplegados:
+
+- **Máquina virtual**: Dirección IP pública, usuario y clave SSH.
+- **Azure Container Registry (ACR)**: Nombre, servidor de login, credenciales de acceso.
+- **Clúster AKS**: Nombre y grupo de recursos asociado.
+
+```hcl title="main.tf"
+# Generar el archivo hosts.yml
+resource "local_file" "ansible_inventory" {
+  filename = "../ansible/hosts.yml"
+  content  = templatefile("../ansible/hosts.tmpl", {
+    vm_name             = var.vm_name
+    vm_public_ip        = module.virtual_machine.vm_public_ip
+    vm_username         = var.vm_username
+    ssh_private_key     = "~/.ssh/az_unir_rsa"
+    python_interpreter  = var.python_interpreter
+    acr_name            = "${var.acr_name}${var.environment}"
+    acr_login_server    = "${var.acr_name}${var.environment}.azurecr.io"
+    acr_username        = module.container_registry.acr_username
+    acr_password        = module.container_registry.acr_password
+    aks_name            = var.aks_name
+    aks_resource_group  = var.resource_group_name
+  })
+```
+
+Esto permite que Ansible trabaje con información actualizada sin intervención manual, garantizando coherencia y simplificando la configuración.
+
+### Fichero `terraform.tfvars`
+
+El fichero define las variables utilizadas en el despliegue de la infraestructura, priorizando configuraciones de bajo coste para optimizar el uso de recursos en el ejercicio. 
+
+Se establece un entorno de desarrollo (`dev`), una máquina virtual con especificaciones mínimas y un clúster AKS con un solo nodo. Además, se configura un ACR y una red con una subred pequeña para evitar sobreasignación de recursos innecesaria.
+
+```hcl title="terraform.tfvars"
+# Generic
+resource_group_name = "rg-weu-cp2"
+location            = "West Europe"
+environment         = "dev"
+
+# ACR
+acr_name            = "acrweucp2"
+
+# virtual machine
+vm_name             = "vm-weu-cp2-docs"
+vm_username         = "charlstown"
+vm_size             = "Standard_B1ls"
+ssh_public_key      = "~/.ssh/az_unir_rsa.pub"
+python_interpreter  = "/usr/bin/python3"
+
+# Networking
+vnet_name           = "vnet-weu-cp2"
+subnet_name         = "subnet-weu-cp2"
+subnet_cidr         = "10.0.1.0/28"
+
+# Image
+image_os            = "22_04-lts-gen2"
+image_offer         = "0001-com-ubuntu-server-jammy"
+# check offers here: https://documentation.ubuntu.com/azure/en/latest/azure-how-to/instances/find-ubuntu-images/
+
+# AKS
+aks_name            = "aks-weu-cp2"
+dns_prefix          = "aksweucp2"
+node_count          = 1
+aks_vm_size         = "Standard_B2s"
+
+# Tags
+tags = {
+  environment = "casopractico2"
+}
+```
+
+## Módulos
 
 ### Container registry
 
 La infraestructura de **Azure Container Service(ACR)** se ha definido utilizando **Terraform**, organizando los recursos en módulos separados para mejorar la modularidad y reutilización del código. A continuación, se presentan los archivos principales que definen el despliegue:
 
-```bash
+```plaintext
 terraform/
 │── terraform.tfvars        # Variables globales del despliegue
 │── main.tf                 # Llamada a módulos y recursos principales
@@ -353,136 +485,82 @@ resource "azurerm_network_security_rule" "allow_outbound" {
 | **`protocol = "*"`**             | Permite cualquier protocolo. |
 | **`destination_port_range = "*"`** | No restringe los puertos de destino. |
 
-### Kubernetes service
+### Kubernetes service (AKS)
 
+La infraestructura del **Azure Kubernetes Service (AKS)** se ha definido en **Terraform** dentro de un módulo independiente para asegurar una correcta organización y reutilización del código. Este módulo define los recursos necesarios para desplegar un clúster de Kubernetes gestionado por Azure.
 
-## :simple-ansible: Configuración de la infraestructura
-
-A continuación se describen las configuraciones aplicadas a la infraestructura desplegada, automatizadas con Ansible, y la justificación de cada una de ellas.
-
-### Imágenes contenerizadas
-
-#### Imágen sin persistencia para la VM
-
-La imagen utilizada en el contenedor Podman dentro de la máquina virtual se basa en **MkDocs**, una librería de documentación escrita en Python. Esta herramienta permite generar sitios estáticos a partir de archivos Markdown, facilitando la creación y publicación de documentación técnica [(MkDocs, s.f.)](./referencias.md#herramientas-usadas). La imagen generada en este ejercicio contiene la documentación del propio proyecto, asegurando que el contenido se pueda visualizar de manera estructurada en un navegador.
-
-Además, se ha utilizado el tema **Material for MkDocs**, que añade una interfaz moderna y varias opciones de personalización [(Squidfunk, s.f.)](./referencias.md#herramientas-usadas).
-
-La documentación también está disponible a través de **GitHub Pages**, lo que permite su acceso incluso cuando la infraestructura de Azure no está desplegada. Se puede visualizar en el siguiente enlace:  
-
-[:material-file-document: Ver documentación en GitHub Pages](https://charlstown.github.io/unir-cp2)  
-
-#### Imágen con persistencia para el AKS
-
-### Configuración del ACR
-
-Para configurar el ACR se publicarán dos imágenes contenerizadas: una corresponde a un sitio estático en Nginx, que será desplegado en una máquina virtual con Podman, y la otra es una aplicación con persistencia que será ejecutada en un contenedor dentro de Azure Kubernetes Service (AKS).
-
-Este proyecto permite la publicación de las imágenes en el ACR de dos maneras:
-
-- Publicación mediante Ansible.
-- Publicación manual mediante Github Actions
-
-#### Publicación mediante Ansible
-
-Para la publicación usando Ansible se ha generado un rol llamado `acr` que contiene todas las tareas necesarias y se estructura de la siguiente manera:
-
-```sh
-ansible/
-├── roles/
-│   ├── acr/                 # Rol para gestionar ACR en Ansible
-│   │   ├── tasks/           # Tareas que se ejecutan en el ACR
-│   │   │   ├── login.yml    # Iniciar sesión en ACR
-│   │   │   ├── build.yml    # Construcción de las imágenes
-│   │   │   ├── push.yml     # Publicación de imágenes en ACR
-│   │   │   └── main.yml     # Inclusión de todas las tareas
-│   │   └── vars/            # Variables específicas del rol
-│   │       └── main.yml     # Configuración de credenciales y parámetros
+```bash
+terraform/
+│── terraform.tfvars        # Variables globales del despliegue
+│── main.tf                 # Llamada a módulos y recursos principales
+│── modules/
+│   ├── aks/                # Módulo de Kubernetes Service (AKS)
+│   │   ├── main.tf         # Definición del clúster de Kubernetes
+│   │   ├── outputs.tf      # Variables de salida (Cluster ID, Node Pool ID)
+│   │   └── variables.tf    # Definición de variables del módulo
 ```
 
-El fichero `tasks/main.yml` dentro del rol acr, gestiona la configuración y publicación de imágenes en la máquina virtual y el Azure Container Registry (ACR).
+#### Fichero `main.tf`
 
-```yaml title="main.yml"
----
-- name: Install Podman on the VM
-  include_tasks: install.yml
+El fichero `main.tf` del módulo de AKS incluye los siguientes recursos:
 
-- name: Build image from the VM
-  include_tasks: build.yml
+- **Clúster de Kubernetes (AKS)** → Crea una instancia de **Azure Kubernetes Service** con un *node pool* por defecto y acceso RBAC habilitado.
+- **Role Assignment para ACR** → Permite a AKS acceder al **Azure Container Registry (ACR)** para extraer imágenes de contenedores.
 
-- name: Push image in to Azure Container Registry (ACR)
-  include_tasks: push.yml
+##### Clúster de Kubernetes (AKS)
+
+```hcl title="main.tf"
+resource "azurerm_kubernetes_cluster" "aks" {
+  name                = var.aks_name
+  location            = var.location
+  resource_group_name = var.resource_group
+  dns_prefix          = var.dns_prefix
+  sku_tier            = "Standard"
+
+  default_node_pool {
+    name            = "default"
+    node_count      = var.node_count
+    vm_size         = var.vm_size
+    os_disk_size_gb = 30
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  role_based_access_control_enabled = true
+
+  tags = var.tags
+}
 ```
 
-#### Instalar Podman
+| **Parámetro**                   | **Descripción** |
+|----------------------------------|--------------------------------|
+| **`var.aks_name`**               | Nombre del clúster de AKS. |
+| **`var.resource_group`**         | Grupo de recursos donde se despliega el AKS. |
+| **`var.location`**               | Región de Azure donde se despliega. |
+| **`var.dns_prefix`**             | Prefijo DNS único del clúster. |
+| **`sku_tier = "Standard"`**      | Define el nivel del servicio de Kubernetes. |
+| **`default_node_pool`**          | Define el grupo de nodos (*Node Pool*) que ejecutará los contenedores. |
+| **`var.node_count`**             | Número de nodos en el *node pool* por defecto. |
+| **`var.vm_size`**                | Tamaño de las máquinas virtuales utilizadas como nodos. |
+| **`os_disk_size_gb = 30`**       | Tamaño del disco de cada nodo. |
+| **`identity { type = "SystemAssigned" }`** | Se asigna una identidad gestionada para que el clúster pueda autenticarse con otros servicios de Azure. |
+| **`role_based_access_control_enabled = true`** | Habilita RBAC para gestionar permisos dentro del clúster. |
+| **`var.tags`**                   | Etiquetas para organización y gestión dentro de Azure. |
 
-```yaml title="install.yml"
----
-- name: Install Podman
-  apt:
-    name: podman
-    state: present
-    update_cache: no  # Avoids unnecessary update
+##### Role Assignment para ACR
+
+```hcl title="main.tf"
+resource "azurerm_role_assignment" "acr_pull" {
+  scope                = var.acr_id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_kubernetes_cluster.aks.identity[0].principal_id
+}
 ```
 
-#### Construir la imagen
-
-```yaml title="build.yml"
----
-- name: Ensure repository is present on the VM
-  git:
-    repo: "https://github.com/charlstown/unir-cp2.git"
-    dest: "/opt/unir-cp2"
-    version: main
-
-- name: Install dependencies for MkDocs
-  apt:
-    name:
-      - python3-pip
-    state: present
-    update_cache: no
-  become: yes
-
-- name: Install required system dependencies for WeasyPrint
-  apt:
-    name:
-      - libpango1.0-0
-      - libpangocairo-1.0-0
-      - libcairo2
-    state: present
-    update_cache: no
-  become: yes
-
-- name: Install project dependencies
-  pip:
-    requirements: "/opt/unir-cp2/requirements.txt"
-
-- name: Build MkDocs static site
-  command:
-    cmd: mkdocs build
-    chdir: "/opt/unir-cp2"
-
-- name: Build Podman image on the VM
-  command:
-    cmd: podman build -t "{{ image_name }}:{{ image_tag }}" -f /opt/unir-cp2/Dockerfile.docs
-    chdir: "/opt/unir-cp2"
-```
-
-#### Publicar la imagen en ACR
-
-
-
-##### Generación de la Imagen  
-
-La imagen se genera a partir de la documentación escrita en MkDocs, transformándola en un sitio web estático y empaquetándola en un contenedor. Esta imagen se construye y publica mediante dos métodos:  
-
-1. **Workflow de GitHub:** Se ha añadido un workflow en `.github/workflows` llamado [:material-file-document: `Publish docs to ACR`](https://github.com/charlstown/unir-cp2/blob/main/.github/workflows/publish-release.yml), que permite generar y publicar la imagen en el ACR. 
-
-2. **Ejecución con Ansible:** Durante la configuración de la máquina virtual, Ansible ejecuta un playbook con el mismo proceso que el workflow de GitHub para generar y publicar la imagen en el ACR.
-
-El proceso detallado de despliegue de la imagen puede consultarse en el siguiente apartado de esta memoria: [:material-file-document: Sección de Despliegue](./despliegue.md).
-
-
-### Configuración de la VM
-
-### Configuración del AKS
+| **Parámetro**                   | **Descripción** |
+|----------------------------------|--------------------------------|
+| **`var.acr_id`**                 | ID del Azure Container Registry asociado al clúster. |
+| **`role_definition_name = "AcrPull"`** | Asigna el rol de **AcrPull**, que permite a AKS extraer imágenes de contenedores desde ACR. |
+| **`principal_id`**               | Se refiere a la identidad asignada al clúster de AKS para la autenticación con ACR. |

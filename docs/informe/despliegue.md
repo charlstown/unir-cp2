@@ -31,7 +31,6 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
 
     ```sh
     terraform -chdir=./terraform apply --auto-approve
-    cd ..
     ```
 
 !!! tip "Automatización de variables"

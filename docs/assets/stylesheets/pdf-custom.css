@@ -2,21 +2,18 @@
 @media print {
     /* Softer blue lines for PDF */
     hr, .md-typeset hr {
-        border-color: #6D9DC5 !important; /* Light pastel blue */
+        border-color: #607c8a !important;
     }
 
     /* Borders under H1, H2, H3 only in PDF */
-    h1 {
-        border-color:#6D9DC5 !important; /* Soft lavender blue */
-    }
-
-    h2 {
-        border-color:  #b3c5d3 !important; /* Soft lavender blue */
+    h1, h2, h3 {
+        color:#546d78 !important;
+        border-color: #546d78 !important;
     }
 
     /* Cover Page Title and Subtitle */
     .cover-title {
-        color: #6D9DC5 !important; /* Grayish pastel blue */
+        color: #546d78 !important;
     }
     /* Center all images in the PDF */
     img {
@@ -27,6 +24,10 @@
     ol, li, p, details, pre, img {
         break-inside: auto !important;
         page-break-inside: auto !important;
+    }
+    /* Hide icons in index */
+    .md-nav__icon {
+        display: none !important;
     }
 }
 
