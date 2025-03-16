@@ -2,14 +2,14 @@
 
 A continuación, se explica cómo reproducir los pasos necesarios para llevar a cabo el caso práctico sobre el repositorio. Se detallan las instrucciones para:
 
-- [1. Despliegue de la infraestructura](#1-despliegue-de-la-infraestructura)
-- [2. Publicación de las imagenes](#2-publicacion-de-las-imagens)
-- [3. Configuración de la VM](#3-configuracion-de-la-vm)
-- [4. Configuración del AKS](#4-configuración-del-aks)
+- [1. Despliegue de la infraestructura](#despliegue-de-la-infraestructura)
+- [2. Publicación de las imagenes](#publicacion-de-las-imagens)
+- [3. Configuración de la VM](#configuracion-de-la-vm)
+- [4. Configuración del AKS](#configuración-del-aks)
 
 ---
 
-## 1. Despliegue de la infraestructura
+## Despliegue de la infraestructura
 
 El despliegue de la infraestructura se realiza con Terraform desde la máquina local, asegurando que la configuración es válida antes de aplicar los cambios y provisionar los recursos necesarios.
 
@@ -41,7 +41,7 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
     source setup.sh
     ```
 
-## 2. Publicación de las imagenes
+## Publicación de las imagenes
 
 La publicación de la imagen se automatiza mediante el workflow [`Publish release to ACR`](https://github.com/charlstown/unir-cp2/actions/workflows/publish-release.yml) de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.
 
@@ -61,7 +61,7 @@ La publicación de la imagen se automatiza mediante el workflow [`Publish releas
 
     ![Workflow run](../assets/images/job-logs.png)
 
-## 3. Configuración de la VM
+## Configuración de la VM
 
 La configuración de la VM se llevará a cabo desde la máquina local utilizando Ansible, accediendo por SSH para realizar comprobaciones y garantizar el correcto despliegue del entorno.
 
@@ -98,7 +98,7 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
     ![acceso-vm-docs](../assets/images/acceso-vm-docs-ip-publica.png)
 
 
-## 4. Configuración del AKS
+## Configuración del AKS
 
 
 ??? note "Descargar credenciales en local"
