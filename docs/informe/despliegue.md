@@ -100,3 +100,12 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
 
 
 ## 4. Configuración del AKS
+
+
+??? note "Descargar credenciales en local"
+
+    El siguiente comando guarda las credenciales del AKS en `/home/<USER>/.kube/config` y marca como contexto el AKS seleccionado.
+
+    ```sh
+    az aks get-credentials --resource-group rg-weu-cp2-dev --name aks-weu-cp2-dev
+    ```

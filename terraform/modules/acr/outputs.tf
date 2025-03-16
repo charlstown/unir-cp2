@@ -14,3 +14,8 @@ output "acr_password" {
   value       = azurerm_container_registry.acr.admin_password
   sensitive   = true
 }
+
+output "acr_id" {
+  description = "The ID of the Azure Container Registry"
+  value       = azurerm_container_registry.acr.id
+}

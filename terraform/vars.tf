@@ -86,6 +86,31 @@ variable "python_interpreter" {
   default     = "/usr/bin/python3"
 }
 
+# AKS
+variable "aks_name" {
+  description = "Azure Kubernetes Service (AKS) name"
+  type        = string
+  default     = "aks-weu-cp2"
+}
+
+variable "dns_prefix" {
+  description = "DNS prefix for AKS"
+  type        = string
+  default     = "aksweucp2"
+}
+
+variable "node_count" {
+  description = "Number of nodes in AKS cluster"
+  type        = number
+  default     = 1
+}
+
+variable "aks_vm_size" {
+  description = "AKS node size"
+  type        = string
+  default     = "Standard_B2s"
+}
+
 variable "tags" {
   description = "Tags to be applied to resources"
   type        = map(string)

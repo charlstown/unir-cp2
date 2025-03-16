@@ -51,7 +51,20 @@ module "container_registry" {
   tags           = var.tags
 }
 
-# Generar el archivo inventory.ini
+# Llamar al módulo del AKS
+module "aks" {
+  source          = "./modules/aks"
+  aks_name        = "${var.aks_name}-${var.environment}"
+  resource_group  = azurerm_resource_group.rg.name
+  location        = azurerm_resource_group.rg.location
+  dns_prefix      = var.dns_prefix
+  node_count      = var.node_count
+  vm_size         = var.aks_vm_size
+  acr_id          = module.container_registry.acr_id
+  tags            = var.tags
+}
+
+# Generar el archivo hosts.yml
 resource "local_file" "ansible_inventory" {
   filename = "../ansible/hosts.yml"
   content  = templatefile("../ansible/hosts.tmpl", {
@@ -64,5 +77,7 @@ resource "local_file" "ansible_inventory" {
     acr_login_server    = "${var.acr_name}${var.environment}.azurecr.io"
     acr_username        = module.container_registry.acr_username
     acr_password        = module.container_registry.acr_password
+    aks_name            = var.aks_name
+    aks_resource_group  = var.resource_group_name
   })
 }

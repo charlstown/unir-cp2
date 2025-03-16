@@ -1,6 +1,7 @@
 # Generic
 resource_group_name = "rg-weu-cp2"
 location            = "West Europe"
+environment         = "dev"
 
 # ACR
 acr_name            = "acrweucp2"
@@ -22,7 +23,13 @@ image_os            = "22_04-lts-gen2"
 image_offer         = "0001-com-ubuntu-server-jammy"
 # check offers here: https://documentation.ubuntu.com/azure/en/latest/azure-how-to/instances/find-ubuntu-images/
 
+# AKS
+aks_name            = "aks-weu-cp2"
+dns_prefix          = "aksweucp2"
+node_count          = 1
+aks_vm_size         = "Standard_B2s"
+
 # Tags
 tags = {
-  casopractico2 = "true"
+  environment = "casopractico2"
 }
