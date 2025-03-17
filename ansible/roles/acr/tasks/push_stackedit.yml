@@ -1,17 +1,15 @@
 ---
-- name: Log in to ACR from localhost
+- name: Pull StackEdit image from Docker Hub
   command: >
-    az acr login --name {{ acr_name }}
-  delegate_to: localhost
-  run_once: true
-  become: no  # ✅ Prevent sudo escalation
+    podman pull docker.io/benweet/stackedit-base:latest
+  become: yes
 
-- name: Import StackEdit image directly from Docker Hub to ACR (Run Locally)
+- name: Tag StackEdit image for ACR
   command: >
-    az acr import --name {{ acr_name }}
-    --source docker.io/benweet/stackedit-base:latest
-    --image {{ image_name_stackedit }}:{{ image_tag_stackedit }}
-  delegate_to: localhost
-  run_once: true
-  become: no  # ✅ Prevent sudo escalation
-  
+    podman tag docker.io/benweet/stackedit-base:latest {{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}
+  become: yes
+
+- name: Push StackEdit image to ACR
+  command: >
+    podman push {{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}
+  become: yes

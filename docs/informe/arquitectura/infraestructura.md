@@ -106,6 +106,32 @@ resource "local_file" "ansible_inventory" {
   })
 ```
 
+Esta instrucción de terraform apunta al fichero `hosts.tmpl` de la carpeta de ansible y que usa como plantilla para generar el fichero de inventario `hosts.yml`.
+
+```yaml title="hosts.tmpl"
+all:
+  children:
+    azure_vm:
+      hosts:
+        ${vm_name}:
+          ansible_host: ${vm_public_ip}
+          ansible_user: ${vm_username}
+          ansible_ssh_private_key_file: ${ssh_private_key}
+          ansible_python_interpreter: ${python_interpreter}
+
+    azure_acr:
+      hosts:
+        ${acr_name}:
+          acr_login_server: ${acr_login_server}
+
+    azure_aks:
+      hosts:
+        ${aks_name}:
+          aks_resource_group: ${aks_resource_group}
+          ansible_connection: local
+          ansible_python_interpreter: /usr/bin/python3
+```
+
 Esto permite que Ansible trabaje con información actualizada sin intervención manual, garantizando coherencia y simplificando la configuración.
 
 ### Fichero `terraform.tfvars`
@@ -126,7 +152,7 @@ acr_name            = "acrweucp2"
 # virtual machine
 vm_name             = "vm-weu-cp2-docs"
 vm_username         = "charlstown"
-vm_size             = "Standard_B1ls"
+vm_size             = "Standard_B1ms"   # "Standard_B1ls"
 ssh_public_key      = "~/.ssh/az_unir_rsa.pub"
 python_interpreter  = "/usr/bin/python3"
 

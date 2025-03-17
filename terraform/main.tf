@@ -13,11 +13,6 @@ provider "azurerm" {
   features {}
 }
 
-# Define la variable de entorno elegida para el despliegue
-locals {
-  env_suffix = "-${var.environment}"
-}
-
 # Crear un grupo de recursos en West Europe
 resource "azurerm_resource_group" "rg" {
   name     = "${var.resource_group_name}-${var.environment}"

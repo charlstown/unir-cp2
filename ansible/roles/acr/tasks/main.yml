@@ -5,6 +5,9 @@
 - name: Build MkDocs image
   include_tasks: build_docs.yml
 
+- name: Login into ACR from the VM
+  include_tasks: login_acr.yml
+
 - name: Push mkdocs image to ACR from the VM
   include_tasks: push_mkdocs.yml
 

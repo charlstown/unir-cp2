@@ -23,7 +23,7 @@ Para configurar el ACR se publicarán dos imágenes contenerizadas: una correspo
 Este proyecto permite la publicación de las imágenes en el ACR de dos maneras:
 
 - Publicación mediante Ansible.
-- Publicación manual mediante Github Actions
+- Publicación manual mediante Github Actions (fuera de alcance)
 
 ### Publicación mediante Ansible
 
@@ -32,14 +32,16 @@ Para la publicación usando Ansible se ha generado un rol llamado `acr` que cont
 ```sh
 ansible/
 ├── roles/
-│   ├── acr/                 # Rol para gestionar ACR en Ansible
-│   │   ├── tasks/           # Tareas que se ejecutan en el ACR
-│   │   │   ├── login.yml    # Iniciar sesión en ACR
-│   │   │   ├── build.yml    # Construcción de las imágenes
-│   │   │   ├── push.yml     # Publicación de imágenes en ACR
-│   │   │   └── main.yml     # Inclusión de todas las tareas
-│   │   └── vars/            # Variables específicas del rol
-│   │       └── main.yml     # Configuración de credenciales y parámetros
+│   ├── acr/                        # Rol para gestionar ACR en Ansible
+│   │   ├── tasks/                  # Tareas que se ejecutan en el ACR
+│   │   │   ├── main.yml            # Inclusión de todas las tareas
+│   │   │   ├── install.yml         # Instala podman en la VM
+│   │   │   ├── build_docs.yml      # Construcción de las imágenes
+│   │   │   ├── login.yml           # Iniciar sesión en ACR
+│   │   │   ├── push_mkdocs.yml     # Publicación de mkdocs en ACR
+│   │   │   └── push_stackedit.yml  # Publicación de stackedit en ACR
+│   │   └── vars/                   # Variables específicas del rol
+│   │       └── main.yml            # Configuración de parámetros
 ```
 
 El fichero `tasks/main.yml` dentro del rol acr, gestiona la configuración y publicación de imágenes en la máquina virtual y el Azure Container Registry (ACR).
@@ -49,12 +51,20 @@ El fichero `tasks/main.yml` dentro del rol acr, gestiona la configuración y pub
 - name: Install Podman on the VM
   include_tasks: install.yml
 
-- name: Build image from the VM
-  include_tasks: build.yml
+- name: Build MkDocs image
+  include_tasks: build_docs.yml
 
-- name: Push image in to Azure Container Registry (ACR)
-  include_tasks: push.yml
+- name: Login into ACR from the VM
+  include_tasks: login.yml
+
+- name: Push mkdocs image to ACR from the VM
+  include_tasks: push_mkdocs.yml
+
+- name: Push stackedit image to ACR from localhost
+  include_tasks: push_stackedit.yml
 ```
+
+
 
 ### Instalar Podman
 

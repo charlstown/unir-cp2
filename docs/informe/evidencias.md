@@ -266,6 +266,8 @@ El `rg-weu-cp2-dev` contiene todos los recursos declarados en nuestros ficheros 
 
 ### Creación del ACR
 
+Desde el portal de Azure podemos observar como el servicio de contenedores (ACR) se ha creado correctamente bajo los parámetros definidos en los ficheros terraform.
+
 ![acr](../assets/images/screenshot-acr.png)
 
 ```sh
@@ -285,6 +287,8 @@ También podemos comprobar que se ha creado correctamente iniciando sesión en e
 ![acr-login](../assets/images/screenshot-acr-login.png)
 
 ### Creación de la VM
+
+Desde el portal de Azure podemos observar como la VM se ha creado correctamente bajo los parámetros definidos en los ficheros terraform.
 
 ![vm](../assets/images/screenshot-vm.png)
 
@@ -308,6 +312,8 @@ ssh -i ~/.ssh/az_unir_rsa charlstown@13.81.82.89
 ![screenshot-ssh](../assets/images/screenshot-ssh.png)
 
 ### Creación del AKS
+
+Desde el portal de Azure podemos observar como el servicio de Kubernetes (AKS) se ha creado correctamente bajo los parámetros definidos en los ficheros terraform.
 
 ![aks](../assets/images/screenshot-aks.png)
 
@@ -349,6 +355,79 @@ kubectl get pods -n kube-system
 
 ## Publicación de las imagenes
 
+### Publicación de imágenes mediante Ansible
+
+Tras ejecutar el playbook `publish_images.yml` de Asnible con el comando:
+
+```sh
+ansible-playbook ansible/publish_images.yml -i an
+sible/hosts.yml --extra-vars "@ansible/vars.yml" --ask-vault-pass
+```
+
+Podemos ver como se ejecuta el rol de ACR de la carpeta Ansible ejecutando las tareas sin errores.
+
+![ansible-images-logs](../assets/images/screenshot-ansible-images-logs.png)
+
+### Publicación mediante Github Actions (fuera de alcance)
+
+La publicación de la imagen se automatiza mediante el workflow [`Publish mkdocs image to ACR`](https://github.com/charlstown/unir-cp2/actions/workflows/publish-image-mkdocs.yml) de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.
+
+1. Rellenar los datos del formulario del workflow con username y pwd del ACR desplegado en Azure.
+
+    ??? note "Visualizar usuario y contraseña del ACR"
+
+        Siempre puedes ejecutar este comando para recuperar el usuario y la contraseña del ACR.
+
+        ```bash
+        az acr credential show --name acrweucp2dev --query "[username, passwords[0].value]" -o tsv
+        ```
+
+    ![Workflow form](../assets/images/run-workflow-form.png)
+
+2. Ejecutar workflow y validar la correcta ejecución del job
+
+![Workflow run](../assets/images/job-logs.png)
+
+### Validación de imagenes publicadas
+
+Tras publicar las imágenes por Ansible o por Github Action podremos ver los repositorios en `Services/Repositories` en el recurso del ACR.
+
+También podemos ejectuar el siguiente comando desde local para listar las imágenes del ACR.
+
+```sh
+az acr repository list --name acrweucp2dev --output table
+```
+
+![screenshot-acr-list](../assets/images/screenshot-acr-list.png)
+
+#### Imagen `docs-nginx`
+
+![screenshot-docs-nginx-image](../assets/images/screenshot-docs-nginx-image.png)
+
+#### Imagen `stackedit`
+
+![screenshot-stackedit-image](../assets/images/screenshot-stackedit-image.png)
+
 ## Despliegue en la VM
+
+Para desplegar la imagen de mkdocs-nginx en un contendor sobre la máquina virtual ejecutamos el siguiente playbook que contiene el rol `vm`.
+
+```sh
+ansible-playbook ansible/playbook.yml -i ansible/hosts.yml --extra-vars "@ansible/vars.yml" --ask-vault-pass
+```
+
+Si todo ha ido bien se puede comprobar que el sitio se muestra a través de internet en la ip pública de la VM. Ejecutando el comando:
+
+```sh
+curl -k -u charlstown:*** https://${VM_IP}:443
+```
+
+También puede visualizarse en el browser en la dirección `https://ip-publica/`.
+
+![acceso-vm-docs](../assets/images/acceso-vm-docs-ip-publica.png)
+
+Si introducimos el usuario y la contraseña tendremos acceso a la web de la imagen de `` levantada en la IP pública de la VM.
+
+![web-nginx](../assets/images/screenshot-web-mkdocs.png)
 
 ## Despliegue en el AKS

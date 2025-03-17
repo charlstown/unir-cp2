@@ -1,0 +1,6 @@
+---
+- name: Configure VM and Push Image to ACR
+  hosts: azure_vm
+  become: yes
+  roles:
+    - acr

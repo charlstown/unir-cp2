@@ -9,7 +9,8 @@ acr_name            = "acrweucp2"
 # virtual machine
 vm_name             = "vm-weu-cp2-docs"
 vm_username         = "charlstown"
-vm_size             = "Standard_B1ls"
+vm_size             = "Standard_B1ms"
+# "Standard_B1ls" sin suficiente memoria
 ssh_public_key      = "~/.ssh/az_unir_rsa.pub"
 python_interpreter  = "/usr/bin/python3"
 

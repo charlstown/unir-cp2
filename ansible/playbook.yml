@@ -1,10 +1,4 @@
 ---
-- name: Configure VM and Push Image to ACR
-  hosts: azure_vm
-  become: yes
-  roles:
-    - acr
-
 - name: Configure VM and Deploy Podman Container
   hosts: azure_vm
   become: yes

@@ -13,7 +13,7 @@ A continuación, se explica cómo reproducir los pasos necesarios para llevar a 
 
 El despliegue de la infraestructura se realiza con Terraform desde la máquina local, asegurando que la configuración es válida antes de aplicar los cambios y provisionar los recursos necesarios.
 
-1. Accede al directorio de terraform en el repositorio e inicializa terraform.
+1. Inicializa terraform en el directorio de ficheros terraform.
 
     ```sh
     terraform -chdir=./terraform init
@@ -43,7 +43,22 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
 
 ## Publicación de las imagenes
 
-La publicación de la imagen se automatiza mediante el workflow [`Publish release to ACR`](https://github.com/charlstown/unir-cp2/actions/workflows/publish-release.yml) de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.
+### Publicación de las imágenes mediante Ansible
+
+Para publicar imágenes en el ACR utilizando Ansible, se ha creado un playbook llamado `publish-images.yaml`. Para llevar a cabo su ejecución, es necesario utilizar el siguiente comando.
+
+```sh
+ansible-playbook ansible/publish_images.yml -i ansible/hosts.yml --extra-vars "@ansible/vars.yml" --ask-vault-pass
+```
+
+Este comando construye la imagen de MkDocs, descarga la imagen pública de StackEdit y publica ambas imágenes en el ACR desde la VM.
+
+
+### Publicación mediante Github Actions (fuera de alcance)
+
+En este apartado se explica la publicación de imágenes en el ACR utilizando GitHub Workflows. Aunque no formaba parte del alcance del ejercicio, se ha implementado este método para probar un flujo habitual en proyectos donde un repositorio genera y publica imágenes de contenedor tras una release.
+
+La publicación de la imagen se automatiza mediante el workflow [`Publish mkdocs image to ACR`](https://github.com/charlstown/unir-cp2/actions/workflows/publish-image-mkdocs.yml) de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.
 
 1. Rellenar los datos del formulario del workflow con username y pwd del ACR desplegado en Azure.
 
@@ -59,7 +74,6 @@ La publicación de la imagen se automatiza mediante el workflow [`Publish releas
 
 2. Ejecutar workflow y validar la correcta ejecución del job
 
-    ![Workflow run](../assets/images/job-logs.png)
 
 ## Configuración de la VM
 
@@ -87,15 +101,7 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
         ansible-vault view secrets.yml
         ```
 
-4. Si todo ha ido bien se puede comprobar que el sitio se muestra a través de internet en la ip pública de la VM. Ejecutando el comando:
 
-    ```sh
-     curl -k -u charlstown:\*\*\* https://${VM_IP}:443
-    ```
-
-    También puede visualizarse en el browser en la dirección `https://ip-publica/`.
-
-    ![acceso-vm-docs](../assets/images/acceso-vm-docs-ip-publica.png)
 
 
 ## Configuración del AKS
