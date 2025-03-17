@@ -56,7 +56,7 @@ Este comando construye la imagen de MkDocs, descarga la imagen pública de Stack
 
 ### Publicación mediante Github Actions (fuera de alcance)
 
-En este apartado se explica la publicación de imágenes en el ACR utilizando GitHub Workflows. Aunque no formaba parte del alcance del ejercicio, se ha implementado este método para probar un flujo habitual en proyectos donde un repositorio genera y publica imágenes de contenedor tras una release.
+En este apartado se explica la publicación de imágenes en el ACR utilizando GitHub Actions. Aunque no formaba parte del alcance del ejercicio, se ha implementado este método para probar un flujo habitual en proyectos donde un repositorio genera y publica imágenes de contenedor tras una release.
 
 La publicación de la imagen se automatiza mediante el workflow [`Publish mkdocs image to ACR`](https://github.com/charlstown/unir-cp2/actions/workflows/publish-image-mkdocs.yml) de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.
 

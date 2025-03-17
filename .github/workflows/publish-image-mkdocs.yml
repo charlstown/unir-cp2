@@ -22,7 +22,7 @@ on:
       tag_name:
         description: "Tag Name"
         required: true
-        default: "casopractico2"
+        default: "1.0.0"
         
 env:
   ACR_NAME: ${{ github.event.inputs.acr_name }}
