@@ -1,7 +1,9 @@
 # Referencias
 
 
-Ansible. (s.f.). *Ansible configuration settings*. Ansible Documentation. Recuperado de [https://docs.ansible.com/ansible/latest/reference_appendices/config.html](https://docs.ansible.com/ansible/latest/reference_appendices/config.html)
+Ansible. (s.f.-a). *Best practices for structuring Ansible playbooks*. Ansible Documentation. Recuperado de [https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html)
+
+Ansible. (s.f.-b). *Ansible configuration settings*. Ansible Documentation. Recuperado de [https://docs.ansible.com/ansible/latest/reference_appendices/config.html](https://docs.ansible.com/ansible/latest/reference_appendices/config.html)
 
 Stivenson, T. (2023). Mejores prácticas en Terraform. Medium. Recuperado de [https://medium.com/@tonystivenson1995/mejores-practicas-en-terraform-107533470831](https://medium.com/@tonystivenson1995/mejores-practicas-en-terraform-107533470831)
 
