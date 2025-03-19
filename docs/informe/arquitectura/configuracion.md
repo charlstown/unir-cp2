@@ -47,12 +47,14 @@ ansible
 
 Para configurar el ACR se publicarán dos imágenes contenerizadas: una corresponde a un sitio estático en Nginx, que será desplegado en una máquina virtual con Podman, y la otra es una aplicación con persistencia que será ejecutada en un contenedor dentro de Azure Kubernetes Service (AKS).
 
+!!! example ""
+
+    Puedes ver las evidencias de este rol en el [:material-monitor-screenshot: siguiente enlace](../evidencias.md#publicacion-de-imagenes-mediante-ansible).
+
 Este proyecto permite la publicación de las imágenes en el ACR de dos maneras:
 
 - Publicación mediante Ansible.
 - Publicación manual mediante Github Actions (fuera de alcance).
-
-#### Publicación mediante Ansible
 
 Para la publicación usando Ansible se ha generado un rol llamado `acr` que contiene todas las tareas necesarias y se estructura de la siguiente manera:
 
@@ -104,7 +106,7 @@ Esta tarea instala Podman en la máquina virtual asegurándose de que esté disp
     update_cache: yes
 ```
 
-#### Construir la imagen mkdocs
+#### Construir imagen mkdocs
 
 Clona el repositorio del proyecto en la máquina virtual, instala dependencias necesarias para MkDocs y WeasyPrint, construye el sitio estático de MkDocs y genera una imagen de contenedor con Podman basada en el `Dockerfile.docs`.
 
@@ -202,7 +204,119 @@ Descarga la imagen `stackedit-base` desde Docker Hub, la etiqueta para el ACR y 
   become: yes
 ```
 
-
 ### Rol VM
 
+Para la publicación usando Ansible se ha generado un rol llamado `vm` que contiene todas las tareas necesarias y se estructura de la siguiente manera:
+
+```sh
+ansible/
+├── roles
+│   ├── vm
+│   │   ├── handlers
+│   │   │   └── main.yml
+│   │   ├── tasks
+│   │   │   ├── auth.yml
+│   │   │   ├── container.yml
+│   │   │   ├── main.yml
+│   │   │   └── systemd.yml
+│   │   └── vars
+│   │       └── main.yml
+```
+
+!!! example ""
+
+    Puedes ver las evidencias de este rol en el [:material-monitor-screenshot: siguiente enlace](../evidencias.md#despliegue-en-la-vm).
+
+El fichero `tasks/main.yml` dentro del rol acr, gestiona la configuración y publicación de imágenes en la máquina virtual y el Azure Container Registry (ACR).
+
+```yaml title="main.yml"
+- name: Include authentication setup
+  import_tasks: auth.yml
+
+- name: Include container deployment
+  import_tasks: container.yml
+
+- name: Include systemd configuration
+  import_tasks: systemd.yml
+```
+
+#### Autenticación básica
+
+En esta tarea se configura autenticación básica en Nginx mediante `htpasswd`, asegurando que solo usuarios autorizados puedan acceder. Se instala Apache Utils, se crea el directorio de autenticación y se genera un archivo de credenciales.
+
+
+```yaml
+---
+- name: Install Apache Utils for htpasswd
+  apt:
+    name: apache2-utils
+    state: present
+  become: yes
+
+- name: Ensure authentication directory exists
+  file:
+    path: /etc/nginx/auth
+    state: directory
+    mode: '0755'
+
+- name: Load secure variables
+  include_vars: secrets.yml
+
+- name: Generate htpasswd file
+  command: htpasswd -bc /etc/nginx/auth/htpasswd.users charlstown "{{ site_pwd }}"
+  args:
+    creates: /etc/nginx/auth/htpasswd.users
+```
+
+
+#### Desplegar contenedor
+
+En esta tarea se inicia sesión en el ACR para descargar la imagen del contenedor y se ejecuta con soporte SSL y autenticación básica, vinculando el archivo de credenciales generado en el paso anterior.
+
+```yaml
+---
+- name: Log into Azure Container Registry (ACR)
+  containers.podman.podman_login:
+    registry: "{{ acr_name }}.azurecr.io"
+    username: "{{ acr_username }}"
+    password: "{{ acr_password }}"
+
+- name: Run container from ACR image with SSL and Basic Auth
+  containers.podman.podman_container:
+    name: mkdocs_container
+    image: "{{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "443:443"
+    volume:
+      - "/etc/nginx/auth/htpasswd.users:/etc/nginx/.htpasswd:ro"
+```
+
+
+#### Disponibilidad como servicio
+
+En esta tarea se convierte el contenedor en un servicio systemd, esto garantiza la disponibilidad continua del servicio sin intervención manual, ya que systemd lo monitorea y lo vuelve a iniciar si detecta que ha dejado de funcionar.
+
+```yaml
+---
+- name: Generate systemd service for Podman container
+  containers.podman.podman_generate_systemd:
+    name: mkdocs_container
+    dest: /etc/systemd/system/
+    restart_policy: always
+
+- name: Enable and start Podman container systemd service
+  systemd:
+    name: container-mkdocs_container
+    enabled: yes
+    state: started
+    daemon_reload: yes
+```
+
 ### Rol AKS
+
+
+!!! example ""
+
+    Puedes ver las evidencias de este rol en el [:material-monitor-screenshot: siguiente enlace](../evidencias.md#despliegue-en-el-aks).

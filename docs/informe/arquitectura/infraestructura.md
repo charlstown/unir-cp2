@@ -195,6 +195,11 @@ terraform/
 │   │   └── variables.tf    # Definición de variables del módulo
 ```
 
+!!! example ""
+
+    Puedes ver las evidencias de este despliegue en el [:material-monitor-screenshot: siguiente enlace](../evidencias.md#creacion-del-acr).
+
+
 #### Fichero `main.tf`
 
 El fichero `main.tf` del módulo del ACR recoge únicamente el recurso `azurerm_container_registry`.
@@ -237,6 +242,10 @@ terraform/
 │   │   ├── outputs.tf      # Variables de salida (IPs, VM ID)
 │   │   └── variables.tf    # Definición de variables del módulo
 ```
+
+!!! example ""
+
+    Puedes ver las evidencias de este despliegue en el [:material-monitor-screenshot: siguiente enlace](../evidencias.md#creacion-de-la-vm).
 
 #### Fichero `main.tf`
 
@@ -525,6 +534,10 @@ terraform/
 │   │   ├── outputs.tf      # Variables de salida (Cluster ID, Node Pool ID)
 │   │   └── variables.tf    # Definición de variables del módulo
 ```
+
+!!! example ""
+
+    Puedes ver las evidencias de este despliegue en el [:material-monitor-screenshot: siguiente enlace](../evidencias.md#creacion-del-aks).
 
 #### Fichero `main.tf`
 
