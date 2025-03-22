@@ -1,0 +1,15 @@
+---
+- name: Create Kubernetes Namespace
+  import_tasks: namespace.yml
+
+- name: Create ACR Secret in Kubernetes
+  import_tasks: acr_auth.yml
+
+- name: Apply PersistentVolumeClaim
+  import_tasks: pvc.yml
+
+- name: Deploy Application
+  import_tasks: deploy.yml
+
+- name: Create LoadBalancer Service
+  import_tasks: service.yml

@@ -1,0 +1,5 @@
+---
+namespace: "cp2"
+pvc_name: "stackedit-pvc"
+service_name: "stackedit-service"
+service_port: 80

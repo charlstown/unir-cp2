@@ -1,0 +1,5 @@
+- name: Apply PersistentVolumeClaim
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ namespace }}"
+    definition: "{{ lookup('template', 'pvc.yml.j2') }}"

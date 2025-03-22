@@ -4,3 +4,4 @@
     podman login {{ acr_login_server }} 
     -u {{ acr_username }} 
     --password {{ acr_password }}
+  timeout: 20  # Timeout in seconds

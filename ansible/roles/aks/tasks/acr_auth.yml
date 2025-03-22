@@ -1,0 +1,12 @@
+- name: Create ACR Secret in Kubernetes
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ namespace }}"
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: acr-secret
+      type: kubernetes.io/dockerconfigjson
+      data:
+        .dockerconfigjson: "{{ lookup('template', 'acr-auth.json.j2') | from_yaml | to_json | b64encode }}"

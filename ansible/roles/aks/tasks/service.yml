@@ -1,0 +1,5 @@
+- name: Create LoadBalancer Service
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ namespace }}"
+    definition: "{{ lookup('template', 'service.yml.j2') }}"

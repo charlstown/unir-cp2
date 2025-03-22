@@ -316,7 +316,185 @@ En esta tarea se convierte el contenedor en un servicio systemd, esto garantiza 
 
 ### Rol AKS
 
+Para el despliegue de la aplicación en el clúster de Kubernetes mediante Ansible se ha generado un rol llamado `aks`, que contiene todas las tareas necesarias y se estructura de la siguiente manera:
+
+```sh
+ansible/
+├── roles
+│   ├── aks
+│   │   ├── tasks
+│   │   │   ├── acr_auth.yml
+│   │   │   ├── deploy.yml
+│   │   │   ├── main.yml
+│   │   │   ├── namespace.yml
+│   │   │   ├── pvc.yml
+│   │   │   └── service.yml
+│   │   ├── templates
+│   │   │   ├── acr-auth.json.j2
+│   │   │   ├── deployment.yml.j2
+│   │   │   ├── pvc.yml.j2
+│   │   │   └── service.yml.j2
+│   │   └── vars
+│   │       └── main.yml
+```
 
 !!! example ""
 
     Puedes ver las evidencias de este rol en el [:material-monitor-screenshot: siguiente enlace](../evidencias.md#despliegue-en-el-aks).
+
+El fichero `tasks/main.yml` dentro del rol `aks` orquesta todas las tareas necesarias para desplegar la aplicación, incluyendo la creación del namespace, los volúmenes persistentes, el despliegue de los contenedores y el servicio de acceso.
+
+```yaml title="main.yml"
+- name: Create Kubernetes Namespace
+  import_tasks: namespace.yml
+
+- name: Create ACR Secret in Kubernetes
+  import_tasks: acr_auth.yml
+
+- name: Apply PersistentVolumeClaim
+  import_tasks: pvc.yml
+
+- name: Deploy Application
+  import_tasks: deploy.yml
+
+- name: Create LoadBalancer Service
+  import_tasks: service.yml
+```
+
+#### Crear Namespace
+
+Esta tarea se encarga de crear el namespace donde se desplegarán todos los recursos de la aplicación dentro del clúster de AKS, asegurando su aislamiento lógico del resto de workloads.
+
+{% raw %}
+```yaml title="namespace.yml"
+---
+- name: Create Kubernetes Namespace
+  kubernetes.core.k8s:
+    name: "{{ namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+```
+{% endraw %}
+
+#### Crear secreto en el ACR
+
+Esta tarea crea un `Secret` en el clúster de AKS con las credenciales necesarias para acceder al Azure Container Registry (ACR), permitiendo que Kubernetes pueda descargar imágenes privadas.
+
+{% raw %}
+```yaml title="acr_auth.yml"
+- name: Create ACR Secret in Kubernetes
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ namespace }}"
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: acr-secret
+      type: kubernetes.io/dockerconfigjson
+      data:
+        .dockerconfigjson: "{{ lookup('template', 'acr-auth.json.j2') | from_yaml | to_json | b64encode }}"
+```
+{% endraw %}
+
+El secreto se genera a partir de la plantilla `acr-auth.json.j2`, que contiene las credenciales codificadas en base64:
+
+{% raw %}
+```json title="acr-auth.json.j2"
+{
+  "auths": {
+    "{{ acr_name }}.azurecr.io": {
+      "username": "{{ acr_username }}",
+      "password": "{{ acr_password }}",
+      "auth": "{{ (acr_username + ':' + acr_password) | b64encode }}"
+    }
+  }
+}
+```
+{% endraw %}
+
+#### Crear volumen persistente
+
+Esta tarea crea un `PersistentVolumeClaim` en el clúster de AKS, necesario para mantener los datos persistentes entre reinicios del contenedor.
+
+{% raw %}
+```yaml title="pvc.yml"
+- name: Apply PersistentVolumeClaim
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ namespace }}"
+    definition: "{{ lookup('template', 'pvc.yml.j2') }}"
+```
+{% endraw %}
+
+La plantilla utilizada define un volumen de 5GiB con acceso en modo lectura-escritura por un único nodo:
+
+{% raw %}
+```yaml title="pvc.yml.j2"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ pvc_name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+```
+{% endraw %}
+
+#### Desplegar aplicación
+
+Esta tarea aplica el `Deployment` de Kubernetes necesario para ejecutar la aplicación StackEdit. Se especifica la imagen publicada en el ACR, el puerto interno del contenedor, el volumen persistente y las credenciales de acceso al registro.
+
+{% raw %}
+```yaml title="deploy.yml"
+- name: Deploy Application
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ namespace }}"
+    definition: "{{ lookup('template', 'deployment.yml.j2') }}"
+```
+{% endraw %}
+
+La plantilla del manifiesto define una réplica del contenedor con puerto interno `8080` y volumen montado en `/data`:
+
+{% raw %}
+```yaml title="deployment.yml.j2"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stackedit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stackedit
+  template:
+    metadata:
+      labels:
+        app: stackedit
+    spec:
+      containers:
+      - name: stackedit
+        image: "{{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: storage
+          mountPath: "/data"
+        env:
+        - name: ENV_VAR
+          value: "example-value"
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: {{ pvc_name }}
+      imagePullSecrets:
+      - name: acr-secret
+```
+{% endraw %}

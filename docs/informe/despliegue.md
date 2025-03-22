@@ -45,10 +45,10 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
 
 ### Publicación de las imágenes mediante Ansible
 
-Para publicar imágenes en el ACR utilizando Ansible, se ha creado un playbook llamado `publish-images.yaml`. Para llevar a cabo su ejecución, es necesario utilizar el siguiente comando.
+Para publicar imágenes en el ACR utilizando Ansible, se ha creado un playbook llamado `publish-images.yaml`. Para llevar a cabo su ejecución, es necesario es necesario ejecutar desde el directorio de ansible el siguiente comando.
 
 ```sh
-ansible-playbook ansible/publish_images.yml -i ansible/hosts.yml --extra-vars "@ansible/vars.yml" --ask-vault-pass
+ansible-playbook publish_images.yml -i hosts.yml --ask-vault-pass
 ```
 
 Este comando construye la imagen de MkDocs, descarga la imagen pública de StackEdit y publica ambas imágenes en el ACR desde la VM.
@@ -106,11 +106,29 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
 
 ## Configuración del AKS
 
+El despliegue de la aplicación en el clúster de Kubernetes se realiza mediante Ansible, aplicando los manifiestos necesarios para crear el namespace, el deployment, el PersistentVolumeClaim, el Service y el secret de acceso al ACR. Todo el proceso queda automatizado en el playbook `playbook_aks.yml`.
 
-??? note "Descargar credenciales en local"
+1. Descargar credenciales del AKS para interactuar con el clúster desde kubectl.
 
     El siguiente comando guarda las credenciales del AKS en `/home/<USER>/.kube/config` y marca como contexto el AKS seleccionado.
 
     ```sh
     az aks get-credentials --resource-group rg-weu-cp2-dev --name aks-weu-cp2-dev
     ```
+
+
+2. Ejecutar el playbook de Ansible para desplegar la aplicación en AKS. Este comando debe lanzarse desde la raíz del proyecto.
+
+    ```
+    ansible-playbook playbook_aks.yml -i hosts.yml --ask-vault-pass
+    ```
+
+3. Para obtener la IP pública del servicio y acceder a la aplicación desplegada, ejecuta el siguiente comando.
+
+    ```sh
+    kubectl get svc stackedit-service -n cp2 -o jsonpath="{.status.loadBalancer.ingress[0].ip}"
+    ```
+
+    La aplicación estará disponible en esa dirección IP a través del puerto 80.
+
+🚀 Con estos pasos, se completa el despliegue y configuración íntegra del caso práctico: se ha provisionado toda la infraestructura necesaria, se han publicado las imágenes de contenedor en el ACR, y se ha puesto en marcha tanto la VM como el clúster de AKS. El entorno queda totalmente funcional, con los contenedores desplegados y ejecutándose a partir de sus respectivas imágenes.

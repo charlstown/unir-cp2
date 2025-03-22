@@ -1,0 +1,5 @@
+- name: Deploy Application
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ namespace }}"
+    definition: "{{ lookup('template', 'deployment.yml.j2') }}"

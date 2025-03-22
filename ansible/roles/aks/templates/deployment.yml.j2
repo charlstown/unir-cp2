@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stackedit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stackedit
+  template:
+    metadata:
+      labels:
+        app: stackedit
+    spec:
+      containers:
+      - name: stackedit
+        image: "{{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: storage
+          mountPath: "/data"
+        env:
+        - name: ENV_VAR
+          value: "example-value"
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: {{ pvc_name }}
+      imagePullSecrets:
+      - name: acr-secret

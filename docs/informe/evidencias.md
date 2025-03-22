@@ -430,4 +430,72 @@ Si introducimos el usuario y la contraseña tendremos acceso a la web de la imag
 
 ![web-nginx](../assets/images/screenshot-web-mkdocs.png)
 
+
 ## Despliegue en el AKS
+
+A continuación se muestran las evidencias de que el despliegue del contenedor en AKS se ha realizado correctamente tras ejecutar el siguiente comando, el cual aplica el rol `aks`:
+
+```sh
+ansible-playbook playbook_aks.yml -i hosts.yml --ask-vault-pass
+```
+
+Podemos comprobar que el servicio se ha creado correctamente con tipo `LoadBalancer` y que la IP pública ha sido asignada:
+
+```sh
+kubectl get svc stackedit-service -n cp2
+```
+
+Resultado:
+
+```
+NAME                TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
+stackedit-service   LoadBalancer   10.0.237.2     74.178.201.19   80:32417/TCP   40m
+```
+
+Esto indica que la aplicación desplegada está accesible públicamente a través de la IP `74.178.201.19`.
+
+Podemos validar que el contenedor se ha desplegado correctamente y que está sirviendo en el puerto `80`:
+
+```sh
+kubectl logs -n cp2 -l app=stackedit
+```
+
+Resultado:
+
+```
+HTTP server started: http://localhost:8080
+```
+
+Por tanto, accediendo desde el navegador a `http://74.178.201.19` se podrá visualizar la interfaz web de StackEdit.
+
+![web-aks-stackedit](../assets/images/screenshot-web-stackedit-aks.png)
+
+Esto confirma que el despliegue en AKS se ha realizado con éxito, con el contenedor sirviendo desde la imagen publicada en el ACR.
+
+### Comprobación de persistencia
+
+Para validar que el contenedor desplegado en AKS cuenta con almacenamiento persistente, se realiza la siguiente prueba:
+
+1. **Crear una nota** desde la interfaz web de StackEdit accediendo a `http://74.178.201.19`.
+
+Se añade una nueva nota con el siguiente contenido:
+
+```markdown
+# HelloWorld from the Cloud 🚀  
+_“Bienvenido al desierto de lo real.” — Morfeo_
+```
+
+![markdown-note](../assets/images/screenshot-markdown-note.png)
+2. **Eliminar el pod** para forzar su recreación automática por Kubernetes:
+
+```sh
+kubectl delete pod -n cp2 -l app=stackedit
+```
+
+Desde Lens podemos ver como se recrea el contenedor.
+
+  ![lens-pod](../assets/images/screenshot-lens-pod.png)
+3. **Actualizar la página web** tras unos segundos.  
+La nota debería seguir estando presente, lo que confirma que el volumen persistente está funcionando correctamente.
+
+![markdown-note](../assets/images/screenshot-markdown-note.png)

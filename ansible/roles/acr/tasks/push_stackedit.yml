@@ -1,12 +1,12 @@
 ---
 - name: Pull StackEdit image from Docker Hub
   command: >
-    podman pull docker.io/benweet/stackedit-base:latest
+    podman pull docker.io/benweet/stackedit:latest
   become: yes
 
 - name: Tag StackEdit image for ACR
   command: >
-    podman tag docker.io/benweet/stackedit-base:latest {{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}
+    podman tag docker.io/benweet/stackedit:latest {{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}
   become: yes
 
 - name: Push StackEdit image to ACR
