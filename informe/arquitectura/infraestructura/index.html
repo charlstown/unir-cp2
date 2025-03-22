@@ -1,0 +1,1954 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Automatización de Infraestructura en Azure con Terraform y Ansible">
+      
+      
+        <meta name="author" content="Carlos Grande">
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../configuracion/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Infraestructura - Unir CP2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/pdf-custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#estructura-de-ficheros-terraform" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Unir CP2" class="md-header__button md-logo" aria-label="Unir CP2" data-md-component="logo">
+      
+  <img src="../../../assets/images/favicon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Unir CP2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Infraestructura
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/charlstown/unir-cp2" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Inicio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Informe
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Unir CP2" class="md-nav__button md-logo" aria-label="Unir CP2" data-md-component="logo">
+      
+  <img src="../../../assets/images/favicon.svg" alt="logo">
+
+    </a>
+    Unir CP2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/charlstown/unir-cp2" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inicio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Informe
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Informe
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Arquitectura
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Arquitectura
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Infraestructura
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Infraestructura
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#estructura-de-ficheros-terraform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estructura de ficheros Terraform
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estructura de ficheros Terraform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichero-principal-maintf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero principal main.tf
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fichero principal main.tf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuracion-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuración base
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llamada-a-modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Llamada a módulos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generacion-del-inventario" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generación del inventario
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-terraformtfvars" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero terraform.tfvars
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Módulos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Módulos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container registry
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container registry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichero-maintf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero main.tf
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maquina-virtual" class="md-nav__link">
+    <span class="md-ellipsis">
+      Máquina virtual
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Máquina virtual">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichero-maintf_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero main.tf
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-networktf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero network.tf
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-securitytf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero security.tf
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-service-aks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes service (AKS)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes service (AKS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichero-maintf_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero main.tf
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuracion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuración
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../despliegue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Despliegue
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evidencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Evidencias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../licencia/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Licencia
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../referencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Referencias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#estructura-de-ficheros-terraform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estructura de ficheros Terraform
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estructura de ficheros Terraform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichero-principal-maintf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero principal main.tf
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fichero principal main.tf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuracion-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuración base
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llamada-a-modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Llamada a módulos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generacion-del-inventario" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generación del inventario
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-terraformtfvars" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero terraform.tfvars
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Módulos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Módulos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container registry
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container registry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichero-maintf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero main.tf
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maquina-virtual" class="md-nav__link">
+    <span class="md-ellipsis">
+      Máquina virtual
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Máquina virtual">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichero-maintf_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero main.tf
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-networktf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero network.tf
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-securitytf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero security.tf
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-service-aks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes service (AKS)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes service (AKS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichero-maintf_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fichero main.tf
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="infraestructura"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1.44 0v7.575l6.561 3.79V3.787zm21.12 4.227-6.561 3.791v7.574l6.56-3.787zM8.72 4.23v7.575l6.561 3.787V8.018zm0 8.405v7.575L15.28 24v-7.578z"/></svg></span> Infraestructura<a class="headerlink" href="#infraestructura" title="Permanent link">&para;</a></h1>
+<p>A continuación se describen los diferentes componentes de la infraestructura desplegados con terraform y la justificación de sus configuraciones.</p>
+<h2 id="estructura-de-ficheros-terraform">Estructura de ficheros Terraform<a class="headerlink" href="#estructura-de-ficheros-terraform" title="Permanent link">&para;</a></h2>
+<p>Para la implementación de la infraestructura, se ha seguido una organización modular en Terraform, siguiendo las mejores prácticas recomendadas en la comunidad <a href="../../referencias/">(Stivenson, 2023)</a>. A continuación, se describe la estructura de los archivos y su propósito dentro del proyecto.</p>
+<div class="highlight"><pre><span></span><code>terraform/
+├── main.tf           # Archivo principal que llama a los módulos y recursos
+├── modules/          # Carpeta que contiene los módulos de infraestructura
+│   ├── acr/          # Módulo para desplegar Azure Container Registry (ACR)
+│   ├── aks/          # Módulo para desplegar Azure Kubernetes Service (AKS)
+│   └── vm/           # Módulo para desplegar la máquina virtual en Azure
+├── outputs.tf        # Define las salidas (outputs) de Terraform
+├── terraform.tfvars  # Define valores específicos para esta implementación
+└── vars.tf           # Define las variables requeridas para el despliegue
+</code></pre></div>
+<h3 id="fichero-principal-maintf">Fichero principal <code>main.tf</code><a class="headerlink" href="#fichero-principal-maintf" title="Permanent link">&para;</a></h3>
+<p>El archivo main.tf define la infraestructura base del proyecto y se estructura en tres secciones principales:</p>
+<ul>
+<li><strong>Configuración base:</strong> define el proveedor azurerm, el grupo de recursos y variables locales para el entorno.</li>
+<li><strong>Llamada a los módulos:</strong> incluyendo la máquina virtual (VM), el registro de contenedores (ACR) y el clúster de Kubernetes (AKS).</li>
+<li><strong>Generación dinámica del inventario de Ansible:</strong> crea automáticamente un archivo hosts.yml con la información de conexión necesaria para la configuración mediante Ansible.</li>
+</ul>
+<h4 id="configuracion-base">Configuración base<a class="headerlink" href="#configuracion-base" title="Permanent link">&para;</a></h4>
+<div class="highlight"><span class="filename">main.tf</span><pre><span></span><code><span class="nb">terraform</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nb">required_providers</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">azurerm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="na">source</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;hashicorp/azurerm&quot;</span>
+<span class="w">      </span><span class="na">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;~&gt;3.0&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Configuración del proveedor de Azure</span>
+<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;azurerm&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">subscription_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;fb24fc1f-67e2-4871-8be2-c10a36e74c93&quot;</span>
+<span class="w">  </span><span class="nb">features</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="c1"># Define la variable de entorno elegida para el despliegue</span>
+<span class="nb">locals</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">env_suffix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;-${var.environment}&quot;</span>
+<span class="p">}</span>
+
+<span class="c1"># Crear un grupo de recursos en West Europe</span>
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_resource_group&quot;</span><span class="w"> </span><span class="nv">&quot;rg&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${var.resource_group_name}-${var.environment}&quot;</span>
+<span class="w">  </span><span class="na">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.location</span>
+<span class="w">  </span><span class="na">tags</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nv">var.tags</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="llamada-a-modulos">Llamada a módulos<a class="headerlink" href="#llamada-a-modulos" title="Permanent link">&para;</a></h4>
+<p>Contiene la llamada a los diferentes módulos de infraestructura, incluyendo la máquina virtual (VM), el registro de contenedores (ACR) y el clúster de Kubernetes (AKS).</p>
+<p>A continuación, se muestra un ejemplo de la estructura de un módulo en main.tf, en este caso, la definición del AKS:</p>
+<div class="highlight"><span class="filename">main.tf</span><pre><span></span><code><span class="c1"># Llamar al módulo del AKS</span>
+<span class="kr">module</span><span class="w"> </span><span class="nv">&quot;aks&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">source</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;./modules/aks&quot;</span>
+<span class="w">  </span><span class="na">aks_name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${var.aks_name}-${var.environment}&quot;</span>
+<span class="w">  </span><span class="na">resource_group</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_resource_group.rg.name</span>
+<span class="w">  </span><span class="na">location</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_resource_group.rg.location</span>
+<span class="w">  </span><span class="na">dns_prefix</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nv">var.dns_prefix</span>
+<span class="w">  </span><span class="na">node_count</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nv">var.node_count</span>
+<span class="w">  </span><span class="na">vm_size</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="nv">var.aks_vm_size</span>
+<span class="w">  </span><span class="na">acr_id</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="nv">module.container_registry.acr_id</span>
+<span class="w">  </span><span class="na">tags</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">var.tags</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="generacion-del-inventario">Generación del inventario<a class="headerlink" href="#generacion-del-inventario" title="Permanent link">&para;</a></h4>
+<p>La generación del inventario de Ansible se realiza dinámicamente con Terraform para automatizar la configuración de la infraestructura. Se emplea el recurso <code>local_file</code> para crear el archivo <code>hosts.yml</code> basado en una plantilla que incluye información clave de los recursos desplegados:</p>
+<ul>
+<li><strong>Máquina virtual</strong>: Dirección IP pública, usuario y clave SSH.</li>
+<li><strong>Azure Container Registry (ACR)</strong>: Nombre, servidor de login, credenciales de acceso.</li>
+<li><strong>Clúster AKS</strong>: Nombre y grupo de recursos asociado.</li>
+</ul>
+<div class="highlight"><span class="filename">main.tf</span><pre><span></span><code><span class="c1"># Generar el archivo hosts.yml</span>
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;local_file&quot;</span><span class="w"> </span><span class="nv">&quot;ansible_inventory&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;../ansible/hosts.yml&quot;</span>
+<span class="w">  </span><span class="na">content</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nf">templatefile</span><span class="p">(</span><span class="s2">&quot;../ansible/hosts.tmpl&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">vm_name</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="nv">var.vm_name</span>
+<span class="w">    </span><span class="na">vm_public_ip</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nv">module.virtual_machine.vm_public_ip</span>
+<span class="w">    </span><span class="na">vm_username</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="nv">var.vm_username</span>
+<span class="w">    </span><span class="na">ssh_private_key</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;~/.ssh/az_unir_rsa&quot;</span>
+<span class="w">    </span><span class="na">python_interpreter</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nv">var.python_interpreter</span>
+<span class="w">    </span><span class="na">acr_name</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${var.acr_name}${var.environment}&quot;</span>
+<span class="w">    </span><span class="na">acr_login_server</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${var.acr_name}${var.environment}.azurecr.io&quot;</span>
+<span class="w">    </span><span class="na">acr_username</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nv">module.container_registry.acr_username</span>
+<span class="w">    </span><span class="na">acr_password</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nv">module.container_registry.acr_password</span>
+<span class="w">    </span><span class="na">aks_name</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">var.aks_name</span>
+<span class="w">    </span><span class="na">aks_resource_group</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nv">var.resource_group_name</span>
+<span class="w">  </span><span class="p">})</span>
+</code></pre></div>
+<p>Esta instrucción de terraform apunta al fichero <code>hosts.tmpl</code> de la carpeta de ansible y que usa como plantilla para generar el fichero de inventario <code>hosts.yml</code>.</p>
+<div class="highlight"><span class="filename">hosts.tmpl</span><pre><span></span><code><span class="nt">all</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">children</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">azure_vm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">${vm_name}</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${vm_public_ip}</span>
+<span class="w">          </span><span class="nt">ansible_user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${vm_username}</span>
+<span class="w">          </span><span class="nt">ansible_ssh_private_key_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ssh_private_key}</span>
+<span class="w">          </span><span class="nt">ansible_python_interpreter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${python_interpreter}</span>
+
+<span class="w">    </span><span class="nt">azure_acr</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">${acr_name}</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">acr_login_server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${acr_login_server}</span>
+
+<span class="w">    </span><span class="nt">azure_aks</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">${aks_name}</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">aks_resource_group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${aks_resource_group}</span>
+<span class="w">          </span><span class="nt">ansible_connection</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="w">          </span><span class="nt">ansible_python_interpreter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/bin/python3</span>
+</code></pre></div>
+<p>Esto permite que Ansible trabaje con información actualizada sin intervención manual, garantizando coherencia y simplificando la configuración.</p>
+<h3 id="fichero-terraformtfvars">Fichero <code>terraform.tfvars</code><a class="headerlink" href="#fichero-terraformtfvars" title="Permanent link">&para;</a></h3>
+<p>El fichero define las variables utilizadas en el despliegue de la infraestructura, priorizando configuraciones de bajo coste para optimizar el uso de recursos en el ejercicio. </p>
+<p>Se establece un entorno de desarrollo (<code>dev</code>), una máquina virtual con especificaciones mínimas y un clúster AKS con un solo nodo. Además, se configura un ACR y una red con una subred pequeña para evitar sobreasignación de recursos innecesaria.</p>
+<div class="highlight"><span class="filename">terraform.tfvars</span><pre><span></span><code><span class="c1"># Generic</span>
+<span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rg-weu-cp2&quot;</span>
+<span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;West Europe&quot;</span>
+<span class="na">environment</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;dev&quot;</span>
+
+<span class="c1"># ACR</span>
+<span class="na">acr_name</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;acrweucp2&quot;</span>
+
+<span class="c1"># virtual machine</span>
+<span class="na">vm_name</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;vm-weu-cp2-docs&quot;</span>
+<span class="na">vm_username</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;charlstown&quot;</span>
+<span class="na">vm_size</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Standard_B1ms&quot;   # &quot;Standard_B1ls&quot;</span>
+<span class="na">ssh_public_key</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;~/.ssh/az_unir_rsa.pub&quot;</span>
+<span class="na">python_interpreter</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/usr/bin/python3&quot;</span>
+
+<span class="c1"># Networking</span>
+<span class="na">vnet_name</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;vnet-weu-cp2&quot;</span>
+<span class="na">subnet_name</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;subnet-weu-cp2&quot;</span>
+<span class="na">subnet_cidr</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;10.0.1.0/28&quot;</span>
+
+<span class="c1"># Image</span>
+<span class="na">image_os</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;22_04-lts-gen2&quot;</span>
+<span class="na">image_offer</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0001-com-ubuntu-server-jammy&quot;</span>
+<span class="c1"># check offers here: https://documentation.ubuntu.com/azure/en/latest/azure-how-to/instances/find-ubuntu-images/</span>
+
+<span class="c1"># AKS</span>
+<span class="na">aks_name</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;aks-weu-cp2&quot;</span>
+<span class="na">dns_prefix</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;aksweucp2&quot;</span>
+<span class="na">node_count</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
+<span class="na">aks_vm_size</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Standard_B2s&quot;</span>
+
+<span class="c1"># Tags</span>
+<span class="nb">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;casopractico2&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="modulos">Módulos<a class="headerlink" href="#modulos" title="Permanent link">&para;</a></h2>
+<h3 id="container-registry">Container registry<a class="headerlink" href="#container-registry" title="Permanent link">&para;</a></h3>
+<p>La infraestructura de <strong>Azure Container Service(ACR)</strong> se ha definido utilizando <strong>Terraform</strong>, organizando los recursos en módulos separados para mejorar la modularidad y reutilización del código. A continuación, se presentan los archivos principales que definen el despliegue:</p>
+<div class="highlight"><pre><span></span><code>terraform/
+│── terraform.tfvars        # Variables globales del despliegue
+│── main.tf                 # Llamada a módulos y recursos principales
+│── modules/
+│   ├── acr/                # Módulo del ACR
+│   │   ├── main.tf         # Definición del ACR
+│   │   ├── outputs.tf      # Variables de salida
+│   │   └── variables.tf    # Definición de variables del módulo
+</code></pre></div>
+<div class="admonition example">
+<p>Puedes ver las evidencias de este despliegue en el <a href="../../evidencias/#creacion-del-acr"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 6H5v4h2V8h2m10 2h-2v2h-2v2h4m2 2H3V4h18m0-2H3c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h7v2H8v2h8v-2h-2v-2h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2"/></svg></span> siguiente enlace</a>.</p>
+</div>
+<h4 id="fichero-maintf">Fichero <code>main.tf</code><a class="headerlink" href="#fichero-maintf" title="Permanent link">&para;</a></h4>
+<p>El fichero <code>main.tf</code> del módulo del ACR recoge únicamente el recurso <code>azurerm_container_registry</code>.</p>
+<div class="highlight"><span class="filename">main.tf</span><pre><span></span><code><span class="c1"># Crear Azure Container Registry (ACR)</span>
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_container_registry&quot;</span><span class="w"> </span><span class="nv">&quot;acr&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="nv">var.acr_name</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.resource_group</span>
+<span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">var.location</span>
+<span class="w">  </span><span class="na">sku</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Basic&quot;</span><span class="c1">  # Opción más barata</span>
+<span class="w">  </span><span class="na">admin_enabled</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="na">tags</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="nv">var.tags</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>var.acr_name</code></strong></td>
+<td>Define el nombre del registro de contenedores. Se usa una variable para permitir reutilización y facilitar la personalización sin modificar el código.</td>
+</tr>
+<tr>
+<td><strong><code>var.resource_group</code></strong></td>
+<td>Especifica el grupo de recursos donde se desplegará el ACR.</td>
+</tr>
+<tr>
+<td><strong><code>var.location</code></strong></td>
+<td>Indica la región de Azure en la que se despliega el registro.</td>
+</tr>
+<tr>
+<td><strong><code>sku = "Basic"</code></strong></td>
+<td>Se elige el nivel <strong>Basic</strong>, ya que es la opción más económica y suficiente para los requisitos del ejercicio. Alternativamente, se podría usar <code>Standard</code> o <code>Premium</code> si se requiriera mayor escalabilidad o funcionalidades adicionales.</td>
+</tr>
+<tr>
+<td><strong><code>admin_enabled = true</code></strong></td>
+<td>Habilita el acceso mediante credenciales de administrador. Se activa para simplificar la autenticación en el entorno de pruebas, aunque en entornos de producción sería recomendable deshabilitarlo y usar autenticación con identidades de Azure AD.</td>
+</tr>
+<tr>
+<td><strong><code>tags = var.tags</code></strong></td>
+<td>Permite agregar metadatos al recurso para organización y clasificación dentro de Azure.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="maquina-virtual">Máquina virtual<a class="headerlink" href="#maquina-virtual" title="Permanent link">&para;</a></h3>
+<p>La infraestructura de la máquina virtual se ha definido utilizando <strong>Terraform</strong>, organizando los recursos en módulos separados para mejorar la modularidad y reutilización del código. A continuación, se presentan los archivos principales que definen el despliegue:</p>
+<div class="highlight"><pre><span></span><code>terraform/
+│──<span class="w"> </span>terraform.tfvars<span class="w">        </span><span class="c1"># Variables globales del despliegue</span>
+│──<span class="w"> </span>main.tf<span class="w">                 </span><span class="c1"># Llamada a módulos y recursos principales</span>
+│──<span class="w"> </span>modules/
+│<span class="w">   </span>├──<span class="w"> </span>vm/<span class="w">                 </span><span class="c1"># Módulo de la máquina virtual</span>
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>main.tf<span class="w">         </span><span class="c1"># Definición de la VM</span>
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>network.tf<span class="w">      </span><span class="c1"># Configuración de la red</span>
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>security.tf<span class="w">     </span><span class="c1"># Reglas de seguridad (NSG)</span>
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>outputs.tf<span class="w">      </span><span class="c1"># Variables de salida (IPs, VM ID)</span>
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>variables.tf<span class="w">    </span><span class="c1"># Definición de variables del módulo</span>
+</code></pre></div>
+<div class="admonition example">
+<p>Puedes ver las evidencias de este despliegue en el <a href="../../evidencias/#creacion-de-la-vm"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 6H5v4h2V8h2m10 2h-2v2h-2v2h4m2 2H3V4h18m0-2H3c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h7v2H8v2h8v-2h-2v-2h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2"/></svg></span> siguiente enlace</a>.</p>
+</div>
+<h4 id="fichero-maintf_1">Fichero <code>main.tf</code><a class="headerlink" href="#fichero-maintf_1" title="Permanent link">&para;</a></h4>
+<p>El fichero <code>main.tf</code> del módulo de la máquina virtual recoge los siguientes recursos:</p>
+<ul>
+<li><em>IP Pública</em> → Asigna una dirección IP fija a la VM para acceso remoto.  </li>
+<li><em>Interfaz de Red (NIC)</em> → Proporciona conectividad a la máquina virtual en la red definida.  </li>
+<li><em>Máquina Virtual (VM)</em> → Instancia de un sistema operativo en Azure con configuración personalizada.  </li>
+</ul>
+<h5 id="ip-publica">IP Pública<a class="headerlink" href="#ip-publica" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">main.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_public_ip&quot;</span><span class="w"> </span><span class="nv">&quot;vm_public_ip&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${var.vm_name}-public-ip&quot;</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.resource_group</span>
+<span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">var.location</span>
+<span class="w">  </span><span class="na">allocation_method</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Static&quot;</span>
+<span class="w">  </span><span class="na">tags</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="nv">var.tags</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>var.vm_name</code></strong></td>
+<td>Se usa para nombrar la IP pública de la VM de manera única dentro del recurso.</td>
+</tr>
+<tr>
+<td><strong><code>var.resource_group</code></strong></td>
+<td>Grupo de recursos en el que se despliega la IP pública.</td>
+</tr>
+<tr>
+<td><strong><code>var.location</code></strong></td>
+<td>Región de Azure donde se asignará la IP.</td>
+</tr>
+<tr>
+<td><strong><code>allocation_method = "Static"</code></strong></td>
+<td>Se usa IP <strong>estática</strong> para mantener una dirección fija y evitar cambios en reinicios.</td>
+</tr>
+<tr>
+<td><strong><code>var.tags</code></strong></td>
+<td>Se añaden etiquetas para organización y clasificación dentro de Azure.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="interfaz-de-red-nic">Interfaz de Red (NIC)<a class="headerlink" href="#interfaz-de-red-nic" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">main.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_network_interface&quot;</span><span class="w"> </span><span class="nv">&quot;nic&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${var.vm_name}-nic&quot;</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.resource_group</span>
+<span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">var.location</span>
+
+<span class="w">  </span><span class="nb">ip_configuration</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">name</span><span class="w">                          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;internal&quot;</span>
+<span class="w">    </span><span class="na">subnet_id</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_subnet.subnet.id</span>
+<span class="w">    </span><span class="na">public_ip_address_id</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_public_ip.vm_public_ip.id</span>
+<span class="w">    </span><span class="na">private_ip_address_allocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Dynamic&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="na">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.tags</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>var.vm_name</code></strong></td>
+<td>Nombre de la interfaz de red, vinculado a la VM.</td>
+</tr>
+<tr>
+<td><strong><code>var.resource_group</code></strong></td>
+<td>Grupo de recursos donde se crea la NIC.</td>
+</tr>
+<tr>
+<td><strong><code>var.location</code></strong></td>
+<td>Región donde se despliega la interfaz.</td>
+</tr>
+<tr>
+<td><strong><code>var.subnet_id</code></strong></td>
+<td>Identificador de la subred a la que se conecta la NIC.</td>
+</tr>
+<tr>
+<td><strong><code>var.public_ip_address_id</code></strong></td>
+<td>Asigna la <strong>IP pública estática</strong> previamente definida.</td>
+</tr>
+<tr>
+<td><strong><code>private_ip_address_allocation = "Dynamic"</code></strong></td>
+<td>Permite que Azure asigne automáticamente una IP privada a la VM.</td>
+</tr>
+<tr>
+<td><strong><code>var.tags</code></strong></td>
+<td>Se incluyen etiquetas para organización.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="maquina-virtual-linux">Máquina Virtual Linux<a class="headerlink" href="#maquina-virtual-linux" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">main.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_linux_virtual_machine&quot;</span><span class="w"> </span><span class="nv">&quot;vm&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="nv">var.vm_name</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nv">var.resource_group</span>
+<span class="w">  </span><span class="na">location</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="nv">var.location</span>
+<span class="w">  </span><span class="na">size</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="nv">var.vm_size</span>
+<span class="w">  </span><span class="na">admin_username</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nv">var.admin_username</span>
+<span class="w">  </span><span class="na">network_interface_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">azurerm_network_interface.nic.id</span><span class="p">]</span>
+
+<span class="w">  </span><span class="nb">admin_ssh_key</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">username</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nv">var.admin_username</span>
+<span class="w">    </span><span class="na">public_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.ssh_public_key</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="nb">os_disk</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">caching</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ReadWrite&quot;</span>
+<span class="w">    </span><span class="na">storage_account_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Standard_LRS&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="nb">source_image_reference</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Canonical&quot;</span>
+<span class="w">    </span><span class="na">offer</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nv">var.image_offer</span>
+<span class="w">    </span><span class="na">sku</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="nv">var.image_os</span>
+<span class="w">    </span><span class="na">version</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;latest&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="na">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.tags</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>var.vm_name</code></strong></td>
+<td>Nombre de la máquina virtual.</td>
+</tr>
+<tr>
+<td><strong><code>var.resource_group</code></strong></td>
+<td>Grupo de recursos en el que se despliega la VM.</td>
+</tr>
+<tr>
+<td><strong><code>var.location</code></strong></td>
+<td>Región donde se despliega la máquina.</td>
+</tr>
+<tr>
+<td><strong><code>var.vm_size</code></strong></td>
+<td>Tipo de máquina virtual seleccionada para optimizar coste y rendimiento.</td>
+</tr>
+<tr>
+<td><strong><code>var.admin_username</code></strong></td>
+<td>Usuario administrador de la VM.</td>
+</tr>
+<tr>
+<td><strong><code>var.ssh_public_key</code></strong></td>
+<td>Clave pública SSH para autenticación sin contraseña.</td>
+</tr>
+<tr>
+<td><strong><code>var.network_interface_ids</code></strong></td>
+<td>Conecta la VM a la interfaz de red creada.</td>
+</tr>
+<tr>
+<td><strong><code>caching = "ReadWrite"</code></strong></td>
+<td>Optimización del rendimiento del disco del sistema.</td>
+</tr>
+<tr>
+<td><strong><code>storage_account_type = "Standard_LRS"</code></strong></td>
+<td>Tipo de almacenamiento del disco OS, seleccionado por costo y disponibilidad.</td>
+</tr>
+<tr>
+<td><strong><code>var.image_offer</code></strong></td>
+<td>Imagen de sistema operativo en el Azure Marketplace.</td>
+</tr>
+<tr>
+<td><strong><code>var.image_os</code></strong></td>
+<td>Versión específica del sistema operativo (<code>Ubuntu 22.04 LTS</code>).</td>
+</tr>
+<tr>
+<td><strong><code>var.tags</code></strong></td>
+<td>Etiquetas para gestión y organización dentro de Azure.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="fichero-networktf">Fichero <code>network.tf</code><a class="headerlink" href="#fichero-networktf" title="Permanent link">&para;</a></h4>
+<p>El fichero <code>network.tf</code> del módulo de la máquina virtual recoge los siguientes recursos:  </p>
+<ul>
+<li><em>Red Virtual (VNet)</em> → Define el espacio de direcciones y la conectividad general.  </li>
+<li><em>Subred</em> → Segmenta la red dentro de la VNet, optimizando la asignación de direcciones IP.</li>
+</ul>
+<h5 id="red-virtual-vnet">Red Virtual (VNet)<a class="headerlink" href="#red-virtual-vnet" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">network.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_virtual_network&quot;</span><span class="w"> </span><span class="nv">&quot;vnet&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="nv">var.vnet_name</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.resource_group</span>
+<span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">var.location</span>
+<span class="w">  </span><span class="na">address_space</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;10.0.0.0/16&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="na">tags</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="nv">var.tags</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>var.vnet_name</code></strong></td>
+<td>Nombre de la red virtual, definido como variable para flexibilidad.</td>
+</tr>
+<tr>
+<td><strong><code>var.resource_group</code></strong></td>
+<td>Grupo de recursos donde se despliega la VNet.</td>
+</tr>
+<tr>
+<td><strong><code>var.location</code></strong></td>
+<td>Región de Azure donde se crea la red.</td>
+</tr>
+<tr>
+<td><strong><code>address_space = ["10.0.0.0/16"]</code></strong></td>
+<td>Espacio de direcciones IP asignado a la red virtual, lo que permite futuras segmentaciones.</td>
+</tr>
+<tr>
+<td><strong><code>var.tags</code></strong></td>
+<td>Etiquetas opcionales para organización y gestión en Azure.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="subred">Subred<a class="headerlink" href="#subred" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">network.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_subnet&quot;</span><span class="w"> </span><span class="nv">&quot;subnet&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="nv">var.subnet_name</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nv">var.resource_group</span>
+<span class="w">  </span><span class="na">virtual_network_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_virtual_network.vnet.name</span>
+<span class="w">  </span><span class="na">address_prefixes</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">var.subnet_cidr</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>var.subnet_name</code></strong></td>
+<td>Nombre de la subred dentro de la VNet.</td>
+</tr>
+<tr>
+<td><strong><code>var.resource_group</code></strong></td>
+<td>Grupo de recursos en el que se define la subred.</td>
+</tr>
+<tr>
+<td><strong><code>var.virtual_network_name</code></strong></td>
+<td>Relación con la red virtual a la que pertenece la subred.</td>
+</tr>
+<tr>
+<td><strong><code>address_prefixes = [var.subnet_cidr]</code></strong></td>
+<td>Define el rango de direcciones IP asignado a la subred (<code>10.0.1.0/28</code>), optimizando el uso de IPs.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="fichero-securitytf">Fichero <code>security.tf</code><a class="headerlink" href="#fichero-securitytf" title="Permanent link">&para;</a></h4>
+<p>El fichero <code>security.tf</code> del módulo de la máquina virtual recoge los siguientes recursos:</p>
+<ul>
+<li><em>Grupo de Seguridad de Red (NSG)</em> → Gestiona las reglas de tráfico para la máquina virtual.  </li>
+<li><em>Reglas de Seguridad (Security Rules)</em> → Permiten o bloquean tráfico en puertos específicos.</li>
+</ul>
+<h5 id="grupo-de-seguridad-de-red-nsg">Grupo de Seguridad de Red (NSG)<a class="headerlink" href="#grupo-de-seguridad-de-red-nsg" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">security.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_network_security_group&quot;</span><span class="w"> </span><span class="nv">&quot;vm_nsg&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${var.vm_name}-nsg&quot;</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.resource_group</span>
+<span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">var.location</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>var.vm_name</code></strong></td>
+<td>Nombre del grupo de seguridad, vinculado a la VM.</td>
+</tr>
+<tr>
+<td><strong><code>var.resource_group</code></strong></td>
+<td>Grupo de recursos donde se crea el NSG.</td>
+</tr>
+<tr>
+<td><strong><code>var.location</code></strong></td>
+<td>Región de Azure donde se despliega el NSG.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="regla-para-permitir-ssh-puerto-22">Regla para permitir SSH (Puerto 22)<a class="headerlink" href="#regla-para-permitir-ssh-puerto-22" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">security.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_network_security_rule&quot;</span><span class="w"> </span><span class="nv">&quot;allow_ssh&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow-SSH&quot;</span>
+<span class="w">  </span><span class="na">priority</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="m">1000</span>
+<span class="w">  </span><span class="na">direction</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Inbound&quot;</span>
+<span class="w">  </span><span class="na">access</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span>
+<span class="w">  </span><span class="na">protocol</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Tcp&quot;</span>
+<span class="w">  </span><span class="na">source_port_range</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">destination_port_range</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;22&quot;</span>
+<span class="w">  </span><span class="na">source_address_prefix</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">destination_address_prefix</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">network_security_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_network_security_group.vm_nsg.name</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>priority = 1000</code></strong></td>
+<td>Asigna una prioridad alta para esta regla.</td>
+</tr>
+<tr>
+<td><strong><code>direction = "Inbound"</code></strong></td>
+<td>Define que la regla aplica al tráfico entrante.</td>
+</tr>
+<tr>
+<td><strong><code>access = "Allow"</code></strong></td>
+<td>Permite el tráfico en el puerto 22.</td>
+</tr>
+<tr>
+<td><strong><code>protocol = "Tcp"</code></strong></td>
+<td>Especifica que la regla aplica a conexiones TCP.</td>
+</tr>
+<tr>
+<td><strong><code>destination_port_range = "22"</code></strong></td>
+<td>Permite el acceso SSH a la VM.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="regla-para-permitir-http-puerto-80">Regla para permitir HTTP (Puerto 80)<a class="headerlink" href="#regla-para-permitir-http-puerto-80" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">security.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_network_security_rule&quot;</span><span class="w"> </span><span class="nv">&quot;allow_http&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow-HTTP&quot;</span>
+<span class="w">  </span><span class="na">priority</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="m">1010</span>
+<span class="w">  </span><span class="na">direction</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Inbound&quot;</span>
+<span class="w">  </span><span class="na">access</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span>
+<span class="w">  </span><span class="na">protocol</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Tcp&quot;</span>
+<span class="w">  </span><span class="na">source_port_range</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">destination_port_range</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;80&quot;</span>
+<span class="w">  </span><span class="na">source_address_prefix</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">destination_address_prefix</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">network_security_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_network_security_group.vm_nsg.name</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>priority = 1010</code></strong></td>
+<td>Define la prioridad de la regla para HTTP.</td>
+</tr>
+<tr>
+<td><strong><code>destination_port_range = "80"</code></strong></td>
+<td>Habilita tráfico en el puerto 80 para servir contenido web.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="regla-para-permitir-https-puerto-443">Regla para permitir HTTPS (Puerto 443)<a class="headerlink" href="#regla-para-permitir-https-puerto-443" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">security.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_network_security_rule&quot;</span><span class="w"> </span><span class="nv">&quot;allow_https&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow-HTTPS&quot;</span>
+<span class="w">  </span><span class="na">priority</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="m">1020</span>
+<span class="w">  </span><span class="na">direction</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Inbound&quot;</span>
+<span class="w">  </span><span class="na">access</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span>
+<span class="w">  </span><span class="na">protocol</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Tcp&quot;</span>
+<span class="w">  </span><span class="na">source_port_range</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">destination_port_range</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;443&quot;</span>
+<span class="w">  </span><span class="na">source_address_prefix</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">destination_address_prefix</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">network_security_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_network_security_group.vm_nsg.name</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>priority = 1020</code></strong></td>
+<td>Prioridad asignada a la regla HTTPS.</td>
+</tr>
+<tr>
+<td><strong><code>destination_port_range = "443"</code></strong></td>
+<td>Habilita tráfico en el puerto 443 para conexiones seguras.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h5 id="regla-para-permitir-todo-el-trafico-de-salida">Regla para permitir todo el tráfico de salida<a class="headerlink" href="#regla-para-permitir-todo-el-trafico-de-salida" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">security.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_network_security_rule&quot;</span><span class="w"> </span><span class="nv">&quot;allow_outbound&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow-All-Outbound&quot;</span>
+<span class="w">  </span><span class="na">priority</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="m">900</span>
+<span class="w">  </span><span class="na">direction</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Outbound&quot;</span>
+<span class="w">  </span><span class="na">access</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span>
+<span class="w">  </span><span class="na">protocol</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">source_port_range</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">destination_port_range</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">source_address_prefix</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">destination_address_prefix</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">  </span><span class="na">network_security_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_network_security_group.vm_nsg.name</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>priority = 900</code></strong></td>
+<td>Define una prioridad más baja que las reglas de entrada.</td>
+</tr>
+<tr>
+<td><strong><code>direction = "Outbound"</code></strong></td>
+<td>Aplica la regla al tráfico saliente.</td>
+</tr>
+<tr>
+<td><strong><code>access = "Allow"</code></strong></td>
+<td>Permite que la VM se comunique con otros servicios.</td>
+</tr>
+<tr>
+<td><strong><code>protocol = "*"</code></strong></td>
+<td>Permite cualquier protocolo.</td>
+</tr>
+<tr>
+<td><strong><code>destination_port_range = "*"</code></strong></td>
+<td>No restringe los puertos de destino.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="kubernetes-service-aks">Kubernetes service (AKS)<a class="headerlink" href="#kubernetes-service-aks" title="Permanent link">&para;</a></h3>
+<p>La infraestructura del <strong>Azure Kubernetes Service (AKS)</strong> se ha definido en <strong>Terraform</strong> dentro de un módulo independiente para asegurar una correcta organización y reutilización del código. Este módulo define los recursos necesarios para desplegar un clúster de Kubernetes gestionado por Azure.</p>
+<div class="highlight"><pre><span></span><code>terraform/
+│──<span class="w"> </span>terraform.tfvars<span class="w">        </span><span class="c1"># Variables globales del despliegue</span>
+│──<span class="w"> </span>main.tf<span class="w">                 </span><span class="c1"># Llamada a módulos y recursos principales</span>
+│──<span class="w"> </span>modules/
+│<span class="w">   </span>├──<span class="w"> </span>aks/<span class="w">                </span><span class="c1"># Módulo de Kubernetes Service (AKS)</span>
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>main.tf<span class="w">         </span><span class="c1"># Definición del clúster de Kubernetes</span>
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>outputs.tf<span class="w">      </span><span class="c1"># Variables de salida (Cluster ID, Node Pool ID)</span>
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>variables.tf<span class="w">    </span><span class="c1"># Definición de variables del módulo</span>
+</code></pre></div>
+<div class="admonition example">
+<p>Puedes ver las evidencias de este despliegue en el <a href="../../evidencias/#creacion-del-aks"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 6H5v4h2V8h2m10 2h-2v2h-2v2h4m2 2H3V4h18m0-2H3c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h7v2H8v2h8v-2h-2v-2h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2"/></svg></span> siguiente enlace</a>.</p>
+</div>
+<h4 id="fichero-maintf_2">Fichero <code>main.tf</code><a class="headerlink" href="#fichero-maintf_2" title="Permanent link">&para;</a></h4>
+<p>El fichero <code>main.tf</code> del módulo de AKS incluye los siguientes recursos:</p>
+<ul>
+<li><strong>Clúster de Kubernetes (AKS)</strong> → Crea una instancia de <strong>Azure Kubernetes Service</strong> con un <em>node pool</em> por defecto y acceso RBAC habilitado.</li>
+<li><strong>Role Assignment para ACR</strong> → Permite a AKS acceder al <strong>Azure Container Registry (ACR)</strong> para extraer imágenes de contenedores.</li>
+</ul>
+<h5 id="cluster-de-kubernetes-aks">Clúster de Kubernetes (AKS)<a class="headerlink" href="#cluster-de-kubernetes-aks" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">main.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_kubernetes_cluster&quot;</span><span class="w"> </span><span class="nv">&quot;aks&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="nv">var.aks_name</span>
+<span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">var.location</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.resource_group</span>
+<span class="w">  </span><span class="na">dns_prefix</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="nv">var.dns_prefix</span>
+<span class="w">  </span><span class="na">sku_tier</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Standard&quot;</span>
+
+<span class="w">  </span><span class="nb">default_node_pool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">name</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;default&quot;</span>
+<span class="w">    </span><span class="na">node_count</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nv">var.node_count</span>
+<span class="w">    </span><span class="na">vm_size</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="nv">var.vm_size</span>
+<span class="w">    </span><span class="na">os_disk_size_gb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">30</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="nb">identity</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;SystemAssigned&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="na">role_based_access_control_enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+
+<span class="w">  </span><span class="na">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.tags</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>var.aks_name</code></strong></td>
+<td>Nombre del clúster de AKS.</td>
+</tr>
+<tr>
+<td><strong><code>var.resource_group</code></strong></td>
+<td>Grupo de recursos donde se despliega el AKS.</td>
+</tr>
+<tr>
+<td><strong><code>var.location</code></strong></td>
+<td>Región de Azure donde se despliega.</td>
+</tr>
+<tr>
+<td><strong><code>var.dns_prefix</code></strong></td>
+<td>Prefijo DNS único del clúster.</td>
+</tr>
+<tr>
+<td><strong><code>sku_tier = "Standard"</code></strong></td>
+<td>Define el nivel del servicio de Kubernetes.</td>
+</tr>
+<tr>
+<td><strong><code>default_node_pool</code></strong></td>
+<td>Define el grupo de nodos (<em>Node Pool</em>) que ejecutará los contenedores.</td>
+</tr>
+<tr>
+<td><strong><code>var.node_count</code></strong></td>
+<td>Número de nodos en el <em>node pool</em> por defecto.</td>
+</tr>
+<tr>
+<td><strong><code>var.vm_size</code></strong></td>
+<td>Tamaño de las máquinas virtuales utilizadas como nodos.</td>
+</tr>
+<tr>
+<td><strong><code>os_disk_size_gb = 30</code></strong></td>
+<td>Tamaño del disco de cada nodo.</td>
+</tr>
+<tr>
+<td><strong><code>identity { type = "SystemAssigned" }</code></strong></td>
+<td>Se asigna una identidad gestionada para que el clúster pueda autenticarse con otros servicios de Azure.</td>
+</tr>
+<tr>
+<td><strong><code>role_based_access_control_enabled = true</code></strong></td>
+<td>Habilita RBAC para gestionar permisos dentro del clúster.</td>
+</tr>
+<tr>
+<td><strong><code>var.tags</code></strong></td>
+<td>Etiquetas para organización y gestión dentro de Azure.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="role-assignment-para-acr">Role Assignment para ACR<a class="headerlink" href="#role-assignment-para-acr" title="Permanent link">&para;</a></h5>
+<div class="highlight"><span class="filename">main.tf</span><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_role_assignment&quot;</span><span class="w"> </span><span class="nv">&quot;acr_pull&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">scope</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="nv">var.acr_id</span>
+<span class="w">  </span><span class="na">role_definition_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;AcrPull&quot;</span>
+<span class="w">  </span><span class="na">principal_id</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_kubernetes_cluster.aks.identity[0].principal_id</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><strong>Parámetro</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>var.acr_id</code></strong></td>
+<td>ID del Azure Container Registry asociado al clúster.</td>
+</tr>
+<tr>
+<td><strong><code>role_definition_name = "AcrPull"</code></strong></td>
+<td>Asigna el rol de <strong>AcrPull</strong>, que permite a AKS extraer imágenes de contenedores desde ACR.</td>
+</tr>
+<tr>
+<td><strong><code>principal_id</code></strong></td>
+<td>Se refiere a la identidad asignada al clúster de AKS para la autenticación con ACR.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Arquitectura">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Arquitectura
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../configuracion/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Configuración">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Configuración
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Unir CP2 - 2025
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.path", "navigation.tracking", "navigation.tabs", "navigation.instant", "navigation.sections", "navigation.footer", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link", "navigation.indexes"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../../assets/javascripts/extra.js"></script>
+      
+        <script src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+      
+        <script src="../../../assets/javascripts/drawio-reload.js"></script>
+      
+    
+  </body>
+</html>

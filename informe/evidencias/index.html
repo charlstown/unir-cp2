@@ -1,0 +1,1566 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Automatización de Infraestructura en Azure con Terraform y Ansible">
+      
+      
+        <meta name="author" content="Carlos Grande">
+      
+      
+      
+        <link rel="prev" href="../despliegue/">
+      
+      
+        <link rel="next" href="../licencia/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Evidencias - Unir CP2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/pdf-custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#despliegue-de-la-infraestructura" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Unir CP2" class="md-header__button md-logo" aria-label="Unir CP2" data-md-component="logo">
+      
+  <img src="../../assets/images/favicon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Unir CP2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Evidencias
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/charlstown/unir-cp2" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Inicio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  Informe
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Unir CP2" class="md-nav__button md-logo" aria-label="Unir CP2" data-md-component="logo">
+      
+  <img src="../../assets/images/favicon.svg" alt="logo">
+
+    </a>
+    Unir CP2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/charlstown/unir-cp2" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inicio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Informe
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Informe
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../arquitectura/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Arquitectura
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Arquitectura
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitectura/infraestructura/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Infraestructura
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitectura/configuracion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuración
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../despliegue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Despliegue
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Evidencias
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Evidencias
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#despliegue-de-la-infraestructura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Despliegue de la infraestructura
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Despliegue de la infraestructura">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-los-grupos-de-recursos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación de los grupos de recursos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación de los grupos de recursos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rg-weu-cp2-dev" class="md-nav__link">
+    <span class="md-ellipsis">
+      rg-weu-cp2-dev
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-del-acr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación del ACR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-la-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación de la VM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-del-aks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación del AKS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publicacion-de-las-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publicación de las imagenes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Publicación de las imagenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publicacion-de-imagenes-mediante-ansible" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publicación de imágenes mediante Ansible
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publicacion-mediante-github-actions-fuera-de-alcance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publicación mediante Github Actions (fuera de alcance)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validacion-de-imagenes-publicadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validación de imagenes publicadas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validación de imagenes publicadas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#imagen-docs-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Imagen docs-nginx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imagen-stackedit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Imagen stackedit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#despliegue-en-la-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Despliegue en la VM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#despliegue-en-el-aks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Despliegue en el AKS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Despliegue en el AKS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comprobacion-de-persistencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comprobación de persistencia
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../licencia/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Licencia
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../referencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Referencias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#despliegue-de-la-infraestructura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Despliegue de la infraestructura
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Despliegue de la infraestructura">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-los-grupos-de-recursos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación de los grupos de recursos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación de los grupos de recursos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rg-weu-cp2-dev" class="md-nav__link">
+    <span class="md-ellipsis">
+      rg-weu-cp2-dev
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-del-acr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación del ACR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-la-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación de la VM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-del-aks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación del AKS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publicacion-de-las-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publicación de las imagenes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Publicación de las imagenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publicacion-de-imagenes-mediante-ansible" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publicación de imágenes mediante Ansible
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publicacion-mediante-github-actions-fuera-de-alcance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publicación mediante Github Actions (fuera de alcance)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validacion-de-imagenes-publicadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validación de imagenes publicadas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validación de imagenes publicadas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#imagen-docs-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Imagen docs-nginx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imagen-stackedit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Imagen stackedit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#despliegue-en-la-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Despliegue en la VM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#despliegue-en-el-aks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Despliegue en el AKS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Despliegue en el AKS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comprobacion-de-persistencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comprobación de persistencia
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="evidencias">Evidencias<a class="headerlink" href="#evidencias" title="Permanent link">&para;</a></h1>
+<p>A continuación, se exponen las evidencias de los procesos empleados para realizar la práctica.</p>
+<ul>
+<li><a href="#despliegue-de-la-infraestructura">1. Despliegue de la infraestructura</a></li>
+<li><a href="#publicacion-de-las-imagenes">2. Publicación de las imagenes</a></li>
+<li><a href="#despliegue-en-la-vm">3. Despliegue en la VM</a></li>
+<li><a href="#despliegue-en-el-aks">4. Despliegue en el AKS</a></li>
+</ul>
+<hr />
+<h2 id="despliegue-de-la-infraestructura">Despliegue de la infraestructura<a class="headerlink" href="#despliegue-de-la-infraestructura" title="Permanent link">&para;</a></h2>
+<p>En esta sección se muestran los logs los principales comandos ejecutados y algunas capturas que demuestran la correcta ejecución del caso práctico.</p>
+<p>Lanzamos un <code>terraform plan</code> para comprobar todos los recursos.</p>
+<div class="highlight"><pre><span></span><code>terraform<span class="w"> </span>-chdir<span class="o">=</span>./terraform<span class="w"> </span>plan
+</code></pre></div>
+<div class="highlight"><span class="filename">output</span><pre><span></span><code>Terraform<span class="w"> </span>used<span class="w"> </span>the<span class="w"> </span>selected<span class="w"> </span>providers<span class="w"> </span>to<span class="w"> </span>generate<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>execution<span class="w"> </span>plan.
+Resource<span class="w"> </span>actions<span class="w"> </span>are<span class="w"> </span>indicated<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>symbols:
+<span class="w">  </span>+<span class="w"> </span>create
+
+Terraform<span class="w"> </span>will<span class="w"> </span>perform<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>actions:
+
+<span class="w">  </span><span class="c1"># local_file.ansible_inventory will be created</span>
+<span class="w">  </span>+<span class="w"> </span>resource<span class="w"> </span><span class="s2">&quot;local_file&quot;</span><span class="w"> </span><span class="s2">&quot;ansible_inventory&quot;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">content</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">content_base64sha256</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">content_base64sha512</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">content_md5</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">content_sha1</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">content_sha256</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">content_sha512</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">directory_permission</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0777&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">file_permission</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0777&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">filename</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;../ansible/hosts.yml&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">id</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">  </span><span class="c1"># module.aks.azurerm_kubernetes_cluster.aks will be created</span>
+<span class="w">  </span>+<span class="w"> </span>resource<span class="w"> </span><span class="s2">&quot;azurerm_kubernetes_cluster&quot;</span><span class="w"> </span><span class="s2">&quot;aks&quot;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">api_server_authorized_ip_ranges</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">current_kubernetes_version</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">dns_prefix</span><span class="w">                          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;aksweucp2&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">fqdn</span><span class="w">                                </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">http_application_routing_zone_name</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">id</span><span class="w">                                  </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">image_cleaner_enabled</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">image_cleaner_interval_hours</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="m">48</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">kube_admin_config</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">kube_admin_config_raw</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">kube_config</span><span class="w">                         </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">kube_config_raw</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">kubernetes_version</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">location</span><span class="w">                            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;westeurope&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">name</span><span class="w">                                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;aks-weu-cp2-dev&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">node_resource_group</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">node_resource_group_id</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">oidc_issuer_url</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">portal_fqdn</span><span class="w">                         </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">private_cluster_enabled</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">private_cluster_public_fqdn_enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">private_dns_zone_id</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">private_fqdn</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">public_network_access_enabled</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">resource_group_name</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rg-weu-cp2-dev&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">role_based_access_control_enabled</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">run_command_enabled</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">sku_tier</span><span class="w">                            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Standard&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">support_plan</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;KubernetesOfficial&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">tags</span><span class="w">                                </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="s2">&quot;environment&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;casopractico2&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">workload_identity_enabled</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+
+<span class="w">      </span>+<span class="w"> </span>api_server_access_profile<span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+
+<span class="w">      </span>+<span class="w"> </span>auto_scaler_profile<span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+
+<span class="w">      </span>+<span class="w"> </span>default_node_pool<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">kubelet_disk_type</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">max_pods</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">name</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;default&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">node_count</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">node_labels</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">orchestrator_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">os_disk_size_gb</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="m">30</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">os_disk_type</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Managed&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">os_sku</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">scale_down_mode</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Delete&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nb">type</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;VirtualMachineScaleSets&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">ultra_ssd_enabled</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">vm_size</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Standard_B2s&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">workload_runtime</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">      </span>+<span class="w"> </span>identity<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">principal_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">tenant_id</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nb">type</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;SystemAssigned&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">      </span>+<span class="w"> </span>kubelet_identity<span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+
+<span class="w">      </span>+<span class="w"> </span>network_profile<span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+
+<span class="w">      </span>+<span class="w"> </span>windows_profile<span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">  </span><span class="c1"># module.aks.azurerm_role_assignment.acr_pull will be created</span>
+<span class="w">  </span>+<span class="w"> </span>resource<span class="w"> </span><span class="s2">&quot;azurerm_role_assignment&quot;</span><span class="w"> </span><span class="s2">&quot;acr_pull&quot;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">id</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">name</span><span class="w">                             </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">principal_id</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">principal_type</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">role_definition_id</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">role_definition_name</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;AcrPull&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">scope</span><span class="w">                            </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">skip_service_principal_aad_check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">  </span><span class="c1"># module.container_registry.azurerm_container_registry.acr will be created</span>
+<span class="w">  </span>+<span class="w"> </span>resource<span class="w"> </span><span class="s2">&quot;azurerm_container_registry&quot;</span><span class="w"> </span><span class="s2">&quot;acr&quot;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">admin_enabled</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">admin_password</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">admin_username</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">encryption</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">export_policy_enabled</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">id</span><span class="w">                            </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">location</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;westeurope&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">login_server</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">name</span><span class="w">                          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;acrweucp2dev&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">network_rule_bypass_option</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;AzureServices&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">network_rule_set</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">public_network_access_enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">resource_group_name</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rg-weu-cp2-dev&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">retention_policy</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">sku</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Basic&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">tags</span><span class="w">                          </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="s2">&quot;environment&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;casopractico2&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">trust_policy</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">zone_redundancy_enabled</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">  </span><span class="c1"># module.virtual_machine.azurerm_linux_virtual_machine.vm will be created</span>
+<span class="w">  </span>+<span class="w"> </span>resource<span class="w"> </span><span class="s2">&quot;azurerm_linux_virtual_machine&quot;</span><span class="w"> </span><span class="s2">&quot;vm&quot;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">admin_username</span><span class="w">                                         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;charlstown&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">allow_extension_operations</span><span class="w">                             </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">bypass_platform_safety_checks_on_user_schedule_enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">computer_name</span><span class="w">                                          </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">disable_password_authentication</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">disk_controller_type</span><span class="w">                                   </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">extensions_time_budget</span><span class="w">                                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;PT1H30M&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">id</span><span class="w">                                                     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">location</span><span class="w">                                               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;westeurope&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">max_bid_price</span><span class="w">                                          </span><span class="o">=</span><span class="w"> </span>-1
+<span class="w">      </span>+<span class="w"> </span><span class="nv">name</span><span class="w">                                                   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;vm-weu-cp2-docs-dev&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">network_interface_ids</span><span class="w">                                  </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">patch_assessment_mode</span><span class="w">                                  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ImageDefault&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">patch_mode</span><span class="w">                                             </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ImageDefault&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">platform_fault_domain</span><span class="w">                                  </span><span class="o">=</span><span class="w"> </span>-1
+<span class="w">      </span>+<span class="w"> </span><span class="nv">priority</span><span class="w">                                               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Regular&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">private_ip_address</span><span class="w">                                     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">private_ip_addresses</span><span class="w">                                   </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">provision_vm_agent</span><span class="w">                                     </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">public_ip_address</span><span class="w">                                      </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">public_ip_addresses</span><span class="w">                                    </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">resource_group_name</span><span class="w">                                    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rg-weu-cp2-dev&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">size</span><span class="w">                                                   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Standard_B1ls&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">tags</span><span class="w">                                                   </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="s2">&quot;environment&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;casopractico2&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">virtual_machine_id</span><span class="w">                                     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">vm_agent_platform_updates_enabled</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+
+<span class="w">      </span>+<span class="w"> </span>admin_ssh_key<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">public_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;&lt;-EOT</span>
+<span class="s">                \*\*\*</span>
+<span class="s">            EOT</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">username</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;charlstown&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">      </span>+<span class="w"> </span>os_disk<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">caching</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ReadWrite&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">disk_size_gb</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">name</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">storage_account_type</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Standard_LRS&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">write_accelerator_enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">      </span>+<span class="w"> </span>source_image_reference<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">offer</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0001-com-ubuntu-server-jammy&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">publisher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Canonical&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">sku</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;22_04-lts-gen2&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">version</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;latest&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">      </span>+<span class="w"> </span>termination_notification<span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">  </span><span class="c1"># module.virtual_machine.azurerm_network_interface.nic will be created</span>
+<span class="w">  </span>+<span class="w"> </span>resource<span class="w"> </span><span class="s2">&quot;azurerm_network_interface&quot;</span><span class="w"> </span><span class="s2">&quot;nic&quot;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">accelerated_networking_enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">applied_dns_servers</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">dns_servers</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">enable_accelerated_networking</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">enable_ip_forwarding</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">id</span><span class="w">                             </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">internal_domain_name_suffix</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">ip_forwarding_enabled</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">location</span><span class="w">                       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;westeurope&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">mac_address</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">name</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;vm-weu-cp2-docs-dev-nic&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">private_ip_address</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">private_ip_addresses</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">resource_group_name</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rg-weu-cp2-dev&quot;</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">tags</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="s2">&quot;environment&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;casopractico2&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">      </span>+<span class="w"> </span><span class="nv">virtual_machine_id</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+
+<span class="w">      </span>+<span class="w"> </span>ip_configuration<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">gateway_load_balancer_frontend_ip_configuration_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">name</span><span class="w">                                               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;internal&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">primary</span><span class="w">                                            </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">private_ip_address</span><span class="w">                                 </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">private_ip_address_allocation</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Dynamic&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">private_ip_address_version</span><span class="w">                         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;IPv4&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">public_ip_address_id</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/subscriptions/fb24fc1f-67e2-4871-8be2-c10a36e74c93/resourceGroups/rg-weu-cp2-dev/providers/Microsoft.Network/publicIPAddresses/vm-weu-cp2-docs-dev-public-ip&quot;</span>
+<span class="w">          </span>+<span class="w"> </span><span class="nv">subnet_id</span><span class="w">                                          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/subscriptions/fb24fc1f-67e2-4871-8be2-c10a36e74c93/resourceGroups/rg-weu-cp2-dev/providers/Microsoft.Network/virtualNetworks/vnet-weu-cp2-dev/subnets/subnet-weu-cp2-dev&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>
+
+Plan:<span class="w"> </span><span class="m">6</span><span class="w"> </span>to<span class="w"> </span>add,<span class="w"> </span><span class="m">0</span><span class="w"> </span>to<span class="w"> </span>change,<span class="w"> </span><span class="m">0</span><span class="w"> </span>to<span class="w"> </span>destroy.
+
+Changes<span class="w"> </span>to<span class="w"> </span>Outputs:
+<span class="w">  </span>+<span class="w"> </span><span class="nv">acr_login_server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+<span class="w">  </span>+<span class="w"> </span><span class="nv">acr_password</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<span class="w">  </span>+<span class="w"> </span><span class="nv">acr_username</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>known<span class="w"> </span>after<span class="w"> </span>apply<span class="o">)</span>
+</code></pre></div>
+<h3 id="creacion-de-los-grupos-de-recursos">Creación de los grupos de recursos<a class="headerlink" href="#creacion-de-los-grupos-de-recursos" title="Permanent link">&para;</a></h3>
+<p>Tras ejecutar el comando de <code>terraform apply</code> podremos ver en el apartado <strong>Resource groups</strong> los siguientes RGs.</p>
+<div class="highlight"><pre><span></span><code>terraform<span class="w"> </span>-chdir<span class="o">=</span>./terraform<span class="w"> </span>apply<span class="w"> </span>--auto-approve
+</code></pre></div>
+<p><img alt="resource-groups" src="../../assets/images/screenshot-resource-groups.png" /></p>
+<ul>
+<li><strong>MC_rg-weu-cp2-dev_aks-weu-cp2-dev_westeurope</strong>: Grupo de recursos gestionado automáticamente por Azure para almacenar los nodos y configuraciones internas del AKS.  </li>
+<li><strong>NetworkWatcherRG</strong>: Grupo de recursos creado por Azure para herramientas de monitoreo y diagnóstico de red.  </li>
+<li><strong>rg-weu-cp2-dev</strong>: Grupo de recursos principal donde se despliegan la VM, el ACR y el AKS mediante Terraform.</li>
+</ul>
+<h4 id="rg-weu-cp2-dev">rg-weu-cp2-dev<a class="headerlink" href="#rg-weu-cp2-dev" title="Permanent link">&para;</a></h4>
+<p>El <code>rg-weu-cp2-dev</code> contiene todos los recursos declarados en nuestros ficheros de terraform.</p>
+<p><img alt="rg-weu-cp2-dev" src="../../assets/images/screenshot-rg-weu-cp2-dev.png" /></p>
+<h3 id="creacion-del-acr">Creación del ACR<a class="headerlink" href="#creacion-del-acr" title="Permanent link">&para;</a></h3>
+<p>Desde el portal de Azure podemos observar como el servicio de contenedores (ACR) se ha creado correctamente bajo los parámetros definidos en los ficheros terraform.</p>
+<p><img alt="acr" src="../../assets/images/screenshot-acr.png" /></p>
+<div class="highlight"><pre><span></span><code>az<span class="w"> </span>acr<span class="w"> </span>list<span class="w"> </span>--query<span class="w"> </span><span class="s2">&quot;[?name==&#39;acrweucp2dev&#39;]&quot;</span><span class="w"> </span>--output<span class="w"> </span>table
+</code></pre></div>
+<p>Tras lanzar este comando recibimos esta salida por consola:</p>
+<p>Here is the Markdown code for the table:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Location</th>
+<th>LoginServer</th>
+<th>CreationDate</th>
+<th>ProvisioningState</th>
+<th>AdminUserEnabled</th>
+<th>DataEndpointEnabled</th>
+<th>PublicNetworkAccess</th>
+<th>NetworkRuleBypassOptions</th>
+<th>ZoneRedundancy</th>
+<th>AnonymousPullEnabled</th>
+<th>MetadataSearch</th>
+<th>ResourceGroup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>acrweucp2dev</td>
+<td>westeurope</td>
+<td>acrweucp2dev.azurecr.io</td>
+<td>2025-03-16T20:22:34.983350+00:00</td>
+<td>Succeeded</td>
+<td>True</td>
+<td>False</td>
+<td>Enabled</td>
+<td>AzureServices</td>
+<td>Disabled</td>
+<td>False</td>
+<td>Disabled</td>
+<td>rg-weu-cp2-dev</td>
+</tr>
+</tbody>
+</table>
+<p>También podemos comprobar que se ha creado correctamente iniciando sesión en el ACR mediante el comando <code>az acr login --name acrweucp2dev</code> que devuelve la siguiente salida:</p>
+<p><img alt="acr-login" src="../../assets/images/screenshot-acr-login.png" /></p>
+<h3 id="creacion-de-la-vm">Creación de la VM<a class="headerlink" href="#creacion-de-la-vm" title="Permanent link">&para;</a></h3>
+<p>Desde el portal de Azure podemos observar como la VM se ha creado correctamente bajo los parámetros definidos en los ficheros terraform.</p>
+<p><img alt="vm" src="../../assets/images/screenshot-vm.png" /></p>
+<p>Para comprobar que la VM está levantada podemos acceder por ssh usando la clave pública que le pasamos en el momento del despliegue con terraform y la IP pública publicada en los outputs.</p>
+<p>La IP Pública la podemos extraer de los outputs generados de terraform</p>
+<div class="highlight"><pre><span></span><code>terraform<span class="w"> </span>output
+</code></pre></div>
+<p><img alt="terraform-outputs" src="../../assets/images/screenshot-tf-outputs.png" /></p>
+<p>Si hacemos ssh contra esa IP y con la clave pública que pasamos en el momento de cración podremos acceder a la VM.</p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>-i<span class="w"> </span>~/.ssh/az_unir_rsa<span class="w"> </span>charlstown@13.81.82.89
+</code></pre></div>
+<p><img alt="screenshot-ssh" src="../../assets/images/screenshot-ssh.png" /></p>
+<h3 id="creacion-del-aks">Creación del AKS<a class="headerlink" href="#creacion-del-aks" title="Permanent link">&para;</a></h3>
+<p>Desde el portal de Azure podemos observar como el servicio de Kubernetes (AKS) se ha creado correctamente bajo los parámetros definidos en los ficheros terraform.</p>
+<p><img alt="aks" src="../../assets/images/screenshot-aks.png" /></p>
+<p>Podemos comprobar el estado del AKS en Azure mediante el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>az<span class="w"> </span>aks<span class="w"> </span>show<span class="w"> </span>--resource-group<span class="w"> </span>rg-weu-cp2-dev<span class="w"> </span>--name<span class="w"> </span>aks-weu-cp2-dev<span class="w"> </span>--output<span class="w"> </span>table
+</code></pre></div>
+<p>Here is the markdown code for your table:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Location</th>
+<th>ResourceGroup</th>
+<th>KubernetesVersion</th>
+<th>CurrentKubernetesVersion</th>
+<th>ProvisioningState</th>
+<th>Fqdn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aks-weu-cp2-dev</td>
+<td>westeurope</td>
+<td>rg-weu-cp2-dev</td>
+<td>1.30</td>
+<td>1.30.9</td>
+<td>Succeeded</td>
+<td>aksweucp2-1fslhh1t.hcp.westeurope.azmk8s.io</td>
+</tr>
+</tbody>
+</table>
+<p>Para probar desde local que podemos acceder al cluster de Kubernetes, podemos realizar los siguientes comandos.</p>
+<details class="note">
+<summary>Credenciales de acceso</summary>
+<div class="highlight"><pre><span></span><code>az<span class="w"> </span>aks<span class="w"> </span>get-credentials<span class="w"> </span>--resource-group<span class="w"> </span>rg-weu-cp2-dev<span class="w"> </span>--name<span class="w"> </span>aks-weu-cp2-dev
+</code></pre></div>
+</details>
+<p>Con este comando podemos ver los nodos del cluster y si el AKS está levantado, deberían aparecer con estado Ready.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
+</code></pre></div>
+<p><img alt="kubectl-get-nodes" src="../../assets/images/screenshot-kubectl-get-nodes.png" /></p>
+<p>Con el siguiente comando podemos listar los pods internos del clúster (como CoreDNS, metric-server, etc.). Si están en Running, el clúster funciona correctamente.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kube-system
+</code></pre></div>
+<p><img alt="kubectl-get-pods" src="../../assets/images/screenshot-kubectl-get-pods.png" /></p>
+<h2 id="publicacion-de-las-imagenes">Publicación de las imagenes<a class="headerlink" href="#publicacion-de-las-imagenes" title="Permanent link">&para;</a></h2>
+<h3 id="publicacion-de-imagenes-mediante-ansible">Publicación de imágenes mediante Ansible<a class="headerlink" href="#publicacion-de-imagenes-mediante-ansible" title="Permanent link">&para;</a></h3>
+<p>Tras ejecutar el playbook <code>publish_images.yml</code> de Asnible con el comando:</p>
+<div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>ansible/publish_images.yml<span class="w"> </span>-i<span class="w"> </span>an
+sible/hosts.yml<span class="w"> </span>--extra-vars<span class="w"> </span><span class="s2">&quot;@ansible/vars.yml&quot;</span><span class="w"> </span>--ask-vault-pass
+</code></pre></div>
+<p>Podemos ver como se ejecuta el rol de ACR de la carpeta Ansible ejecutando las tareas sin errores.</p>
+<p><img alt="ansible-images-logs" src="../../assets/images/screenshot-ansible-images-logs.png" /></p>
+<h3 id="publicacion-mediante-github-actions-fuera-de-alcance">Publicación mediante Github Actions (fuera de alcance)<a class="headerlink" href="#publicacion-mediante-github-actions-fuera-de-alcance" title="Permanent link">&para;</a></h3>
+<p>La publicación de la imagen se automatiza mediante el workflow <a href="https://github.com/charlstown/unir-cp2/actions/workflows/publish-image-mkdocs.yml"><code>Publish mkdocs image to ACR</code></a> de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.</p>
+<ol>
+<li>
+<p>Rellenar los datos del formulario del workflow con username y pwd del ACR desplegado en Azure.</p>
+<details class="note">
+<summary>Visualizar usuario y contraseña del ACR</summary>
+<p>Siempre puedes ejecutar este comando para recuperar el usuario y la contraseña del ACR.</p>
+<div class="highlight"><pre><span></span><code>az<span class="w"> </span>acr<span class="w"> </span>credential<span class="w"> </span>show<span class="w"> </span>--name<span class="w"> </span>acrweucp2dev<span class="w"> </span>--query<span class="w"> </span><span class="s2">&quot;[username, passwords[0].value]&quot;</span><span class="w"> </span>-o<span class="w"> </span>tsv
+</code></pre></div>
+</details>
+<p><img alt="Workflow form" src="../../assets/images/run-workflow-form.png" /></p>
+</li>
+<li>
+<p>Ejecutar workflow y validar la correcta ejecución del job</p>
+</li>
+</ol>
+<p><img alt="Workflow run" src="../../assets/images/job-logs.png" /></p>
+<h3 id="validacion-de-imagenes-publicadas">Validación de imagenes publicadas<a class="headerlink" href="#validacion-de-imagenes-publicadas" title="Permanent link">&para;</a></h3>
+<p>Tras publicar las imágenes por Ansible o por Github Action podremos ver los repositorios en <code>Services/Repositories</code> en el recurso del ACR.</p>
+<p>También podemos ejectuar el siguiente comando desde local para listar las imágenes del ACR.</p>
+<div class="highlight"><pre><span></span><code>az<span class="w"> </span>acr<span class="w"> </span>repository<span class="w"> </span>list<span class="w"> </span>--name<span class="w"> </span>acrweucp2dev<span class="w"> </span>--output<span class="w"> </span>table
+</code></pre></div>
+<p><img alt="screenshot-acr-list" src="../../assets/images/screenshot-acr-list.png" /></p>
+<h4 id="imagen-docs-nginx">Imagen <code>docs-nginx</code><a class="headerlink" href="#imagen-docs-nginx" title="Permanent link">&para;</a></h4>
+<p><img alt="screenshot-docs-nginx-image" src="../../assets/images/screenshot-docs-nginx-image.png" /></p>
+<h4 id="imagen-stackedit">Imagen <code>stackedit</code><a class="headerlink" href="#imagen-stackedit" title="Permanent link">&para;</a></h4>
+<p><img alt="screenshot-stackedit-image" src="../../assets/images/screenshot-stackedit-image.png" /></p>
+<h2 id="despliegue-en-la-vm">Despliegue en la VM<a class="headerlink" href="#despliegue-en-la-vm" title="Permanent link">&para;</a></h2>
+<p>Para desplegar la imagen de mkdocs-nginx en un contendor sobre la máquina virtual ejecutamos el siguiente playbook que contiene el rol <code>vm</code>.</p>
+<div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>ansible/playbook.yml<span class="w"> </span>-i<span class="w"> </span>ansible/hosts.yml<span class="w"> </span>--extra-vars<span class="w"> </span><span class="s2">&quot;@ansible/vars.yml&quot;</span><span class="w"> </span>--ask-vault-pass
+</code></pre></div>
+<p>Si todo ha ido bien se puede comprobar que el sitio se muestra a través de internet en la ip pública de la VM. Ejecutando el comando:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-k<span class="w"> </span>-u<span class="w"> </span>charlstown:***<span class="w"> </span>https://<span class="si">${</span><span class="nv">VM_IP</span><span class="si">}</span>:443
+</code></pre></div>
+<p>También puede visualizarse en el browser en la dirección <code>https://ip-publica/</code>.</p>
+<p><img alt="acceso-vm-docs" src="../../assets/images/acceso-vm-docs-ip-publica.png" /></p>
+<p>Si introducimos el usuario y la contraseña tendremos acceso a la web de la imagen de `` levantada en la IP pública de la VM.</p>
+<p><img alt="web-nginx" src="../../assets/images/screenshot-web-mkdocs.png" /></p>
+<h2 id="despliegue-en-el-aks">Despliegue en el AKS<a class="headerlink" href="#despliegue-en-el-aks" title="Permanent link">&para;</a></h2>
+<p>A continuación se muestran las evidencias de que el despliegue del contenedor en AKS se ha realizado correctamente tras ejecutar el siguiente comando, el cual aplica el rol <code>aks</code>:</p>
+<div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>playbook_aks.yml<span class="w"> </span>-i<span class="w"> </span>hosts.yml<span class="w"> </span>--ask-vault-pass
+</code></pre></div>
+<p>Podemos comprobar que el servicio se ha creado correctamente con tipo <code>LoadBalancer</code> y que la IP pública ha sido asignada:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>stackedit-service<span class="w"> </span>-n<span class="w"> </span>cp2
+</code></pre></div>
+<p>Resultado:</p>
+<div class="highlight"><pre><span></span><code>NAME                TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
+stackedit-service   LoadBalancer   10.0.237.2     74.178.201.19   80:32417/TCP   40m
+</code></pre></div>
+<p>Esto indica que la aplicación desplegada está accesible públicamente a través de la IP <code>74.178.201.19</code>.</p>
+<p>Podemos validar que el contenedor se ha desplegado correctamente y que está sirviendo en el puerto <code>80</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>cp2<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>stackedit
+</code></pre></div>
+<p>Resultado:</p>
+<div class="highlight"><pre><span></span><code>HTTP server started: http://localhost:8080
+</code></pre></div>
+<p>Por tanto, accediendo desde el navegador a <code>http://74.178.201.19</code> se podrá visualizar la interfaz web de StackEdit.</p>
+<p><img alt="web-aks-stackedit" src="../../assets/images/screenshot-web-stackedit-aks.png" /></p>
+<p>Esto confirma que el despliegue en AKS se ha realizado con éxito, con el contenedor sirviendo desde la imagen publicada en el ACR.</p>
+<h3 id="comprobacion-de-persistencia">Comprobación de persistencia<a class="headerlink" href="#comprobacion-de-persistencia" title="Permanent link">&para;</a></h3>
+<p>Para validar que el contenedor desplegado en AKS cuenta con almacenamiento persistente, se realiza la siguiente prueba:</p>
+<ol>
+<li><strong>Crear una nota</strong> desde la interfaz web de StackEdit accediendo a <code>http://74.178.201.19</code>.</li>
+</ol>
+<p>Se añade una nueva nota con el siguiente contenido:</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># HelloWorld from the Cloud 🚀  </span>
+<span class="ge">_“Bienvenido al desierto de lo real.” — Morfeo_</span>
+</code></pre></div>
+<p><img alt="markdown-note" src="../../assets/images/screenshot-markdown-note.png" />
+2. <strong>Eliminar el pod</strong> para forzar su recreación automática por Kubernetes:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>cp2<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>stackedit
+</code></pre></div>
+<p>Desde Lens podemos ver como se recrea el contenedor.</p>
+<p><img alt="lens-pod" src="../../assets/images/screenshot-lens-pod.png" />
+3. <strong>Actualizar la página web</strong> tras unos segundos.<br />
+La nota debería seguir estando presente, lo que confirma que el volumen persistente está funcionando correctamente.</p>
+<p><img alt="markdown-note" src="../../assets/images/screenshot-markdown-note.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../despliegue/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Despliegue">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Despliegue
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../licencia/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Licencia">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Licencia
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Unir CP2 - 2025
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.path", "navigation.tracking", "navigation.tabs", "navigation.instant", "navigation.sections", "navigation.footer", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../assets/javascripts/extra.js"></script>
+      
+        <script src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+      
+        <script src="../../assets/javascripts/drawio-reload.js"></script>
+      
+    
+  </body>
+</html>
