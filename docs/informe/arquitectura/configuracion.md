@@ -6,9 +6,9 @@ A continuación se describen las configuraciones aplicadas a la infraestructura 
 
 ### Imágen sin persistencia para la VM
 
-La imagen utilizada en el contenedor Podman dentro de la máquina virtual se basa en **MkDocs**, una librería de documentación escrita en Python. Esta herramienta permite generar sitios estáticos a partir de archivos Markdown, facilitando la creación y publicación de documentación técnica [(MkDocs, s.f.)](./referencias.md#herramientas-usadas). La imagen generada en este ejercicio contiene la documentación del propio proyecto, asegurando que el contenido se pueda visualizar de manera estructurada en un navegador.
+La imagen utilizada en el contenedor Podman dentro de la máquina virtual se basa en **MkDocs**, una librería de documentación escrita en Python. Esta herramienta permite generar sitios estáticos a partir de archivos Markdown, facilitando la creación y publicación de documentación técnica [(MkDocs, s.f.)](../referencias.md#herramientas-usadas). La imagen generada en este ejercicio contiene la documentación del propio proyecto, asegurando que el contenido se pueda visualizar de manera estructurada en un navegador.
 
-Además, se ha utilizado el tema **Material for MkDocs**, que añade una interfaz moderna y varias opciones de personalización [(Squidfunk, s.f.)](./referencias.md#herramientas-usadas).
+Además, se ha utilizado el tema **Material for MkDocs**, que añade una interfaz moderna y varias opciones de personalización [(Squidfunk, s.f.)](../referencias.md#herramientas-usadas).
 
 La documentación también está disponible a través de **GitHub Pages**, lo que permite su acceso incluso cuando la infraestructura de Azure no está desplegada. Se puede visualizar en el siguiente enlace:  
 
@@ -16,7 +16,7 @@ La documentación también está disponible a través de **GitHub Pages**, lo qu
 
 ### Imágen con persistencia para el AKS
 
-La imagen desplegada en el clúster de **AKS** está basada en **StackEdit**, una aplicación web de código abierto que permite editar y guardar documentos en formato Markdown directamente desde el navegador. Esta herramienta es ideal para la toma de notas técnicas o redacción de documentación rápida, ya que ofrece previsualización en tiempo real y sincronización con almacenamiento local y en la nube [(StackEdit, s.f.)](./referencias.md#herramientas-usadas).
+La imagen desplegada en el clúster de **AKS** está basada en **StackEdit**, una aplicación web de código abierto que permite editar y guardar documentos en formato Markdown directamente desde el navegador. Esta herramienta es ideal para la toma de notas técnicas o redacción de documentación rápida, ya que ofrece previsualización en tiempo real y sincronización con almacenamiento local y en la nube [(StackEdit, s.f.)](../referencias.md#herramientas-usadas).
 
 Para este ejercicio se ha utilizado la imagen pública disponible en Docker Hub: [`benweet/stackedit`](https://hub.docker.com/r/benweet/stackedit), la cual se despliega en un contenedor dentro de Kubernetes con un volumen persistente asociado. Esto garantiza que el contenido creado por el usuario, como notas o documentos, **no se pierde** aunque el contenedor se reinicie o se reprograme, validando así la persistencia de los datos en un entorno dinámico.
 
