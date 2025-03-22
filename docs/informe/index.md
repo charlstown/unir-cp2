@@ -16,15 +16,18 @@ Para la generación del informe, se ha utilizado MkDocs, una librería de Python
 
 ### Estructura del repositorio
 
+El proyecto se organiza en tres grandes bloques: infraestructura, despliegue y documentación. A continuación se resume su estructura principal:
+
 ```
 📦 repo-root
-├── ansible
-│   ├── deploy.sh       # Script de despliegue con Ansible
-│   ├── hosts           # Inventario de servidores
-│   └── playbook.yml    # Playbook principal de Ansible
-│
-├── terraform
-│   ├── vars.tf         # Variables de configuración
-│   ├── main.tf         # Configuración principal de Terraform
-│   └── recursos.tf     # Definición de recursos en Azure
+├── terraform/        # Código para el despliegue de la infraestructura (ACR, VM, AKS)
+├── ansible/          # Playbooks y roles para configurar la VM y desplegar en AKS
+├── docs/             # Documentación del proyecto (MkDocs)
+├── site/             # Sitio estático generado de la documentación
+├── setup.sh          # Script para exportar variables tras despliegue
+├── mkdocs.yml        # Configuración de MkDocs
+├── Dockerfile.docs   # Dockerfile para generar la imagen de documentación
+├── requirements.txt  # Dependencias de Python
+├── README.md         # Descripción general del proyecto
+└── LICENSE           # Licencia del repositorio
 ```

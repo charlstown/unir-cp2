@@ -18,4 +18,6 @@ MkDocs. (s.f.). *MkDocs Documentation*. Recuperado de [https://www.mkdocs.org](h
 
 Squidfunk. (s.f.). *Material for MkDocs*. Recuperado de [https://squidfunk.github.io/mkdocs-material/](https://squidfunk.github.io/mkdocs-material/)
 
+StackEdit. (s.f.). *StackEdit - In-browser Markdown editor*. GitHub. [https://github.com/benweet/stackedit](https://github.com/benweet/stackedit)
+
 WithPDF. (s.f.). WithPDF Plugin for MkDocs. Recuperado de [https://github.com/orzih/mkdocs-with-pdf](https://github.com/orzih/mkdocs-with-pdf)

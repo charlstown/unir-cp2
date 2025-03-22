@@ -16,7 +16,9 @@ La documentación también está disponible a través de **GitHub Pages**, lo qu
 
 ### Imágen con persistencia para el AKS
 
-Content WIP.
+La imagen desplegada en el clúster de **AKS** está basada en **StackEdit**, una aplicación web de código abierto que permite editar y guardar documentos en formato Markdown directamente desde el navegador. Esta herramienta es ideal para la toma de notas técnicas o redacción de documentación rápida, ya que ofrece previsualización en tiempo real y sincronización con almacenamiento local y en la nube [(StackEdit, s.f.)](./referencias.md#herramientas-usadas).
+
+Para este ejercicio se ha utilizado la imagen pública disponible en Docker Hub: [`benweet/stackedit`](https://hub.docker.com/r/benweet/stackedit), la cual se despliega en un contenedor dentro de Kubernetes con un volumen persistente asociado. Esto garantiza que el contenido creado por el usuario, como notas o documentos, **no se pierde** aunque el contenedor se reinicie o se reprograme, validando así la persistencia de los datos en un entorno dinámico.
 
 ## Configuración con Ansible 
 
